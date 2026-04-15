@@ -1,0 +1,89 @@
+path,source_release,subtask_or_split,file_type,license_family,role,status,notes
+data/raw/nadi2020/NADI_release/.DS_Store,NADI 2020,,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2020/NADI_release/EXAMPLE.GOLD,NADI 2020,,gold,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2020/NADI_release/EXAMPLE.PRED,NADI 2020,,pred,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2020/NADI_release/NADI-DID-Scorer.py,NADI 2020,,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2020/NADI_release/NADI-Obtain-Tweets.py,NADI 2020,,python,CC BY-NC-ND 4.0,hydration_script,out_of_scope,requires external tweet hydration
+data/raw/nadi2020/NADI_release/NADI-Twitter-Corpus-License.txt,NADI 2020,,text,CC BY-NC-ND 4.0,license,reference,license text bundled with source release
+data/raw/nadi2020/NADI_release/README.txt,NADI 2020,,text,CC BY-NC-ND 4.0,release_notes,reference,release documentation
+data/raw/nadi2020/NADI_release/dev_labeled.tsv,NADI 2020,,tsv,CC BY-NC-ND 4.0,country_province_dataset,provenance_aux_eval_only,standalone NADI 2020 labeled split documented for provenance inspection and possible auxiliary evaluation only
+data/raw/nadi2020/NADI_release/train_labeled.tsv,NADI 2020,,tsv,CC BY-NC-ND 4.0,country_province_dataset,provenance_aux_eval_only,standalone NADI 2020 labeled split documented for provenance inspection and possible auxiliary evaluation only
+data/raw/nadi2020/NADI_release/unlabeled_10M.tsv,NADI 2020,,tsv,CC BY-NC-ND 4.0,unlabeled_ids,out_of_scope,tweet IDs only no text
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/.DS_Store,NADI 2020,,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/EXAMPLE_DEV_GOLD,NADI 2020,,unknown,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/NADI-DID-Scorer.py,NADI 2020,,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/NADI-Twitter-Corpus-License.txt,NADI 2020,,text,CC BY-NC-ND 4.0,license,reference,license text bundled with source release
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/README.txt,NADI 2020,,text,CC BY-NC-ND 4.0,release_notes,reference,release documentation
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/test_unlabeled.tsv,NADI 2020,,tsv,CC BY-NC-ND 4.0,test_unlabeled,evaluation_only,test inputs without labels
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/ubc_subtask1_dev_1.txt,NADI 2020,,text,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2020/test/NADI-2020_TEST_2.0/ubc_subtask1_dev_1.zip,NADI 2020,,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-DID-Scorer.py,NADI 2021,,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-Obtain-Tweets.py,NADI 2021,,python,CC BY-NC-ND 4.0,hydration_script,out_of_scope,requires external tweet hydration
+data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-README.txt,NADI 2021,,text,CC BY-NC-ND 4.0,release_notes,reference,release documentation
+data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-Twitter-Corpus-License.txt,NADI 2021,,text,CC BY-NC-ND 4.0,license,reference,license text bundled with source release
+data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-unlabeled_10M.tsv,NADI 2021,,tsv,CC BY-NC-ND 4.0,unlabeled_ids,out_of_scope,tweet IDs only no text
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/MSA_dev_labeled.tsv,NADI 2021,Subtask_1.1+2.1_MSA,tsv,CC BY-NC-ND 4.0,msa_dataset,out_of_scope,MSA subtask not used in v1
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/MSA_train_labeled.tsv,NADI 2021,Subtask_1.1+2.1_MSA,tsv,CC BY-NC-ND 4.0,msa_dataset,out_of_scope,MSA subtask not used in v1
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/UBC_subtask11_dev_1.zip,NADI 2021,Subtask_1.1+2.1_MSA,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/UBC_subtask21_dev_1.zip,NADI 2021,Subtask_1.1+2.1_MSA,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/subtask11_GOLD.txt,NADI 2021,Subtask_1.1+2.1_MSA,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/subtask21_GOLD.txt,NADI 2021,Subtask_1.1+2.1_MSA,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv,NADI 2021,Subtask_1.2+2.2_DA,tsv,CC BY-NC-ND 4.0,country_province_dataset,provenance_aux_eval_only,standalone NADI 2021 DA labeled split documented for provenance inspection and possible auxiliary evaluation only
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv,NADI 2021,Subtask_1.2+2.2_DA,tsv,CC BY-NC-ND 4.0,country_province_dataset,provenance_aux_eval_only,standalone NADI 2021 DA labeled split documented for provenance inspection and possible auxiliary evaluation only
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/UBC_subtask12_dev_1.zip,NADI 2021,Subtask_1.2+2.2_DA,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/UBC_subtask22_dev_1.zip,NADI 2021,Subtask_1.2+2.2_DA,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/subtask12_GOLD.txt,NADI 2021,Subtask_1.2+2.2_DA,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/subtask22_GOLD.txt,NADI 2021,Subtask_1.2+2.2_DA,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/NADI2023_Release_Train/.DS_Store,NADI 2023,,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/NADI2023_Release_Train/.ipynb_checkpoints/NADI2023-README-checkpoint.txt,NADI 2023,,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/.ipynb_checkpoints/NADI2023-Twitter-Corpus-License-checkpoint.txt,NADI 2023,,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/NADI2023-README.txt,NADI 2023,,text,CC BY-NC-ND 4.0,release_notes,reference,release documentation
+data/raw/nadi2023/NADI2023_Release_Train/NADI2023-Twitter-Corpus-License.txt,NADI 2023,,text,CC BY-NC-ND 4.0,license,reference,license text bundled with source release
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.DS_Store,NADI 2023,Subtask1,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023-ST1-Scorer-checkpoint.py,NADI 2023,Subtask1,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023_Subtask1_DEV-checkpoint.tsv,NADI 2023,Subtask1,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023_Subtask1_TRAIN-checkpoint.tsv,NADI 2023,Subtask1,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/subtask1_dev_GOLD-checkpoint.txt,NADI 2023,Subtask1,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/MADAR-2018.tsv,NADI 2023,Subtask1,tsv,CC BY-NC-ND 4.0,city_country_dataset,reference_future_ood,reference future OOD source not part of initial v1 training mixture
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv,NADI 2023,Subtask1,tsv,CC BY-NC-ND 4.0,country_dialect_dataset,canonical_supporting,canonical benchmark-aligned supporting source for v1 bundled in NADI 2023
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv,NADI 2023,Subtask1,tsv,CC BY-NC-ND 4.0,country_dialect_dataset,canonical_supporting,canonical benchmark-aligned supporting source for v1 bundled in NADI 2023
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023-ST1-Scorer.py,NADI 2023,Subtask1,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv,NADI 2023,Subtask1,tsv,CC BY-NC-ND 4.0,country_dialect_dataset,primary,NADI 2023 Subtask 1 benchmark split
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv,NADI 2023,Subtask1,tsv,CC BY-NC-ND 4.0,country_dialect_dataset,primary,NADI 2023 Subtask 1 benchmark split
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/subtask1_dev_GOLD.txt,NADI 2023,Subtask1,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/NADI2023_Release_Train/Subtask1/ubc_subtask1_dev_1.txt.zip,NADI 2023,Subtask1,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/.DS_Store,NADI 2023,Subtask2,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/.ipynb_checkpoints/NADI2023_Subtask2B_DEV-checkpoint.tsv,NADI 2023,Subtask2,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/.ipynb_checkpoints/substask2_B_devb_GOLD-checkpoint.txt,NADI 2023,Subtask2,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/NADI2023-ST2-Scorer.py,NADI 2023,Subtask2,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/subtask2_dev.tsv,NADI 2023,Subtask2,tsv,CC BY-NC-ND 4.0,mt_dev_dataset,out_of_scope,MT subtasks not used in v1
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/subtask2_dev_GOLD.txt,NADI 2023,Subtask2,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/NADI2023_Release_Train/Subtask2/ubc_subtask2_dev_1.txt.zip,NADI 2023,Subtask2,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/.DS_Store,NADI 2023,Subtask3,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/.ipynb_checkpoints/NADI2023_Subtask2B_DEV-checkpoint.tsv,NADI 2023,Subtask3,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/.ipynb_checkpoints/substask2_B_devb_GOLD-checkpoint.txt,NADI 2023,Subtask3,checkpoint_artifact,CC BY-NC-ND 4.0,package_artifact,ignored,Jupyter checkpoint copy
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/NADI2023-ST3-Scorer.py,NADI 2023,Subtask3,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/subtask3_dev.tsv,NADI 2023,Subtask3,tsv,CC BY-NC-ND 4.0,mt_dev_dataset,out_of_scope,MT subtasks not used in v1
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/subtask3_dev_GOLD.txt,NADI 2023,Subtask3,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/NADI2023_Release_Train/Subtask3/ubc_subtask3_dev_1.txt.zip,NADI 2023,Subtask3,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/test/NADI2023_Release_Test/.DS_Store,NADI 2023,,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/test/NADI2023_Release_Test/NADI2023-Test-README.txt,NADI 2023,,text,CC BY-NC-ND 4.0,release_notes,reference,release documentation
+data/raw/nadi2023/test/NADI2023_Release_Test/NADI2023-Twitter-Corpus-License.txt,NADI 2023,,text,CC BY-NC-ND 4.0,license,reference,license text bundled with source release
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/.DS_Store,NADI 2023,Subtask1,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/NADI2023-ST1-Scorer.py,NADI 2023,Subtask1,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/NADI2023_Subtask1_TEST_Unlabeled.tsv,NADI 2023,Subtask1,tsv,CC BY-NC-ND 4.0,test_unlabeled,evaluation_only,test inputs without labels
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/subtask1_dev_GOLD.txt,NADI 2023,Subtask1,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/ubc_subtask1_dev_1.txt.zip,NADI 2023,Subtask1,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/ubc_subtask1_test_1.zip,NADI 2023,Subtask1,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/.DS_Store,NADI 2023,Subtask2,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/NADI2023-ST2-Scorer.py,NADI 2023,Subtask2,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/NADI2023_Subtask2_TEST_Unlabeled.tsv,NADI 2023,Subtask2,tsv,CC BY-NC-ND 4.0,test_unlabeled,evaluation_only,test inputs without labels
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/subtask2_dev_GOLD.txt,NADI 2023,Subtask2,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/ubc_subtask2_dev_1.txt.zip,NADI 2023,Subtask2,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/ubc_subtask2_test_1.zip,NADI 2023,Subtask2,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/.DS_Store,NADI 2023,Subtask3,macos_metadata,CC BY-NC-ND 4.0,package_artifact,ignored,macOS finder metadata
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/NADI2023-ST3-Scorer.py,NADI 2023,Subtask3,python,CC BY-NC-ND 4.0,scorer,reference,official scoring utility
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/NADI2023_Subtask3_TEST_Unlabeled.tsv,NADI 2023,Subtask3,tsv,CC BY-NC-ND 4.0,test_unlabeled,evaluation_only,test inputs without labels
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/subtask3_dev_GOLD.txt,NADI 2023,Subtask3,text,CC BY-NC-ND 4.0,gold_labels,reference,gold labels or references for scorer
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/ubc_subtask3_dev_1.txt.zip,NADI 2023,Subtask3,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example
+data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/ubc_subtask3_test_1.zip,NADI 2023,Subtask3,zip,CC BY-NC-ND 4.0,example_submission,reference,shared-task submission example

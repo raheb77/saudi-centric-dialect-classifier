@@ -1,0 +1,7 @@
+data/raw/
+*.zip
+__MACOSX/
+.ipynb_checkpoints/
+*.pyc
+.DS_Store
+.venv/
