@@ -29,28 +29,33 @@ def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> 
             writer.writerow(row)
 
 
+def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
 def test_run_baseline_writes_expected_reports(tmp_path: Path) -> None:
     train_path = tmp_path / "data" / "processed" / "train_core.csv"
     dev_path = tmp_path / "data" / "processed" / "dev_core.csv"
     report_dir = tmp_path / "artifacts" / "reports"
     config_path = tmp_path / "configs" / "baseline.yaml"
-    fieldnames = ["source_id", "macro_label", "processed_text"]
+    fieldnames = ["source_id", "original_text", "macro_label", "processed_text"]
 
     train_rows = [
-        {"source_id": "1", "macro_label": "Saudi", "processed_text": "الهلال سعودي الرياض"},
-        {"source_id": "2", "macro_label": "Saudi", "processed_text": "النصر سعودي جدة"},
-        {"source_id": "3", "macro_label": "Egyptian", "processed_text": "القاهرة مصر مصري"},
-        {"source_id": "4", "macro_label": "Egyptian", "processed_text": "اسكندرية لهجة مصرية"},
-        {"source_id": "5", "macro_label": "Levantine", "processed_text": "فلسطين شام لهجة"},
-        {"source_id": "6", "macro_label": "Levantine", "processed_text": "بيروت شام اردن"},
-        {"source_id": "7", "macro_label": "Maghrebi", "processed_text": "مغرب الجزائر دارجة"},
-        {"source_id": "8", "macro_label": "Maghrebi", "processed_text": "تونس ليبيا مغاربي"},
+        {"source_id": "1", "original_text": "الهلال سعودي الرياض", "macro_label": "Saudi", "processed_text": "الهلال سعودي الرياض"},
+        {"source_id": "2", "original_text": "النصر سعودي جدة", "macro_label": "Saudi", "processed_text": "النصر سعودي جدة"},
+        {"source_id": "3", "original_text": "القاهرة مصر مصري", "macro_label": "Egyptian", "processed_text": "القاهرة مصر مصري"},
+        {"source_id": "4", "original_text": "اسكندرية لهجة مصرية", "macro_label": "Egyptian", "processed_text": "اسكندرية لهجة مصرية"},
+        {"source_id": "5", "original_text": "فلسطين شام لهجة", "macro_label": "Levantine", "processed_text": "فلسطين شام لهجة"},
+        {"source_id": "6", "original_text": "بيروت شام اردن", "macro_label": "Levantine", "processed_text": "بيروت شام اردن"},
+        {"source_id": "7", "original_text": "مغرب الجزائر دارجة", "macro_label": "Maghrebi", "processed_text": "مغرب الجزائر دارجة"},
+        {"source_id": "8", "original_text": "تونس ليبيا مغاربي", "macro_label": "Maghrebi", "processed_text": "تونس ليبيا مغاربي"},
     ]
     dev_rows = [
-        {"source_id": "9", "macro_label": "Saudi", "processed_text": "الرياض سعودي"},
-        {"source_id": "10", "macro_label": "Egyptian", "processed_text": "مصر القاهرة"},
-        {"source_id": "11", "macro_label": "Levantine", "processed_text": "بيروت شام"},
-        {"source_id": "12", "macro_label": "Maghrebi", "processed_text": "الجزائر مغرب"},
+        {"source_id": "9", "original_text": "الرياض سعودي", "macro_label": "Saudi", "processed_text": "الرياض سعودي"},
+        {"source_id": "10", "original_text": "مصر القاهرة", "macro_label": "Egyptian", "processed_text": "مصر القاهرة"},
+        {"source_id": "11", "original_text": "بيروت شام", "macro_label": "Levantine", "processed_text": "بيروت شام"},
+        {"source_id": "12", "original_text": "الجزائر مغرب", "macro_label": "Maghrebi", "processed_text": "الجزائر مغرب"},
     ]
 
     write_csv(train_path, fieldnames, train_rows)
@@ -89,6 +94,8 @@ def test_run_baseline_writes_expected_reports(tmp_path: Path) -> None:
         "classification_report_txt",
         "confusion_matrix_csv",
         "summary_markdown",
+        "dev_predictions_csv",
+        "error_analysis_markdown",
     }
     assert set(outputs) == expected_keys
     for path in outputs.values():
@@ -99,3 +106,17 @@ def test_run_baseline_writes_expected_reports(tmp_path: Path) -> None:
     assert metrics["dev_rows"] == 4
     assert 0.0 <= metrics["accuracy"] <= 1.0
     assert 0.0 <= metrics["macro_f1"] <= 1.0
+
+    predictions = read_csv_rows(outputs["dev_predictions_csv"])
+    assert len(predictions) == 4
+    assert {
+        "source_id",
+        "original_text",
+        "processed_text",
+        "true_label",
+        "predicted_label",
+    }.issubset(predictions[0].keys())
+
+    error_analysis = outputs["error_analysis_markdown"].read_text(encoding="utf-8")
+    assert "Saudi -> Levantine" in error_analysis
+    assert "Top 10 Off-Diagonal Confusions" in error_analysis

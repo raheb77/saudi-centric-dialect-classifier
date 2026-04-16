@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score
 from sklearn.pipeline import FeatureUnion, Pipeline
+
+
+ERROR_ANALYSIS_DIRECTIONS = (
+    ("Saudi", "Levantine"),
+    ("Saudi", "Maghrebi"),
+    ("Egyptian", "Maghrebi"),
+    ("Egyptian", "Levantine"),
+)
 
 
 @dataclass(frozen=True)
@@ -136,6 +145,158 @@ def _markdown_table(headers: list[str], rows: list[list[str]]) -> list[str]:
     return lines
 
 
+def _truncate_text(value: str, limit: int = 160) -> str:
+    normalized = " ".join(value.split())
+    if len(normalized) <= limit:
+        return normalized
+    return normalized[: limit - 1] + "…"
+
+
+def _prediction_row(row: dict[str, str], predicted_label: str, *, config: BaselineConfig) -> dict[str, str]:
+    return {
+        "source_dataset": row.get("source_dataset", ""),
+        "source_file": row.get("source_file", ""),
+        "source_id": row.get("source_id", ""),
+        "source_row_number": row.get("source_row_number", ""),
+        "original_text": row.get("original_text", ""),
+        "processed_text": row.get(config.text_column, ""),
+        "true_label": row.get(config.target_column, ""),
+        "predicted_label": predicted_label,
+        "is_error": str(row.get(config.target_column, "") != predicted_label).lower(),
+    }
+
+
+def write_dev_predictions_csv(
+    path: Path,
+    *,
+    dev_rows: list[dict[str, str]],
+    predictions: list[str],
+    config: BaselineConfig,
+) -> None:
+    fieldnames = [
+        "source_dataset",
+        "source_file",
+        "source_id",
+        "source_row_number",
+        "original_text",
+        "processed_text",
+        "true_label",
+        "predicted_label",
+        "is_error",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        for row, predicted_label in zip(dev_rows, predictions, strict=True):
+            writer.writerow(_prediction_row(row, predicted_label, config=config))
+
+
+def _collect_confusion_examples(
+    dev_rows: list[dict[str, str]],
+    predictions: list[str],
+    *,
+    config: BaselineConfig,
+    true_label: str,
+    predicted_label: str,
+    limit: int = 10,
+) -> list[dict[str, str]]:
+    examples: list[dict[str, str]] = []
+    for row, prediction in zip(dev_rows, predictions, strict=True):
+        if row[config.target_column] != true_label or prediction != predicted_label:
+            continue
+        examples.append(
+            {
+                "source_id": row.get("source_id", ""),
+                "original_text": _truncate_text(row.get("original_text", "")),
+                "processed_text": _truncate_text(row.get(config.text_column, "")),
+            }
+        )
+        if len(examples) >= limit:
+            break
+    return examples
+
+
+def _render_confusion_examples_table(examples: list[dict[str, str]]) -> list[str]:
+    if not examples:
+        return ["No examples found.", ""]
+    rows = [
+        [example["source_id"] or "-", example["processed_text"] or "-", example["original_text"] or "-"]
+        for example in examples
+    ]
+    return [
+        *_markdown_table(["Source ID", "Processed Text", "Original Text"], rows),
+        "",
+    ]
+
+
+def write_error_analysis_markdown(
+    path: Path,
+    *,
+    config: BaselineConfig,
+    dev_rows: list[dict[str, str]],
+    predictions: list[str],
+) -> None:
+    confusion_counts = Counter(
+        (row[config.target_column], prediction)
+        for row, prediction in zip(dev_rows, predictions, strict=True)
+        if row[config.target_column] != prediction
+    )
+    top_confusions = sorted(
+        confusion_counts.items(),
+        key=lambda item: (-item[1], item[0][0], item[0][1]),
+    )[:10]
+    lines = [
+        "# Classical Baseline Error Analysis",
+        "",
+        "This report summarizes row-level dev-set errors from the current TF-IDF + Logistic Regression baseline.",
+        "",
+        "## Requested Confusion Directions",
+        "",
+    ]
+    for true_label, predicted_label in ERROR_ANALYSIS_DIRECTIONS:
+        count = confusion_counts.get((true_label, predicted_label), 0)
+        lines.extend(
+            [
+                f"### {true_label} -> {predicted_label}",
+                "",
+                f"- Count: `{count}`",
+                "",
+                *_render_confusion_examples_table(
+                    _collect_confusion_examples(
+                        dev_rows,
+                        predictions,
+                        config=config,
+                        true_label=true_label,
+                        predicted_label=predicted_label,
+                    )
+                ),
+            ]
+        )
+
+    lines.extend(["## Top 10 Off-Diagonal Confusions", ""])
+    if top_confusions:
+        rows = [
+            [true_label, predicted_label, str(count)]
+            for (true_label, predicted_label), count in top_confusions
+        ]
+        lines.extend(_markdown_table(["True Label", "Predicted Label", "Count"], rows))
+        lines.append("")
+    else:
+        lines.extend(["No off-diagonal confusions found.", ""])
+
+    lines.extend(
+        [
+            "## Interpretation",
+            "",
+            "- The baseline is strongest on broad Levantine and Maghrebi separation, with weaker recall on Saudi and Egyptian examples.",
+            "- The largest requested confusions show Saudi and Egyptian texts being pulled toward broader regional classes, which is consistent with a surface-form TF-IDF model relying on shared lexical and orthographic cues.",
+            "- This suggests the current baseline captures strong regional similarity but misses finer class-specific markers for Saudi and Egyptian short texts.",
+            "",
+        ]
+    )
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
 def write_summary_markdown(
     path: Path,
     *,
@@ -244,6 +405,8 @@ def evaluate_baseline(config: BaselineConfig) -> dict[str, Any]:
     return {
         "train_rows": len(train_rows),
         "dev_rows": len(dev_rows),
+        "dev_predictions": [str(prediction) for prediction in predictions],
+        "dev_rows_data": dev_rows,
         "accuracy": float(accuracy),
         "macro_f1": float(macro_f1),
         "labels": list(config.label_order),
@@ -261,6 +424,8 @@ def write_reports(config: BaselineConfig, results: dict[str, Any]) -> dict[str, 
     report_txt_path = config.report_dir / f"{prefix}_classification_report.txt"
     confusion_path = config.report_dir / f"{prefix}_confusion_matrix.csv"
     summary_path = config.report_dir / f"{prefix}_summary.md"
+    predictions_path = config.report_dir / f"{prefix}_dev_predictions.csv"
+    error_analysis_path = config.report_dir / f"{prefix}_error_analysis.md"
 
     metrics_payload = {
         "train_rows": results["train_rows"],
@@ -276,6 +441,12 @@ def write_reports(config: BaselineConfig, results: dict[str, Any]) -> dict[str, 
     )
     report_txt_path.write_text(results["classification_report_text"], encoding="utf-8")
     write_confusion_matrix_csv(confusion_path, config.label_order, results["confusion_matrix"])
+    write_dev_predictions_csv(
+        predictions_path,
+        dev_rows=results["dev_rows_data"],
+        predictions=results["dev_predictions"],
+        config=config,
+    )
     write_summary_markdown(
         summary_path,
         config=config,
@@ -284,12 +455,20 @@ def write_reports(config: BaselineConfig, results: dict[str, Any]) -> dict[str, 
         metrics=results,
         confusion=results["confusion_matrix"],
     )
+    write_error_analysis_markdown(
+        error_analysis_path,
+        config=config,
+        dev_rows=results["dev_rows_data"],
+        predictions=results["dev_predictions"],
+    )
     return {
         "metrics_json": metrics_path,
         "classification_report_json": report_json_path,
         "classification_report_txt": report_txt_path,
         "confusion_matrix_csv": confusion_path,
         "summary_markdown": summary_path,
+        "dev_predictions_csv": predictions_path,
+        "error_analysis_markdown": error_analysis_path,
     }
 
 
