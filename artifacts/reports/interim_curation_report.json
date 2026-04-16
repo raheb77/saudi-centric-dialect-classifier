@@ -1,0 +1,732 @@
+{
+  "outputs": {
+    "train_core": {
+      "path": "data/interim/train_core.csv",
+      "rows_kept": 10000,
+      "kept_by_source": {
+        "NADI2023_Subtask1_TRAIN": 10000
+      },
+      "kept_by_macro_label": {
+        "Levantine": 4000,
+        "Maghrebi": 4000,
+        "Egyptian": 1000,
+        "Saudi": 1000
+      },
+      "dropped_by_reason": {
+        "out_of_scope_country": 8000
+      }
+    },
+    "dev_core": {
+      "path": "data/interim/dev_core.csv",
+      "rows_kept": 999,
+      "kept_by_source": {
+        "NADI2023_Subtask1_DEV": 999
+      },
+      "kept_by_macro_label": {
+        "Maghrebi": 400,
+        "Levantine": 399,
+        "Egyptian": 100,
+        "Saudi": 100
+      },
+      "dropped_by_reason": {
+        "out_of_scope_country": 795,
+        "benchmark_exact_overlap_with_train": 6
+      }
+    },
+    "train_aug_candidates": {
+      "path": "data/interim/train_aug_candidates.csv",
+      "rows_kept": 27629,
+      "kept_by_source": {
+        "NADI2021_TWT": 14016,
+        "NADI2020_TWT": 13613
+      },
+      "kept_by_macro_label": {
+        "Maghrebi": 9153,
+        "Egyptian": 8723,
+        "Levantine": 5326,
+        "Saudi": 4427
+      },
+      "dropped_by_reason": {
+        "out_of_scope_country": 12972,
+        "conflicting_supporting_label": 166,
+        "overlap_with_train_core": 1
+      }
+    }
+  },
+  "overall_kept_by_source": {
+    "NADI2021_TWT": 14016,
+    "NADI2020_TWT": 13613,
+    "NADI2023_Subtask1_TRAIN": 10000,
+    "NADI2023_Subtask1_DEV": 999
+  },
+  "overall_kept_by_macro_label": {
+    "Maghrebi": 13553,
+    "Egyptian": 9823,
+    "Levantine": 9725,
+    "Saudi": 5527
+  },
+  "overall_dropped_by_reason": {
+    "out_of_scope_country": 21767,
+    "conflicting_supporting_label": 166,
+    "benchmark_exact_overlap_with_train": 6,
+    "overlap_with_train_core": 1
+  },
+  "overlap_removals": {
+    "benchmark_train_dev_exact_overlap_text_hash_count": 6,
+    "dev_rows_removed_for_benchmark_overlap": 6,
+    "benchmark_overlap_examples": [
+      {
+        "text_hash": "928c479414b43312f954565b73429b78eb1e84db",
+        "source_dataset": "NADI2023_Subtask1_DEV",
+        "source_id": "subtask1_dev_162",
+        "source_row_number": 163
+      },
+      {
+        "text_hash": "b13dc3def48541a44315add213bd8e34ba35a728",
+        "source_dataset": "NADI2023_Subtask1_DEV",
+        "source_id": "subtask1_dev_229",
+        "source_row_number": 230
+      },
+      {
+        "text_hash": "7269cf7aa18a4b5ac0e4cd65fe6e300d9926eed0",
+        "source_dataset": "NADI2023_Subtask1_DEV",
+        "source_id": "subtask1_dev_635",
+        "source_row_number": 636
+      },
+      {
+        "text_hash": "122874ea182df90ee81879b0b3732d6ba5eb3dc0",
+        "source_dataset": "NADI2023_Subtask1_DEV",
+        "source_id": "subtask1_dev_1688",
+        "source_row_number": 1689
+      },
+      {
+        "text_hash": "5bbbe3a3499669d885eef52da6d9e06932e8420f",
+        "source_dataset": "NADI2023_Subtask1_DEV",
+        "source_id": "subtask1_dev_1699",
+        "source_row_number": 1700
+      },
+      {
+        "text_hash": "1f25e02318f388515a4c423b22a3ebcd4934bdeb",
+        "source_dataset": "NADI2023_Subtask1_DEV",
+        "source_id": "subtask1_dev_1704",
+        "source_row_number": 1705
+      }
+    ],
+    "train_core_overlap_text_hash_count": 1,
+    "train_core_overlap_rows_removed": 1,
+    "train_core_overlap_examples": [
+      {
+        "text_hash": "e9b11bcfb5006715b2cd24a1dde53ad964201863",
+        "source_dataset": "NADI2021_TWT",
+        "source_id": "TRAIN_14641",
+        "source_row_number": 14237,
+        "normalized_raw_label": "Egypt"
+      }
+    ]
+  },
+  "conflict_removals": {
+    "label_normalization": {
+      "UAE": "UAE",
+      "United_Arab_Emirates": "UAE"
+    },
+    "supporting_conflict_text_hash_count": 64,
+    "supporting_conflict_rows_removed": 166,
+    "supporting_conflict_examples": [
+      {
+        "text_hash": "04f9b951f0eb0b86c9e1c32e18d70b3e121de3ac",
+        "normalized_raw_labels": [
+          "Egypt",
+          "Oman"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_946",
+            "source_row_number": 920,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_10444",
+            "source_row_number": 10129,
+            "raw_label": "Oman",
+            "normalized_raw_label": "Oman"
+          }
+        ]
+      },
+      {
+        "text_hash": "0ea0974025c41c3d54179002bb64ca3cd2a133e8",
+        "normalized_raw_labels": [
+          "Kuwait",
+          "Saudi_Arabia",
+          "UAE"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_2250",
+            "source_row_number": 2190,
+            "raw_label": "Kuwait",
+            "normalized_raw_label": "Kuwait"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_2677",
+            "source_row_number": 2606,
+            "raw_label": "Saudi_Arabia",
+            "normalized_raw_label": "Saudi_Arabia"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_15215",
+            "source_row_number": 14756,
+            "raw_label": "UAE",
+            "normalized_raw_label": "UAE"
+          }
+        ]
+      },
+      {
+        "text_hash": "150996d08436f11e3b23d5904022657abb5bccb0",
+        "normalized_raw_labels": [
+          "Iraq",
+          "Saudi_Arabia"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_3252",
+            "source_row_number": 3166,
+            "raw_label": "Saudi_Arabia",
+            "normalized_raw_label": "Saudi_Arabia"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_16800",
+            "source_row_number": 16297,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          }
+        ]
+      },
+      {
+        "text_hash": "2b916b682d38b641f166f61c796a18f18b79935e",
+        "normalized_raw_labels": [
+          "Egypt",
+          "Syria"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1193",
+            "source_row_number": 1164,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_19506",
+            "source_row_number": 18915,
+            "raw_label": "Syria",
+            "normalized_raw_label": "Syria"
+          }
+        ]
+      },
+      {
+        "text_hash": "3683066c108466ae683b0c52933d38ef58b6f96d",
+        "normalized_raw_labels": [
+          "Iraq",
+          "Morocco",
+          "Qatar"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_533",
+            "source_row_number": 522,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1166",
+            "source_row_number": 1138,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1867",
+            "source_row_number": 1815,
+            "raw_label": "Qatar",
+            "normalized_raw_label": "Qatar"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_10487",
+            "source_row_number": 10171,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          }
+        ]
+      },
+      {
+        "text_hash": "58cd5e44cdd174459418160e1ddb046a61adb3d6",
+        "normalized_raw_labels": [
+          "Algeria",
+          "Egypt"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_3168",
+            "source_row_number": 3084,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_14212",
+            "source_row_number": 13787,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          }
+        ]
+      },
+      {
+        "text_hash": "5972ad51ae211ab5feb3547ed285476bebc63ac6",
+        "normalized_raw_labels": [
+          "Iraq",
+          "Saudi_Arabia",
+          "Yemen"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_3340",
+            "source_row_number": 3254,
+            "raw_label": "Saudi_Arabia",
+            "normalized_raw_label": "Saudi_Arabia"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_6957",
+            "source_row_number": 6754,
+            "raw_label": "Yemen",
+            "normalized_raw_label": "Yemen"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_7510",
+            "source_row_number": 7288,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          }
+        ]
+      },
+      {
+        "text_hash": "67493e25cc7cbd26f2ec6e49d54cb311059511ec",
+        "normalized_raw_labels": [
+          "Algeria",
+          "Iraq",
+          "Yemen"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_354",
+            "source_row_number": 345,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_9576",
+            "source_row_number": 9284,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_11302",
+            "source_row_number": 10953,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_18582",
+            "source_row_number": 18025,
+            "raw_label": "Yemen",
+            "normalized_raw_label": "Yemen"
+          }
+        ]
+      },
+      {
+        "text_hash": "6d142f5a52c91fb03dda2bc4c850c35dfa3e2c7c",
+        "normalized_raw_labels": [
+          "Libya",
+          "Morocco"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_3029",
+            "source_row_number": 2947,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_10811",
+            "source_row_number": 10484,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_16740",
+            "source_row_number": 16240,
+            "raw_label": "Libya",
+            "normalized_raw_label": "Libya"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_16766",
+            "source_row_number": 16263,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          }
+        ]
+      },
+      {
+        "text_hash": "754f1805ee7193788a707f1cc67056415c627d6d",
+        "normalized_raw_labels": [
+          "Iraq",
+          "Libya"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1730",
+            "source_row_number": 1682,
+            "raw_label": "Libya",
+            "normalized_raw_label": "Libya"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_5286",
+            "source_row_number": 5134,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          }
+        ]
+      },
+      {
+        "text_hash": "7f4e9bdf19c81172e7a2bdd4d96e2691bae8e0cc",
+        "normalized_raw_labels": [
+          "Algeria",
+          "Palestine"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_547",
+            "source_row_number": 536,
+            "raw_label": "Palestine",
+            "normalized_raw_label": "Palestine"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_6471",
+            "source_row_number": 6283,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          }
+        ]
+      },
+      {
+        "text_hash": "85bdb9d3f435786bd767c8cf7a619f058499abdb",
+        "normalized_raw_labels": [
+          "Lebanon",
+          "Syria"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_3094",
+            "source_row_number": 3011,
+            "raw_label": "Syria",
+            "normalized_raw_label": "Syria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_16578",
+            "source_row_number": 16084,
+            "raw_label": "Lebanon",
+            "normalized_raw_label": "Lebanon"
+          },
+          {
+            "source_dataset": "NADI2021_TWT",
+            "source_id": "TRAIN_3738",
+            "source_row_number": 3648,
+            "raw_label": "Syria",
+            "normalized_raw_label": "Syria"
+          }
+        ]
+      },
+      {
+        "text_hash": "8bdc16ace7f760e2814601db0f9d8f0aafc69000",
+        "normalized_raw_labels": [
+          "Tunisia",
+          "UAE"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1999",
+            "source_row_number": 1943,
+            "raw_label": "Tunisia",
+            "normalized_raw_label": "Tunisia"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_15698",
+            "source_row_number": 15226,
+            "raw_label": "UAE",
+            "normalized_raw_label": "UAE"
+          }
+        ]
+      },
+      {
+        "text_hash": "9cd193931d4af4f10633b376225a57823672e0b0",
+        "normalized_raw_labels": [
+          "Morocco",
+          "Saudi_Arabia",
+          "UAE"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_365",
+            "source_row_number": 356,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_6594",
+            "source_row_number": 6402,
+            "raw_label": "UAE",
+            "normalized_raw_label": "UAE"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_15399",
+            "source_row_number": 14935,
+            "raw_label": "Saudi_Arabia",
+            "normalized_raw_label": "Saudi_Arabia"
+          }
+        ]
+      },
+      {
+        "text_hash": "abc6510a74986d773e73de335775e555daa65681",
+        "normalized_raw_labels": [
+          "Algeria",
+          "Egypt",
+          "Libya",
+          "Morocco",
+          "Oman"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1354",
+            "source_row_number": 1319,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1380",
+            "source_row_number": 1344,
+            "raw_label": "Oman",
+            "normalized_raw_label": "Oman"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_3848",
+            "source_row_number": 3749,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_6637",
+            "source_row_number": 6445,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_6737",
+            "source_row_number": 6542,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_7602",
+            "source_row_number": 7376,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          }
+        ]
+      },
+      {
+        "text_hash": "b44ba7fa05179c68562be10a50c5658ed950ab37",
+        "normalized_raw_labels": [
+          "Algeria",
+          "Morocco"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_108",
+            "source_row_number": 103,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1331",
+            "source_row_number": 1296,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_5697",
+            "source_row_number": 5531,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_12615",
+            "source_row_number": 12225,
+            "raw_label": "Algeria",
+            "normalized_raw_label": "Algeria"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_17358",
+            "source_row_number": 16840,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          }
+        ]
+      },
+      {
+        "text_hash": "b879a41ed72a13e69b51aee8c27d975986853a58",
+        "normalized_raw_labels": [
+          "Iraq",
+          "Jordan"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_2395",
+            "source_row_number": 2333,
+            "raw_label": "Jordan",
+            "normalized_raw_label": "Jordan"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_2602",
+            "source_row_number": 2533,
+            "raw_label": "Iraq",
+            "normalized_raw_label": "Iraq"
+          }
+        ]
+      },
+      {
+        "text_hash": "d400e3bd2b11c41a8fb835db199d5fd20ffc72d6",
+        "normalized_raw_labels": [
+          "Libya",
+          "Morocco",
+          "Saudi_Arabia"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_2590",
+            "source_row_number": 2522,
+            "raw_label": "Morocco",
+            "normalized_raw_label": "Morocco"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_17551",
+            "source_row_number": 17026,
+            "raw_label": "Saudi_Arabia",
+            "normalized_raw_label": "Saudi_Arabia"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_19493",
+            "source_row_number": 18903,
+            "raw_label": "Libya",
+            "normalized_raw_label": "Libya"
+          }
+        ]
+      },
+      {
+        "text_hash": "e33239927d111dbdad9866cfa81a100c970e9caf",
+        "normalized_raw_labels": [
+          "Egypt",
+          "Oman"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_1678",
+            "source_row_number": 1634,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_17030",
+            "source_row_number": 16519,
+            "raw_label": "Oman",
+            "normalized_raw_label": "Oman"
+          }
+        ]
+      },
+      {
+        "text_hash": "ee5e51b217f08fecc24681c67a043a7b4bfcc3d0",
+        "normalized_raw_labels": [
+          "Egypt",
+          "Jordan"
+        ],
+        "occurrences": [
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_934",
+            "source_row_number": 909,
+            "raw_label": "Jordan",
+            "normalized_raw_label": "Jordan"
+          },
+          {
+            "source_dataset": "NADI2020_TWT",
+            "source_id": "TRAIN_14790",
+            "source_row_number": 14345,
+            "raw_label": "Egypt",
+            "normalized_raw_label": "Egypt"
+          }
+        ]
+      }
+    ]
+  }
+}
