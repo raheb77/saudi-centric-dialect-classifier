@@ -139,6 +139,125 @@ def test_run_baseline_writes_expected_reports(tmp_path: Path, monkeypatch) -> No
     assert "Classical" in error_analysis
 
 
+def test_run_baseline_writes_full_dev_comparison_when_requested(tmp_path: Path, monkeypatch) -> None:
+    train_path = tmp_path / "data" / "processed" / "train_core.csv"
+    dev_path = tmp_path / "data" / "processed" / "dev_core.csv"
+    report_dir = tmp_path / "artifacts" / "reports"
+    config_path = tmp_path / "configs" / "llm_sonnet_full_dev.yaml"
+    fieldnames = ["source_id", "original_text", "macro_label", "processed_text"]
+
+    train_rows = [
+        {"source_id": "s1", "original_text": "لهجة سعودية", "macro_label": "Saudi", "processed_text": "الرياض مره جميله"},
+        {"source_id": "s2", "original_text": "لهجة سعودية", "macro_label": "Saudi", "processed_text": "وش عندكم اليوم"},
+        {"source_id": "e1", "original_text": "لهجة مصرية", "macro_label": "Egyptian", "processed_text": "ايه الاخبار دلوقتي"},
+        {"source_id": "e2", "original_text": "لهجة مصرية", "macro_label": "Egyptian", "processed_text": "لسه راجع من الشغل"},
+        {"source_id": "l1", "original_text": "لهجة شامية", "macro_label": "Levantine", "processed_text": "شو الاخبار اليوم"},
+        {"source_id": "l2", "original_text": "لهجة شامية", "macro_label": "Levantine", "processed_text": "هيدي الطريق مزحومه"},
+        {"source_id": "m1", "original_text": "لهجة مغاربية", "macro_label": "Maghrebi", "processed_text": "بغيت نمشي للدرب"},
+        {"source_id": "m2", "original_text": "لهجة مغاربية", "macro_label": "Maghrebi", "processed_text": "شكون جا لدار"},
+    ]
+    dev_rows = [
+        {"source_id": "d1", "original_text": "نص سعودي", "macro_label": "Saudi", "processed_text": "وش عندكم"},
+        {"source_id": "d2", "original_text": "نص مصري", "macro_label": "Egyptian", "processed_text": "ايه الاخبار"},
+        {"source_id": "d3", "original_text": "نص شامي", "macro_label": "Levantine", "processed_text": "شو الاخبار"},
+        {"source_id": "d4", "original_text": "نص مغاربي", "macro_label": "Maghrebi", "processed_text": "شكون جا"},
+    ]
+
+    write_csv(train_path, fieldnames, train_rows)
+    write_csv(dev_path, fieldnames, dev_rows)
+    report_dir.mkdir(parents=True, exist_ok=True)
+    (report_dir / "classical_baseline_metrics.json").write_text(
+        json.dumps({"accuracy": 0.5, "macro_f1": 0.4}),
+        encoding="utf-8",
+    )
+    write_csv(
+        report_dir / "classical_baseline_dev_predictions.csv",
+        ["true_label", "predicted_label"],
+        [
+            {"true_label": "Saudi", "predicted_label": "Levantine"},
+            {"true_label": "Egyptian", "predicted_label": "Egyptian"},
+            {"true_label": "Levantine", "predicted_label": "Levantine"},
+            {"true_label": "Maghrebi", "predicted_label": "Maghrebi"},
+        ],
+    )
+    (report_dir / "llm_gemini_flash_lite_metrics.json").write_text(
+        json.dumps(
+            {
+                "zero_shot": {"accuracy": 0.75, "macro_f1": 0.7},
+                "few_shot": {"accuracy": 1.0, "macro_f1": 1.0},
+            }
+        ),
+        encoding="utf-8",
+    )
+    write_csv(
+        report_dir / "llm_gemini_flash_lite_dev_predictions.csv",
+        ["true_label", "zero_shot_predicted_label", "few_shot_predicted_label"],
+        [
+            {"true_label": "Saudi", "zero_shot_predicted_label": "Saudi", "few_shot_predicted_label": "Saudi"},
+            {"true_label": "Egyptian", "zero_shot_predicted_label": "Maghrebi", "few_shot_predicted_label": "Egyptian"},
+            {"true_label": "Levantine", "zero_shot_predicted_label": "Levantine", "few_shot_predicted_label": "Levantine"},
+            {"true_label": "Maghrebi", "zero_shot_predicted_label": "Maghrebi", "few_shot_predicted_label": "Maghrebi"},
+        ],
+    )
+
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(
+        yaml.safe_dump(
+            {
+                "data": {
+                    "train_path": train_path.as_posix(),
+                    "dev_path": dev_path.as_posix(),
+                    "text_column": "processed_text",
+                    "target_column": "macro_label",
+                },
+                "labels": {"order": ["Saudi", "Egyptian", "Levantine", "Maghrebi"]},
+                "provider": {
+                    "name": "anthropic_messages",
+                    "model": "claude-sonnet-4-20250514",
+                    "api_base": "https://api.anthropic.com/v1/messages",
+                    "api_key_env": "ANTHROPIC_API_KEY",
+                    "timeout_seconds": 60,
+                    "max_retries": 0,
+                    "input_price_per_1m_tokens": 3.0,
+                    "output_price_per_1m_tokens": 15.0,
+                },
+                "inference": {"batch_size": 4, "temperature": 0.0, "max_completion_tokens": 256},
+                "few_shot": {"examples_per_class": 2},
+                "output": {"report_dir": report_dir.as_posix(), "prefix": "llm_sonnet_full_dev"},
+            },
+            sort_keys=False,
+            allow_unicode=True,
+        ),
+        encoding="utf-8",
+    )
+
+    def fake_chat_completion(*, config, developer_prompt, user_prompt):
+        if "Few-shot support examples" in user_prompt:
+            labels = ["Saudi", "Egyptian", "Levantine", "Maghrebi"]
+        else:
+            labels = ["Levantine", "Egyptian", "Levantine", "Maghrebi"]
+        payload = {
+            "predictions": [
+                {"item_id": str(index + 1), "label": label}
+                for index, label in enumerate(labels)
+            ]
+        }
+        usage = {"prompt_tokens": 100, "completion_tokens": 20, "total_tokens": 120}
+        return json.dumps(payload, ensure_ascii=False), usage, 250.0
+
+    monkeypatch.setattr(MODULE, "_call_llm", fake_chat_completion)
+
+    outputs = MODULE.run_baseline(config_path)
+
+    assert "comparison_markdown" in outputs
+    comparison = outputs["comparison_markdown"].read_text(encoding="utf-8")
+    assert "Gemini Zero-Shot" in comparison
+    assert "Sonnet Few-Shot" in comparison
+
+    error_analysis = outputs["error_analysis_markdown"].read_text(encoding="utf-8")
+    assert "Gemini zero-shot count" in error_analysis
+
+
 def test_parse_gemini_response_payload() -> None:
     payload = {
         "candidates": [

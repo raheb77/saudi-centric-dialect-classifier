@@ -666,6 +666,23 @@ def _load_classical_confusion_counts(report_dir: Path) -> Counter[tuple[str, str
     )
 
 
+def _load_gemini_confusion_counts(
+    report_dir: Path,
+    *,
+    prediction_column: str,
+) -> Counter[tuple[str, str]]:
+    path = report_dir / "llm_gemini_flash_lite_dev_predictions.csv"
+    if not path.exists():
+        return Counter()
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    return Counter(
+        (row["true_label"], row[prediction_column])
+        for row in rows
+        if row.get("true_label") and row.get(prediction_column) and row["true_label"] != row[prediction_column]
+    )
+
+
 def write_error_analysis_markdown(
     path: Path,
     *,
@@ -681,11 +698,28 @@ def write_error_analysis_markdown(
     few_confusions = _confusion_counts(dev_rows=dev_rows, predictions=few_shot_predictions, config=config)
     classical_confusions = _load_classical_confusion_counts(report_dir)
     classical_metrics = _load_json_if_exists(report_dir / "classical_baseline_metrics.json") or {}
+    include_gemini = config.report_prefix != "llm_gemini_flash_lite"
+    gemini_metrics = _load_json_if_exists(report_dir / "llm_gemini_flash_lite_metrics.json") if include_gemini else None
+    gemini_zero_confusions = (
+        _load_gemini_confusion_counts(report_dir, prediction_column="zero_shot_predicted_label")
+        if include_gemini
+        else Counter()
+    )
+    gemini_few_confusions = (
+        _load_gemini_confusion_counts(report_dir, prediction_column="few_shot_predicted_label")
+        if include_gemini
+        else Counter()
+    )
 
     lines = [
         "# LLM Baseline Error Analysis",
         "",
-        "This report compares the zero-shot and few-shot LLM baselines against the existing classical TF-IDF baseline on `dev_core`.",
+        (
+            "This report compares the zero-shot and few-shot LLM baselines against the existing classical TF-IDF baseline "
+            "and Gemini Flash-Lite full-dev run on `dev_core`."
+            if gemini_metrics
+            else "This report compares the zero-shot and few-shot LLM baselines against the existing classical TF-IDF baseline on `dev_core`."
+        ),
         "",
         "## Requested Confusion Directions",
         "",
@@ -693,66 +727,209 @@ def write_error_analysis_markdown(
     rows = []
     for true_label, predicted_label in ERROR_ANALYSIS_DIRECTIONS:
         classical_count = classical_confusions.get((true_label, predicted_label), 0)
+        gemini_zero_count = gemini_zero_confusions.get((true_label, predicted_label), 0)
+        gemini_few_count = gemini_few_confusions.get((true_label, predicted_label), 0)
         zero_count = zero_confusions.get((true_label, predicted_label), 0)
         few_count = few_confusions.get((true_label, predicted_label), 0)
-        rows.append(
-            [
-                true_label,
-                predicted_label,
-                str(classical_count),
-                str(zero_count),
-                str(few_count),
-            ]
-        )
+        row = [true_label, predicted_label, str(classical_count)]
+        if gemini_metrics:
+            row.extend([str(gemini_zero_count), str(gemini_few_count)])
+        row.extend([str(zero_count), str(few_count)])
+        rows.append(row)
         lines.extend(
             [
                 f"### {true_label} -> {predicted_label}",
                 "",
                 f"- Classical count: `{classical_count}`",
+                *(
+                    [
+                        f"- Gemini zero-shot count: `{gemini_zero_count}`",
+                        f"- Gemini few-shot count: `{gemini_few_count}`",
+                    ]
+                    if gemini_metrics
+                    else []
+                ),
                 f"- Zero-shot count: `{zero_count}`",
                 f"- Few-shot count: `{few_count}`",
                 "",
             ]
         )
+    headers = ["True Label", "Predicted Label", "Classical"]
+    if gemini_metrics:
+        headers.extend(["Gemini Zero", "Gemini Few"])
+    headers.extend(["Zero-Shot", "Few-Shot"])
     lines.extend(
         _markdown_table(
-            ["True Label", "Predicted Label", "Classical", "Zero-Shot", "Few-Shot"],
+            headers,
             rows,
         )
     )
     lines.append("")
 
+    overall_rows = [
+        [
+            "Classical",
+            f"{float(classical_metrics.get('accuracy', 0.0)):.4f}",
+            f"{float(classical_metrics.get('macro_f1', 0.0)):.4f}",
+        ],
+    ]
+    if gemini_metrics:
+        overall_rows.extend(
+            [
+                [
+                    "Gemini Zero-Shot",
+                    f"{float(gemini_metrics.get('zero_shot', {}).get('accuracy', 0.0)):.4f}",
+                    f"{float(gemini_metrics.get('zero_shot', {}).get('macro_f1', 0.0)):.4f}",
+                ],
+                [
+                    "Gemini Few-Shot",
+                    f"{float(gemini_metrics.get('few_shot', {}).get('accuracy', 0.0)):.4f}",
+                    f"{float(gemini_metrics.get('few_shot', {}).get('macro_f1', 0.0)):.4f}",
+                ],
+            ]
+        )
+    overall_rows.extend(
+        [
+            [
+                "Zero-Shot",
+                f"{zero_shot_metrics['accuracy']:.4f}",
+                f"{zero_shot_metrics['macro_f1']:.4f}",
+            ],
+            [
+                "Few-Shot",
+                f"{few_shot_metrics['accuracy']:.4f}",
+                f"{few_shot_metrics['macro_f1']:.4f}",
+            ],
+        ]
+    )
     lines.extend(
         [
             "## Overall Comparison",
             "",
             *_markdown_table(
                 ["Mode", "Accuracy", "Macro F1"],
-                [
-                    [
-                        "Classical",
-                        f"{float(classical_metrics.get('accuracy', 0.0)):.4f}",
-                        f"{float(classical_metrics.get('macro_f1', 0.0)):.4f}",
-                    ],
-                    [
-                        "Zero-Shot",
-                        f"{zero_shot_metrics['accuracy']:.4f}",
-                        f"{zero_shot_metrics['macro_f1']:.4f}",
-                    ],
-                    [
-                        "Few-Shot",
-                        f"{few_shot_metrics['accuracy']:.4f}",
-                        f"{few_shot_metrics['macro_f1']:.4f}",
-                    ],
-                ],
+                overall_rows,
             ),
             "",
             "## Interpretation",
             "",
             "- The LLM baseline is evaluated against the same benchmark-safe `train_core` / `dev_core` setup as the classical baseline.",
             "- The requested confusion directions show whether prompting reduces the TF-IDF tendency to absorb Saudi and Egyptian texts into broader regional classes.",
+            *(
+                ["- Gemini Flash-Lite provides a like-for-like full-dev LLM comparison using the same benchmark-safe core split."]
+                if gemini_metrics
+                else []
+            ),
             "- Zero-shot performance reflects the model's raw label understanding; few-shot performance adds only a small, train-derived support set and remains within the benchmark-safe core pool.",
             "- Remaining errors should be read together with `ERROR_ANALYSIS.md`: weak local signal, shared colloquial vocabulary, quasi-MSA writing, and topic-driven cues are still expected to matter even for an LLM baseline.",
+            "",
+        ]
+    )
+    path.write_text("\n".join(lines), encoding="utf-8")
+
+
+def write_full_dev_comparison_markdown(
+    path: Path,
+    *,
+    config: LLMConfig,
+    zero_shot_results: dict[str, Any],
+    few_shot_results: dict[str, Any],
+    dev_rows: list[dict[str, str]],
+    report_dir: Path,
+) -> None:
+    classical_metrics = _load_json_if_exists(report_dir / "classical_baseline_metrics.json") or {}
+    gemini_metrics = _load_json_if_exists(report_dir / "llm_gemini_flash_lite_metrics.json") or {}
+    classical_confusions = _load_classical_confusion_counts(report_dir)
+    gemini_zero_confusions = _load_gemini_confusion_counts(report_dir, prediction_column="zero_shot_predicted_label")
+    gemini_few_confusions = _load_gemini_confusion_counts(report_dir, prediction_column="few_shot_predicted_label")
+    sonnet_zero_confusions = _confusion_counts(
+        dev_rows=dev_rows,
+        predictions=zero_shot_results["predictions"],
+        config=config,
+    )
+    sonnet_few_confusions = _confusion_counts(
+        dev_rows=dev_rows,
+        predictions=few_shot_results["predictions"],
+        config=config,
+    )
+
+    lines = [
+        "# Full-Dev LLM Comparison",
+        "",
+        "This comparison uses the same full `dev_core` split for the classical baseline, Gemini Flash-Lite, and Claude Sonnet.",
+        "",
+        "## Overall Metrics",
+        "",
+        *_markdown_table(
+            ["Mode", "Accuracy", "Macro F1"],
+            [
+                [
+                    "Classical",
+                    f"{float(classical_metrics.get('accuracy', 0.0)):.4f}",
+                    f"{float(classical_metrics.get('macro_f1', 0.0)):.4f}",
+                ],
+                [
+                    "Gemini Zero-Shot",
+                    f"{float(gemini_metrics.get('zero_shot', {}).get('accuracy', 0.0)):.4f}",
+                    f"{float(gemini_metrics.get('zero_shot', {}).get('macro_f1', 0.0)):.4f}",
+                ],
+                [
+                    "Gemini Few-Shot",
+                    f"{float(gemini_metrics.get('few_shot', {}).get('accuracy', 0.0)):.4f}",
+                    f"{float(gemini_metrics.get('few_shot', {}).get('macro_f1', 0.0)):.4f}",
+                ],
+                [
+                    "Sonnet Zero-Shot",
+                    f"{zero_shot_results['metrics']['accuracy']:.4f}",
+                    f"{zero_shot_results['metrics']['macro_f1']:.4f}",
+                ],
+                [
+                    "Sonnet Few-Shot",
+                    f"{few_shot_results['metrics']['accuracy']:.4f}",
+                    f"{few_shot_results['metrics']['macro_f1']:.4f}",
+                ],
+            ],
+        ),
+        "",
+        "## Tracked Confusion Directions",
+        "",
+    ]
+
+    confusion_rows = []
+    for true_label, predicted_label in ERROR_ANALYSIS_DIRECTIONS:
+        confusion_rows.append(
+            [
+                true_label,
+                predicted_label,
+                str(classical_confusions.get((true_label, predicted_label), 0)),
+                str(gemini_zero_confusions.get((true_label, predicted_label), 0)),
+                str(gemini_few_confusions.get((true_label, predicted_label), 0)),
+                str(sonnet_zero_confusions.get((true_label, predicted_label), 0)),
+                str(sonnet_few_confusions.get((true_label, predicted_label), 0)),
+            ]
+        )
+    lines.extend(
+        _markdown_table(
+            [
+                "True Label",
+                "Predicted Label",
+                "Classical",
+                "Gemini Zero",
+                "Gemini Few",
+                "Sonnet Zero",
+                "Sonnet Few",
+            ],
+            confusion_rows,
+        )
+    )
+    lines.extend(
+        [
+            "",
+            "## Interpretation",
+            "",
+            "- This is the like-for-like full-dev comparison across all currently completed benchmark-safe baselines.",
+            "- The four tracked confusion directions remain the main diagnostic for whether a stronger model reduces Saudi and Egyptian absorption into broader regional labels.",
+            "- Use this report to decide whether the next phase should focus on encoder training rather than more prompt-only iteration.",
             "",
         ]
     )
@@ -898,6 +1075,7 @@ def write_reports(config: LLMConfig, results: dict[str, Any]) -> dict[str, Path]
     classification_path = config.report_dir / f"{prefix}_classification_report.json"
     predictions_path = config.report_dir / f"{prefix}_dev_predictions.csv"
     error_analysis_path = config.report_dir / f"{prefix}_error_analysis.md"
+    comparison_path = config.report_dir / "llm_full_dev_comparison.md"
 
     write_summary_markdown(
         summary_path,
@@ -963,13 +1141,24 @@ def write_reports(config: LLMConfig, results: dict[str, Any]) -> dict[str, Path]
         few_shot_metrics=results["few_shot"]["metrics"],
         report_dir=config.report_dir,
     )
-    return {
+    outputs = {
         "summary_markdown": summary_path,
         "metrics_json": metrics_path,
         "classification_report_json": classification_path,
         "dev_predictions_csv": predictions_path,
         "error_analysis_markdown": error_analysis_path,
     }
+    if config.report_prefix.endswith("_full_dev") and config.report_prefix != "llm_gemini_flash_lite":
+        write_full_dev_comparison_markdown(
+            comparison_path,
+            config=config,
+            zero_shot_results=results["zero_shot"],
+            few_shot_results=results["few_shot"],
+            dev_rows=results["dev_rows_data"],
+            report_dir=config.report_dir,
+        )
+        outputs["comparison_markdown"] = comparison_path
+    return outputs
 
 
 def evaluate_llm_baseline(config: LLMConfig) -> dict[str, Any]:
