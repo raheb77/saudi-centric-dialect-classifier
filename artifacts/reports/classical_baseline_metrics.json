@@ -1,0 +1,12 @@
+{
+  "train_rows": 10000,
+  "dev_rows": 999,
+  "accuracy": 0.8868868868868869,
+  "macro_f1": 0.8483223035488402,
+  "labels": [
+    "Saudi",
+    "Egyptian",
+    "Levantine",
+    "Maghrebi"
+  ]
+}

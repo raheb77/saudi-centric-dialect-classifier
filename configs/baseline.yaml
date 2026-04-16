@@ -1,0 +1,33 @@
+data:
+  train_path: data/processed/train_core.csv
+  dev_path: data/processed/dev_core.csv
+  text_column: processed_text
+  target_column: macro_label
+
+labels:
+  order:
+    - Saudi
+    - Egyptian
+    - Levantine
+    - Maghrebi
+
+features:
+  lowercase: false
+  sublinear_tf: true
+  word:
+    ngram_range: [1, 2]
+    min_df: 2
+  char:
+    analyzer: char_wb
+    ngram_range: [3, 5]
+    min_df: 2
+
+model:
+  C: 4.0
+  max_iter: 2000
+  solver: lbfgs
+  random_state: 42
+
+output:
+  report_dir: artifacts/reports
+  prefix: classical_baseline
