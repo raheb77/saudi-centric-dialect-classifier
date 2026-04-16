@@ -239,6 +239,17 @@ def _extract_gemini_content(response_payload: dict[str, Any]) -> str:
     return "".join(chunks)
 
 
+def _extract_anthropic_content(response_payload: dict[str, Any]) -> str:
+    content = response_payload.get("content") or []
+    chunks: list[str] = []
+    for item in content:
+        if isinstance(item, dict) and item.get("type") == "text":
+            chunks.append(str(item.get("text", "")))
+    if not chunks:
+        raise ValueError("Missing text content in Anthropic response.")
+    return "".join(chunks)
+
+
 def _call_openai_chat_completion(
     *,
     config: LLMConfig,
@@ -343,6 +354,58 @@ def _call_gemini_generate_content(
     raise RuntimeError(f"LLM request failed after retries: {last_error}") from last_error
 
 
+def _call_anthropic_messages(
+    *,
+    config: LLMConfig,
+    developer_prompt: str,
+    user_prompt: str,
+) -> tuple[str, dict[str, int], float]:
+    api_key = os.environ.get(config.api_key_env)
+    if not api_key:
+        raise RuntimeError(f"Missing required API key env var `{config.api_key_env}`.")
+
+    payload = {
+        "model": config.model,
+        "temperature": config.temperature,
+        "max_tokens": config.max_completion_tokens,
+        "system": developer_prompt,
+        "messages": [
+            {
+                "role": "user",
+                "content": user_prompt,
+            }
+        ],
+    }
+    data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    headers = {
+        "x-api-key": api_key,
+        "anthropic-version": "2023-06-01",
+        "Content-Type": "application/json",
+    }
+    last_error: Exception | None = None
+    for attempt in range(config.max_retries + 1):
+        req = request.Request(config.api_base, data=data, headers=headers, method="POST")
+        start = time.perf_counter()
+        try:
+            with request.urlopen(req, timeout=config.timeout_seconds) as response:
+                elapsed_ms = (time.perf_counter() - start) * 1000.0
+                response_payload = json.loads(response.read().decode("utf-8"))
+            usage = response_payload.get("usage") or {}
+            usage_summary = {
+                "prompt_tokens": int(usage.get("input_tokens", 0)),
+                "completion_tokens": int(usage.get("output_tokens", 0)),
+                "total_tokens": int(usage.get("input_tokens", 0)) + int(usage.get("output_tokens", 0)),
+            }
+            return _extract_anthropic_content(response_payload), usage_summary, elapsed_ms
+        except (error.HTTPError, error.URLError, TimeoutError, json.JSONDecodeError, ValueError) as exc:
+            last_error = exc
+            if attempt >= config.max_retries:
+                break
+            time.sleep(1.0 * (attempt + 1))
+    assert last_error is not None
+    raise RuntimeError(f"LLM request failed after retries: {last_error}") from last_error
+
+
 def _call_llm(
     *,
     config: LLMConfig,
@@ -357,6 +420,12 @@ def _call_llm(
         )
     if config.provider_name == "gemini_generate_content":
         return _call_gemini_generate_content(
+            config=config,
+            developer_prompt=developer_prompt,
+            user_prompt=user_prompt,
+        )
+    if config.provider_name == "anthropic_messages":
+        return _call_anthropic_messages(
             config=config,
             developer_prompt=developer_prompt,
             user_prompt=user_prompt,
