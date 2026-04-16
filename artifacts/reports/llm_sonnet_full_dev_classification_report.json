@@ -1,0 +1,80 @@
+{
+  "zero_shot": {
+    "Saudi": {
+      "precision": 0.5838926174496645,
+      "recall": 0.87,
+      "f1-score": 0.6987951807228916,
+      "support": 100.0
+    },
+    "Egyptian": {
+      "precision": 0.6012658227848101,
+      "recall": 0.95,
+      "f1-score": 0.7364341085271318,
+      "support": 100.0
+    },
+    "Levantine": {
+      "precision": 0.9058171745152355,
+      "recall": 0.8195488721804511,
+      "f1-score": 0.8605263157894737,
+      "support": 399.0
+    },
+    "Maghrebi": {
+      "precision": 0.9577039274924471,
+      "recall": 0.7925,
+      "f1-score": 0.8673050615595075,
+      "support": 400.0
+    },
+    "accuracy": 0.8268268268268268,
+    "macro avg": {
+      "precision": 0.7621698855605393,
+      "recall": 0.8580122180451127,
+      "f1-score": 0.790765166649751,
+      "support": 999.0
+    },
+    "weighted avg": {
+      "precision": 0.8638823500020073,
+      "recall": 0.8268268268268268,
+      "f1-score": 0.8346295831319372,
+      "support": 999.0
+    }
+  },
+  "few_shot": {
+    "Saudi": {
+      "precision": 0.6384615384615384,
+      "recall": 0.83,
+      "f1-score": 0.7217391304347827,
+      "support": 100.0
+    },
+    "Egyptian": {
+      "precision": 0.6024844720496895,
+      "recall": 0.97,
+      "f1-score": 0.7432950191570882,
+      "support": 100.0
+    },
+    "Levantine": {
+      "precision": 0.9061662198391421,
+      "recall": 0.8471177944862155,
+      "f1-score": 0.8756476683937824,
+      "support": 399.0
+    },
+    "Maghrebi": {
+      "precision": 0.9611940298507463,
+      "recall": 0.805,
+      "f1-score": 0.8761904761904762,
+      "support": 400.0
+    },
+    "accuracy": 0.8408408408408409,
+    "macro avg": {
+      "precision": 0.7770765650502791,
+      "recall": 0.8630294486215538,
+      "f1-score": 0.8042180735440324,
+      "support": 999.0
+    },
+    "weighted avg": {
+      "precision": 0.8710035382454846,
+      "recall": 0.8408408408408409,
+      "f1-score": 0.8472102353598566,
+      "support": 999.0
+    }
+  }
+}

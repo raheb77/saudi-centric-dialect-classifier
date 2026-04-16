@@ -1,0 +1,197 @@
+{
+  "classical_subset": {
+    "Saudi": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 26.0
+    },
+    "Egyptian": {
+      "precision": 1.0,
+      "recall": 0.027777777777777776,
+      "f1-score": 0.05405405405405406,
+      "support": 36.0
+    },
+    "Levantine": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "Maghrebi": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "accuracy": 0.016129032258064516,
+    "macro avg": {
+      "precision": 0.25,
+      "recall": 0.006944444444444444,
+      "f1-score": 0.013513513513513514,
+      "support": 62.0
+    },
+    "weighted avg": {
+      "precision": 0.5806451612903226,
+      "recall": 0.016129032258064516,
+      "f1-score": 0.03138622493461203,
+      "support": 62.0
+    }
+  },
+  "gemini_zero_subset": {
+    "Saudi": {
+      "precision": 0.8064516129032258,
+      "recall": 0.9615384615384616,
+      "f1-score": 0.8771929824561403,
+      "support": 26.0
+    },
+    "Egyptian": {
+      "precision": 1.0,
+      "recall": 0.8055555555555556,
+      "f1-score": 0.8923076923076924,
+      "support": 36.0
+    },
+    "Levantine": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "Maghrebi": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "accuracy": 0.8709677419354839,
+    "macro avg": {
+      "precision": 0.45161290322580644,
+      "recall": 0.44177350427350426,
+      "f1-score": 0.44237516869095816,
+      "support": 62.0
+    },
+    "weighted avg": {
+      "precision": 0.918834547346514,
+      "recall": 0.8709677419354839,
+      "f1-score": 0.8859692655957511,
+      "support": 62.0
+    }
+  },
+  "gemini_few_subset": {
+    "Saudi": {
+      "precision": 0.8064516129032258,
+      "recall": 0.9615384615384616,
+      "f1-score": 0.8771929824561403,
+      "support": 26.0
+    },
+    "Egyptian": {
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1-score": 0.8571428571428571,
+      "support": 36.0
+    },
+    "Levantine": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "Maghrebi": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "accuracy": 0.8387096774193549,
+    "macro avg": {
+      "precision": 0.45161290322580644,
+      "recall": 0.4278846153846154,
+      "f1-score": 0.43358395989974935,
+      "support": 62.0
+    },
+    "weighted avg": {
+      "precision": 0.918834547346514,
+      "recall": 0.8387096774193549,
+      "f1-score": 0.8655509742097178,
+      "support": 62.0
+    }
+  },
+  "zero_shot": {
+    "Saudi": {
+      "precision": 0.9090909090909091,
+      "recall": 0.7692307692307693,
+      "f1-score": 0.8333333333333334,
+      "support": 26.0
+    },
+    "Egyptian": {
+      "precision": 0.8888888888888888,
+      "recall": 0.8888888888888888,
+      "f1-score": 0.8888888888888888,
+      "support": 36.0
+    },
+    "Levantine": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "Maghrebi": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "accuracy": 0.8387096774193549,
+    "macro avg": {
+      "precision": 0.4494949494949495,
+      "recall": 0.4145299145299145,
+      "f1-score": 0.4305555555555556,
+      "support": 62.0
+    },
+    "weighted avg": {
+      "precision": 0.8973607038123168,
+      "recall": 0.8387096774193549,
+      "f1-score": 0.8655913978494625,
+      "support": 62.0
+    }
+  },
+  "few_shot": {
+    "Saudi": {
+      "precision": 0.9545454545454546,
+      "recall": 0.8076923076923077,
+      "f1-score": 0.875,
+      "support": 26.0
+    },
+    "Egyptian": {
+      "precision": 0.9142857142857143,
+      "recall": 0.8888888888888888,
+      "f1-score": 0.9014084507042254,
+      "support": 36.0
+    },
+    "Levantine": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "Maghrebi": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 0.0
+    },
+    "accuracy": 0.8548387096774194,
+    "macro avg": {
+      "precision": 0.4672077922077922,
+      "recall": 0.42414529914529914,
+      "f1-score": 0.44410211267605637,
+      "support": 62.0
+    },
+    "weighted avg": {
+      "precision": 0.9311688311688312,
+      "recall": 0.8548387096774194,
+      "f1-score": 0.8903339391185825,
+      "support": 62.0
+    }
+  }
+}

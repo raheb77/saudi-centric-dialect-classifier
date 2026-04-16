@@ -14,3 +14,5 @@ artifacts/reports/classical_baseline_error_analysis.md
 artifacts/reports/llm_*_dev_predictions.csv
 
 artifacts/reports/llm_sonnet_full_dev_predictions.csv
+
+artifacts/reports/llm_sonnet_*_predictions.csv

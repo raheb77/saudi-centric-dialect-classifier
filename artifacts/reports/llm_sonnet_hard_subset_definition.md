@@ -1,21 +1,23 @@
-# Claude Sonnet Hard Subset Definition
+# Claude Sonnet Targeted Confusion Subset Definition
 
 This subset is built from `data/processed/dev_core.csv` only.
+It is not a generic difficulty sample from the dev set.
+It is a repository-specific targeted confusion subset that isolates the Saudi/Egyptian absorption errors already tracked in [ERROR_ANALYSIS.md](../../ERROR_ANALYSIS.md).
 
 ## Selection Rule
 
-Keep a dev-set row if at least one existing baseline prediction places it in one of these tracked confusion directions:
+Keep a `dev_core` row if its `source_id` matches at least one of the following rules:
+
+1. In [classical_baseline_dev_predictions.csv](./classical_baseline_dev_predictions.csv), the pair `("true_label", "predicted_label")` is one of the tracked confusion directions below.
+2. In [llm_gemini_flash_lite_dev_predictions.csv](./llm_gemini_flash_lite_dev_predictions.csv), the pair `("true_label", "zero_shot_predicted_label")` is one of the tracked confusion directions below.
+3. In [llm_gemini_flash_lite_dev_predictions.csv](./llm_gemini_flash_lite_dev_predictions.csv), the pair `("true_label", "few_shot_predicted_label")` is one of the tracked confusion directions below.
+
+Tracked confusion directions:
 
 - `Saudi -> Levantine`
 - `Saudi -> Maghrebi`
 - `Egyptian -> Maghrebi`
 - `Egyptian -> Levantine`
-
-Baselines checked for inclusion:
-
-- classical baseline (`predicted_label`)
-- Gemini Flash-Lite zero-shot (`zero_shot_predicted_label`)
-- Gemini Flash-Lite few-shot (`few_shot_predicted_label`)
 
 The final subset is the union of matching rows, deduplicated by `source_id` and kept in original `dev_core` order.
 
@@ -45,6 +47,17 @@ The final subset is the union of matching rows, deduplicated by `source_id` and 
 | classical, gemini_few, gemini_zero | 2 |
 | gemini_few | 1 |
 
-## Implication
+## Interpretation
 
-Because all tracked confusion directions start from `Saudi` or `Egyptian`, the resulting hard subset contains only those two true labels. Metrics therefore stay comparable across models on the same rows, but 4-class macro F1 will be depressed by the zero-support `Levantine` and `Maghrebi` true classes in this subset.
+- What this subset measures:
+  recovery on the specific Saudi/Egyptian confusion region where earlier baselines absorbed single-country labels into broader `Levantine` or `Maghrebi` buckets.
+- What it does not measure:
+  overall `dev_core` difficulty, broad 4-way task coverage, or generic robustness on all label types.
+- Why it is still useful:
+  it gives a like-for-like comparison on the exact failure region highlighted in [ERROR_ANALYSIS.md](../../ERROR_ANALYSIS.md), without conflating that region with the rest of the benchmark.
+
+## Metric Caveat
+
+Because all tracked confusion directions start from `Saudi` or `Egyptian`, the targeted confusion subset contains only those two true labels.
+`Levantine` and `Maghrebi` therefore have true-label support `0` in this subset.
+Any 4-label macro F1 reported on this subset is retained for bookkeeping only and is not directly comparable to full-dev 4-label macro F1.

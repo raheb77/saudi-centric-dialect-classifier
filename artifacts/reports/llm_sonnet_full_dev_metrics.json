@@ -1,0 +1,81 @@
+{
+  "provider": "anthropic_messages",
+  "model": "claude-sonnet-4-20250514",
+  "train_rows": 10000,
+  "dev_rows": 999,
+  "few_shot_support_examples_per_class": 2,
+  "few_shot_support_examples": [
+    {
+      "source_id": "subtask1_train_10492",
+      "macro_label": "Saudi",
+      "processed_text": "يا قوي يا حرامي ساهر"
+    },
+    {
+      "source_id": "subtask1_train_445",
+      "macro_label": "Saudi",
+      "processed_text": "تذكره مجانيه للي يبي يحضر"
+    },
+    {
+      "source_id": "subtask1_train_9718",
+      "macro_label": "Egyptian",
+      "processed_text": "انا مشوفتش اوسخ من كده"
+    },
+    {
+      "source_id": "subtask1_train_4298",
+      "macro_label": "Egyptian",
+      "processed_text": "وحشتني اوي علي فكره بقه"
+    },
+    {
+      "source_id": "subtask1_train_5745",
+      "macro_label": "Levantine",
+      "processed_text": "مش كل شي كل شي"
+    },
+    {
+      "source_id": "subtask1_train_10147",
+      "macro_label": "Levantine",
+      "processed_text": "تبا و تب ليش هيك"
+    },
+    {
+      "source_id": "subtask1_train_13697",
+      "macro_label": "Maghrebi",
+      "processed_text": "مول كرش باقي ما شبع"
+    },
+    {
+      "source_id": "subtask1_train_3155",
+      "macro_label": "Maghrebi",
+      "processed_text": "لي عندو شي فم يربطو"
+    }
+  ],
+  "zero_shot": {
+    "accuracy": 0.8268268268268268,
+    "macro_f1": 0.790765166649751,
+    "usage": {
+      "prompt_tokens": 63593,
+      "completion_tokens": 13488,
+      "total_tokens": 77081
+    },
+    "latency": {
+      "request_count": 40,
+      "total_ms": 192887.1358730321,
+      "avg_request_ms": 4822.178396825802,
+      "avg_row_ms": 193.08021608912122
+    },
+    "estimated_cost_usd": 0.393099
+  },
+  "few_shot": {
+    "accuracy": 0.8408408408408409,
+    "macro_f1": 0.8042180735440324,
+    "usage": {
+      "prompt_tokens": 71673,
+      "completion_tokens": 13592,
+      "total_tokens": 85265
+    },
+    "latency": {
+      "request_count": 40,
+      "total_ms": 188076.9134600414,
+      "avg_request_ms": 4701.922836501035,
+      "avg_row_ms": 188.26517863868008
+    },
+    "estimated_cost_usd": 0.418899
+  }
+}

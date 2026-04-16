@@ -1,0 +1,65 @@
+{
+  "subset_name": "targeted_confusion_subset",
+  "subset_construction_rule": "Union of data/processed/dev_core.csv rows whose source_id appears in artifacts/reports/classical_baseline_dev_predictions.csv with (true_label, predicted_label) in the tracked Saudi/Egyptian confusion directions, or in artifacts/reports/llm_gemini_flash_lite_dev_predictions.csv with (true_label, zero_shot_predicted_label) or (true_label, few_shot_predicted_label) in the same tracked directions; deduplicated by source_id and kept in original dev_core order.",
+  "present_labels": [
+    "Saudi",
+    "Egyptian"
+  ],
+  "absent_true_labels": [
+    "Levantine",
+    "Maghrebi"
+  ],
+  "metric_note": "Stored 4-label macro F1 is retained for traceability but is not directly comparable to full-dev macro F1 because Levantine and Maghrebi have zero true-label support in this subset.",
+  "provider": "anthropic_messages",
+  "model": "claude-sonnet-4-20250514",
+  "hard_subset_rows": 62,
+  "classical_subset": {
+    "accuracy": 0.016129032258064516,
+    "macro_f1": 0.013513513513513514,
+    "present_label_macro_f1": 0.02702702702702703
+  },
+  "gemini_zero_subset": {
+    "accuracy": 0.8709677419354839,
+    "macro_f1": 0.44237516869095816,
+    "present_label_macro_f1": 0.8847503373819163
+  },
+  "gemini_few_subset": {
+    "accuracy": 0.8387096774193549,
+    "macro_f1": 0.43358395989974935,
+    "present_label_macro_f1": 0.8671679197994987
+  },
+  "zero_shot": {
+    "accuracy": 0.8387096774193549,
+    "macro_f1": 0.4305555555555556,
+    "present_label_macro_f1": 0.8611111111111112,
+    "usage": {
+      "prompt_tokens": 4231,
+      "completion_tokens": 756,
+      "total_tokens": 4987
+    },
+    "latency": {
+      "request_count": 4,
+      "total_ms": 13754.527665994829,
+      "avg_request_ms": 3438.631916498707,
+      "avg_row_ms": 221.84722041927142
+    },
+    "estimated_cost_usd": 0.024033000000000002
+  },
+  "few_shot": {
+    "accuracy": 0.8548387096774194,
+    "macro_f1": 0.44410211267605637,
+    "present_label_macro_f1": 0.8882042253521127,
+    "usage": {
+      "prompt_tokens": 5039,
+      "completion_tokens": 763,
+      "total_tokens": 5802
+    },
+    "latency": {
+      "request_count": 4,
+      "total_ms": 12775.392373994691,
+      "avg_request_ms": 3193.848093498673,
+      "avg_row_ms": 206.0547157095918
+    },
+    "estimated_cost_usd": 0.026562000000000002
+  }
+}
