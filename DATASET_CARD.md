@@ -27,8 +27,10 @@ The preprocessing stage operates only on the interim CSVs and writes parallel ou
 - Preserves hashtag text while removing `#`
 - Removes Arabic diacritics
 - Normalizes Alef variants and final `ى` to `ي`
+- Strips tatweel / kashida (`ـ`)
 - Reduces repeated letter elongation to at most 2
 - Preserves emojis and English tokens
+- Preserves the source placeholder `NUM` as-is; phase 5 does not normalize it to `<NUM>`
 - Keeps both `original_text` and `processed_text` for traceability
 
 ## Local Raw Sources
@@ -144,4 +146,4 @@ The local raw directory also contains material that should be documented but not
 ## Known Limitations
 - The benchmark anchor is Twitter-domain text, while MADAR is translated travel-domain text. That domain mismatch is why MADAR is documented as a future OOD source rather than a primary benchmark or part of the initial v1 training mixture.
 - The four v1 labels are grouped project labels layered on top of country- or city-level raw sources.
-- The current outputs are leakage-aware interim curation artifacts, not a preprocessing-ready final dataset.
+- The current outputs include both leakage-aware interim curation artifacts and processed CSVs, but they are not yet final experiment datasets.

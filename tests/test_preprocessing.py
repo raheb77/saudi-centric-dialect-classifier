@@ -34,11 +34,11 @@ def read_csv_rows(path: Path) -> list[dict[str, str]]:
 
 
 def test_preprocess_text_applies_required_rules() -> None:
-    text = "USER آلسَّلَام @user مرحببببااا URL https://x.com #السعودية coolلل ى 😀"
+    text = "USER آلسَّلَام @user ســــلام مرحببببااا URL https://x.com #السعودية coolلل ى NUM 😀"
 
     processed = preprocess_text(text)
 
-    assert processed == "<USER> السلام <USER> مرحبباا السعودية coolلل ي 😀"
+    assert processed == "<USER> السلام <USER> سلام مرحبباا السعودية coolلل ي NUM 😀"
 
 
 def test_preprocess_csv_file_preserves_lineage_and_adds_traceability(tmp_path: Path) -> None:
@@ -122,3 +122,19 @@ def test_preprocess_interim_files_writes_all_expected_outputs(tmp_path: Path) ->
 
 def test_preprocess_text_handles_source_placeholders() -> None:
     assert preprocess_text("USER اهلين URL") == "<USER> اهلين"
+
+
+def test_preprocess_text_removes_glued_https_url() -> None:
+    assert preprocess_text("النصhttps://example.com/path") == "النص"
+
+
+def test_preprocess_text_removes_pic_twitter_url() -> None:
+    assert preprocess_text("صورةpic.twitter.com/abc123") == "صورة"
+
+
+def test_preprocess_text_normalizes_glued_mention() -> None:
+    assert preprocess_text("كلمه@handle") == "كلمه <USER>"
+
+
+def test_preprocess_text_preserves_email_address() -> None:
+    assert preprocess_text("راسلني على adminjob@alkhaleej.ae") == "راسلني علي adminjob@alkhaleej.ae"
