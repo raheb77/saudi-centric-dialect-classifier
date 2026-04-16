@@ -1,0 +1,1467 @@
+# Data Validation Summary
+
+- Data root: `data/raw`
+- Files scanned: `23`
+- Total rows scanned: `20212125`
+- Labeled text rows scanned: `112525`
+- Unlabeled ID-only rows scanned: `20000000`
+- Out-of-scope rows scanned: `99600`
+- Files with duplicate rows: `0`
+- Files with empty texts: `0`
+- Files with texts under 3 tokens: `18`
+
+## Grouped File Summary
+
+### Labeled Benchmark Files
+
+- Files: `2`
+- Rows: `19800`
+- Files with duplicates: `0`
+- Files with empty texts: `0`
+- Files with texts under 3 tokens: `1`
+
+| File | Schema | Rows | Duplicates | Duplicate check | Empty texts | Short texts | Missing columns |
+| --- | --- | ---: | ---: | --- | ---: | ---: | --- |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv` | `nadi2023_st1_labeled` | 1800 | 0 | `full` | 0 | 0 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | `nadi2023_st1_labeled` | 18000 | 0 | `full` | 0 | 1 | - |
+
+### Supporting Labeled Files
+
+- Files: `6`
+- Rows: `92725`
+- Files with duplicates: `0`
+- Files with empty texts: `0`
+- Files with texts under 3 tokens: `6`
+
+| File | Schema | Rows | Duplicates | Duplicate check | Empty texts | Short texts | Missing columns |
+| --- | --- | ---: | ---: | --- | ---: | ---: | --- |
+| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `nadi2020_labeled` | 4957 | 0 | `full` | 0 | 4 | - |
+| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `nadi2020_labeled` | 21000 | 0 | `full` | 0 | 12 | - |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `nadi2021_labeled` | 5000 | 0 | `full` | 0 | 1 | - |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `nadi2021_labeled` | 21000 | 0 | `full` | 0 | 8 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `nadi2020_labeled` | 20370 | 0 | `full` | 0 | 12 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | `nadi2021_labeled` | 20398 | 0 | `full` | 0 | 8 | - |
+
+### Unlabeled ID-Only Files
+
+- Files: `2`
+- Rows: `20000000`
+- Files with duplicates: `0`
+- Files with empty texts: `0`
+- Files with texts under 3 tokens: `0`
+
+| File | Schema | Rows | Duplicates | Duplicate check | Empty texts | Short texts | Missing columns |
+| --- | --- | ---: | ---: | --- | ---: | ---: | --- |
+| `data/raw/nadi2020/NADI_release/unlabeled_10M.tsv` | `nadi2020_unlabeled_ids` | 10000000 | 0 | `skipped_large_id_only` | 0 | 0 | - |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-unlabeled_10M.tsv` | `nadi2020_unlabeled_ids` | 10000000 | 0 | `skipped_large_id_only` | 0 | 0 | - |
+
+### Out-of-Scope Files
+
+- Files: `13`
+- Rows: `99600`
+- Files with duplicates: `0`
+- Files with empty texts: `0`
+- Files with texts under 3 tokens: `11`
+
+| File | Schema | Rows | Duplicates | Duplicate check | Empty texts | Short texts | Missing columns |
+| --- | --- | ---: | ---: | --- | ---: | ---: | --- |
+| `data/raw/nadi2020/test/NADI-2020_TEST_2.0/test_unlabeled.tsv` | `nadi2020_test_unlabeled` | 5000 | 0 | `full` | 0 | 1 | - |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/MSA_dev_labeled.tsv` | `nadi2021_labeled` | 5000 | 0 | `full` | 0 | 6 | - |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/MSA_train_labeled.tsv` | `nadi2021_labeled` | 21000 | 0 | `full` | 0 | 12 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023_Subtask1_DEV-checkpoint.tsv` | `nadi2023_st1_labeled_checkpoint` | 1800 | 0 | `full` | 0 | 0 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023_Subtask1_TRAIN-checkpoint.tsv` | `nadi2023_st1_labeled` | 18000 | 0 | `full` | 0 | 1 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/MADAR-2018.tsv` | `madar_2018` | 40000 | 0 | `full` | 0 | 3487 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask2/.ipynb_checkpoints/NADI2023_Subtask2B_DEV-checkpoint.tsv` | `nadi2023_mt_labeled` | 200 | 0 | `full` | 0 | 5 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask2/subtask2_dev.tsv` | `nadi2023_mt_labeled` | 400 | 0 | `full` | 0 | 11 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask3/.ipynb_checkpoints/NADI2023_Subtask2B_DEV-checkpoint.tsv` | `nadi2023_mt_labeled` | 200 | 0 | `full` | 0 | 5 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask3/subtask3_dev.tsv` | `nadi2023_mt_labeled` | 400 | 0 | `full` | 0 | 11 | - |
+| `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/NADI2023_Subtask1_TEST_Unlabeled.tsv` | `nadi2023_st1_test_unlabeled` | 3600 | 0 | `full` | 0 | 0 | - |
+| `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/NADI2023_Subtask2_TEST_Unlabeled.tsv` | `nadi2023_mt_test_unlabeled` | 2000 | 0 | `full` | 0 | 15 | - |
+| `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/NADI2023_Subtask3_TEST_Unlabeled.tsv` | `nadi2023_mt_test_unlabeled` | 2000 | 0 | `full` | 0 | 15 | - |
+
+## Cross-File Overlap Checks
+
+- Scope: labeled benchmark files plus supporting labeled files only
+- Files analyzed: `8`
+- Unique exact text hashes analyzed: `71205`
+- Exact text hashes appearing in more than one file: `40482`
+- Possible label leakage cases: `1798`
+
+### Pairwise Overlap Counts
+
+| File A | File B | Shared exact texts |
+| --- | --- | ---: |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 20372 |
+| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 20221 |
+| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | 178 |
+| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 162 |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 162 |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 162 |
+| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | 32 |
+| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 30 |
+| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2020/NADI_release/train_labeled.tsv` | 29 |
+| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 28 |
+| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | 26 |
+| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | 23 |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 23 |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 6 |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | 5 |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 5 |
+| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 2 |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 2 |
+| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 1 |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 1 |
+
+### Possible Label Leakage Examples
+
+| Text hash | Labels | Files | Occurrences |
+| --- | --- | --- | ---: |
+| `85bdb9d3f435786bd767c8cf7a619f058499abdb` | `Lebanon`, `Syria` | `train_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2020-TWT.tsv`, `NADI2021-TWT.tsv` | 6 |
+| `4552ba417ddec7e927482f2c41f78c28f6ad5daa` | `Iraq`, `Sudan` | `train_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2020-TWT.tsv`, `NADI2021-TWT.tsv` | 4 |
+| `c1c103e31191b57161dfcb0cd3d2eec6d499e939` | `Iraq`, `Palestine` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 7 |
+| `c577fa0dbdbba07da9678201fdea0ab37813f26a` | `Jordan`, `Oman` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 6 |
+| `cad225b2eed8c7ea857517e37cf57b52ef2d6ff9` | `Egypt`, `Iraq`, `Morocco`, `United_Arab_Emirates` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 6 |
+| `ce4914b210f1cfc6ecb26e1b4bbce7c2e5b47c0d` | `Egypt`, `Iraq`, `Libya`, `Saudi_Arabia` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 6 |
+| `1aaea59a9d6dbecbe3d028e29789fea941b45512` | `Morocco`, `Saudi_Arabia`, `United_Arab_Emirates` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
+| `2a0ff161cc9917f2970172a2416fb58335c03aad` | `Egypt`, `Libya`, `Morocco` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
+| `3aa045e467c3bd92e6322304de58e36822f64a48` | `Lebanon`, `Palestine`, `Saudi_Arabia` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
+| `8bdc16ace7f760e2814601db0f9d8f0aafc69000` | `Algeria`, `Tunisia`, `UAE`, `United_Arab_Emirates` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
+| `c76807d5d5fd27f8df822eb513e3e4501ad2100c` | `Morocco`, `Syria` | `DA_dev_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2021-TWT.tsv` | 5 |
+| `cc6dd82f8f1a916310e0e94b00b51cfc39983ee0` | `Algeria`, `Egypt` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
+| `5a430057e36deac04bfb0e852f6d6527a0ec8618` | `Egypt`, `Iraq`, `Lebanon` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 4 |
+| `6096718d9fe885fdbdbb1e2fd34c9badf817fbbc` | `Algeria`, `Lebanon`, `Saudi_Arabia` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 4 |
+| `806ba866bb7ff645ce32cc87042eb5f6499bf464` | `Oman`, `Saudi_Arabia` | `DA_dev_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2021-TWT.tsv` | 4 |
+| `1628debafde1d7452c85c4b4f37a2c13c283d598` | `Egypt`, `Yemen` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 3 |
+| `1cbe2629787899800f65ad277a529c7e5999aaba` | `Egypt`, `Jordan` | `DA_dev_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2021-TWT.tsv` | 3 |
+| `2bf93c5f0b6777317de8c1c6e2c1803d06cbeabc` | `Iraq`, `Syria` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 3 |
+| `2c13929fe59d51ff665c367ebbf56b18147c1524` | `Egypt`, `Lebanon` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 3 |
+| `39e9514dbdda624466d503b2937ca03a695533fc` | `Kuwait`, `UAE`, `United_Arab_Emirates` | `DA_train_labeled.tsv`, `NADI2021-TWT.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | 3 |
+
+## Per-File Details
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv`
+- Group: `labeled_benchmark`
+- Schema: `nadi2023_st1_labeled`
+- Rows: `1800`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_content`: 0 empty, 0 under 3 tokens
+- Class counts for `#3_label`:
+  - `Algeria`: 100
+  - `Bahrain`: 100
+  - `Egypt`: 100
+  - `Iraq`: 100
+  - `Jordan`: 100
+  - `Kuwait`: 100
+  - `Lebanon`: 100
+  - `Libya`: 100
+  - `Morocco`: 100
+  - `Oman`: 100
+  - `Palestine`: 100
+  - `Qatar`: 100
+  - `Saudi_Arabia`: 100
+  - `Sudan`: 100
+  - `Syria`: 100
+  - `Tunisia`: 100
+  - `UAE`: 100
+  - `Yemen`: 100
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv`
+- Group: `labeled_benchmark`
+- Schema: `nadi2023_st1_labeled`
+- Rows: `18000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_content`: 0 empty, 1 under 3 tokens
+  sample short rows: 16685
+- Class counts for `#3_label`:
+  - `Algeria`: 1000
+  - `Bahrain`: 1000
+  - `Egypt`: 1000
+  - `Iraq`: 1000
+  - `Jordan`: 1000
+  - `Kuwait`: 1000
+  - `Lebanon`: 1000
+  - `Libya`: 1000
+  - `Morocco`: 1000
+  - `Oman`: 1000
+  - `Palestine`: 1000
+  - `Qatar`: 1000
+  - `Saudi_Arabia`: 1000
+  - `Sudan`: 1000
+  - `Syria`: 1000
+  - `Tunisia`: 1000
+  - `UAE`: 1000
+  - `Yemen`: 1000
+
+### `data/raw/nadi2020/NADI_release/dev_labeled.tsv`
+- Group: `supporting_labeled`
+- Schema: `nadi2020_labeled`
+- Rows: `4957`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2 tweet_content`: 0 empty, 4 under 3 tokens
+  sample short rows: 1645, 2166, 3936, 4724
+- Class counts for `#3 country_label`:
+  - `Egypt`: 1070
+  - `Iraq`: 636
+  - `Saudi_Arabia`: 579
+  - `Algeria`: 359
+  - `Libya`: 265
+  - `Syria`: 265
+  - `United_Arab_Emirates`: 265
+  - `Morocco`: 249
+  - `Oman`: 249
+  - `Yemen`: 206
+  - `Tunisia`: 164
+  - `Lebanon`: 110
+  - `Jordan`: 104
+  - `Qatar`: 104
+  - `Palestine`: 102
+  - `Kuwait`: 70
+  - `Somalia`: 51
+  - `Sudan`: 51
+  - `Mauritania`: 40
+  - `Djibouti`: 10
+  - `Bahrain`: 8
+- Class counts for `#4 province_label`:
+  - `sa_Ash-Sharqiyah`: 97
+  - `sa_Al-Madinah`: 54
+  - `sa_Ar-Riyad`: 54
+  - `sa_Asir`: 54
+  - `sa_Ha'il`: 54
+  - `sa_Makkah`: 54
+  - `ae_Abu-Dhabi`: 53
+  - `ae_Dubai`: 53
+  - `ae_Fujairah`: 53
+  - `ae_Ras-Al-Khaymah`: 53
+  - `ae_Umm-Al-Qaywayn`: 53
+  - `dz_Bordj-Bou-Arreridj‎`: 53
+  - `dz_Bouira`: 53
+  - `dz_Jijel`: 53
+  - `dz_Khenchela`: 53
+  - `dz_Oran`: 53
+  - `dz_Ouargla`: 53
+  - `eg_Alexandria`: 53
+  - `eg_Aswan`: 53
+  - `eg_Asyut`: 53
+  - `eg_Beheira`: 53
+  - `eg_Beni-Suef`: 53
+  - `eg_Dakahlia`: 53
+  - `eg_Faiyum`: 53
+  - `eg_Gharbia`: 53
+  - `eg_Ismailia`: 53
+  - `eg_Kafr-el-Sheikh`: 53
+  - `eg_Luxor`: 53
+  - `eg_Minya`: 53
+  - `eg_Monufia`: 53
+  - `eg_North-Sinai`: 53
+  - `eg_Port-Said`: 53
+  - `eg_Qena`: 53
+  - `eg_Red-Sea`: 53
+  - `eg_Sohag`: 53
+  - `eg_South-Sinai`: 53
+  - `eg_Suez`: 53
+  - `iq_Al-Anbar`: 53
+  - `iq_Al-Muthannia`: 53
+  - `iq_An-Najaf`: 53
+  - `iq_Arbil`: 53
+  - `iq_As-Sulaymaniyah`: 53
+  - `iq_Baghdad`: 53
+  - `iq_Basra`: 53
+  - `iq_Dihok`: 53
+  - `iq_Karbala`: 53
+  - `iq_Maysan`: 53
+  - `iq_Ninawa`: 53
+  - `iq_Wasit`: 53
+  - `ly_Al-Butnan`: 53
+  - `ly_Al-Jabal-al-Akhdar`: 53
+  - `ly_Benghazi`: 53
+  - `ly_Misrata`: 53
+  - `ly_Tripoli`: 53
+  - `ma_Marrakech-Tensift-Al-Haouz`: 53
+  - `ma_Meknes-Tafilalet`: 53
+  - `ma_Souss-Massa-Draa`: 53
+  - `ma_Tanger-Tetouan`: 53
+  - `om_Ad-Dakhiliyah`: 53
+  - `om_Al-Batnah`: 53
+  - `om_Dhofar`: 53
+  - `om_Muscat`: 53
+  - `sa_Al-Quassim`: 53
+  - `sa_Jizan`: 53
+  - `sa_Najran`: 53
+  - `sa_Tabuk`: 53
+  - `sy_Aleppo`: 53
+  - `sy_As-Suwayda`: 53
+  - `sy_Damascus-City`: 53
+  - `sy_Hims`: 53
+  - `sy_Lattakia`: 53
+  - `jo_Aqaba`: 52
+  - `jo_Zarqa`: 52
+  - `lb_North-Lebanon`: 52
+  - `lb_South-Lebanon`: 52
+  - `qa_Ar-Rayyan`: 52
+  - `qa_Doha`: 52
+  - `tn_Ariana`: 52
+  - `tn_Mahdia`: 52
+  - `tn_Sousse`: 52
+  - `ye_Aden`: 52
+  - `ye_Al-Hudaydah`: 52
+  - `ye_Dhamar`: 52
+  - `kw_Hawalli`: 51
+  - `ps_Gaza-Strip`: 51
+  - `ps_West-Bank`: 51
+  - `sd_Khartoum`: 51
+  - `so_Banaadir`: 51
+  - `ye_Ibb`: 50
+  - `dz_Béchar`: 41
+  - `mr_Nouakchott`: 40
+  - `ma_Oriental`: 37
+  - `om_Musandam`: 27
+  - `kw_Jahra`: 19
+  - `dj_Djibouti`: 10
+  - `eg_Cairo`: 10
+  - `om_Ash-Sharqiyah`: 10
+  - `bh_Capital`: 8
+  - `tn_Kairouan`: 8
+  - `lb_Akkar`: 6
+
+### `data/raw/nadi2020/NADI_release/train_labeled.tsv`
+- Group: `supporting_labeled`
+- Schema: `nadi2020_labeled`
+- Rows: `21000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2 tweet_content`: 0 empty, 12 under 3 tokens
+  sample short rows: 252, 266, 1276, 1911, 3647
+- Class counts for `#3 country_label`:
+  - `Egypt`: 4473
+  - `Iraq`: 2556
+  - `Saudi_Arabia`: 2312
+  - `Algeria`: 1491
+  - `Oman`: 1098
+  - `Libya`: 1070
+  - `Morocco`: 1070
+  - `Syria`: 1070
+  - `United_Arab_Emirates`: 1070
+  - `Yemen`: 851
+  - `Tunisia`: 750
+  - `Lebanon`: 639
+  - `Jordan`: 426
+  - `Kuwait`: 420
+  - `Palestine`: 420
+  - `Qatar`: 234
+  - `Bahrain`: 210
+  - `Djibouti`: 210
+  - `Mauritania`: 210
+  - `Somalia`: 210
+  - `Sudan`: 210
+- Class counts for `#4 province_label`:
+  - `sa_Ash-Sharqiyah`: 395
+  - `ae_Abu-Dhabi`: 214
+  - `ae_Dubai`: 214
+  - `ae_Fujairah`: 214
+  - `ae_Ras-Al-Khaymah`: 214
+  - `ae_Umm-Al-Qaywayn`: 214
+  - `ly_Al-Butnan`: 214
+  - `ly_Al-Jabal-al-Akhdar`: 214
+  - `ly_Benghazi`: 214
+  - `ly_Misrata`: 214
+  - `ly_Tripoli`: 214
+  - `ma_Marrakech-Tensift-Al-Haouz`: 214
+  - `ma_Meknes-Tafilalet`: 214
+  - `ma_Oriental`: 214
+  - `ma_Souss-Massa-Draa`: 214
+  - `ma_Tanger-Tetouan`: 214
+  - `om_Al-Batnah`: 214
+  - `sy_Aleppo`: 214
+  - `sy_As-Suwayda`: 214
+  - `sy_Damascus-City`: 214
+  - `sy_Hims`: 214
+  - `sy_Lattakia`: 214
+  - `dz_Bordj-Bou-Arreridj‎`: 213
+  - `dz_Bouira`: 213
+  - `dz_Béchar`: 213
+  - `dz_Jijel`: 213
+  - `dz_Khenchela`: 213
+  - `dz_Oran`: 213
+  - `dz_Ouargla`: 213
+  - `eg_Alexandria`: 213
+  - `eg_Aswan`: 213
+  - `eg_Asyut`: 213
+  - `eg_Beheira`: 213
+  - `eg_Beni-Suef`: 213
+  - `eg_Cairo`: 213
+  - `eg_Dakahlia`: 213
+  - `eg_Faiyum`: 213
+  - `eg_Gharbia`: 213
+  - `eg_Ismailia`: 213
+  - `eg_Kafr-el-Sheikh`: 213
+  - `eg_Luxor`: 213
+  - `eg_Minya`: 213
+  - `eg_Monufia`: 213
+  - `eg_North-Sinai`: 213
+  - `eg_Port-Said`: 213
+  - `eg_Qena`: 213
+  - `eg_Red-Sea`: 213
+  - `eg_Sohag`: 213
+  - `eg_South-Sinai`: 213
+  - `eg_Suez`: 213
+  - `iq_Al-Anbar`: 213
+  - `iq_Al-Muthannia`: 213
+  - `iq_An-Najaf`: 213
+  - `iq_Arbil`: 213
+  - `iq_As-Sulaymaniyah`: 213
+  - `iq_Baghdad`: 213
+  - `iq_Basra`: 213
+  - `iq_Dihok`: 213
+  - `iq_Karbala`: 213
+  - `iq_Maysan`: 213
+  - `iq_Ninawa`: 213
+  - `iq_Wasit`: 213
+  - `jo_Aqaba`: 213
+  - `jo_Zarqa`: 213
+  - `lb_Akkar`: 213
+  - `lb_North-Lebanon`: 213
+  - `lb_South-Lebanon`: 213
+  - `om_Ad-Dakhiliyah`: 213
+  - `om_Dhofar`: 213
+  - `om_Musandam`: 213
+  - `om_Muscat`: 213
+  - `sa_Al-Madinah`: 213
+  - `sa_Al-Quassim`: 213
+  - `sa_Ar-Riyad`: 213
+  - `sa_Asir`: 213
+  - `sa_Ha'il`: 213
+  - `sa_Jizan`: 213
+  - `sa_Makkah`: 213
+  - `sa_Najran`: 213
+  - `sa_Tabuk`: 213
+  - `ye_Aden`: 213
+  - `ye_Al-Hudaydah`: 213
+  - `ye_Ibb`: 213
+  - `tn_Ariana`: 212
+  - `tn_Mahdia`: 212
+  - `tn_Sousse`: 212
+  - `ye_Dhamar`: 212
+  - `bh_Capital`: 210
+  - `dj_Djibouti`: 210
+  - `kw_Hawalli`: 210
+  - `kw_Jahra`: 210
+  - `mr_Nouakchott`: 210
+  - `ps_Gaza-Strip`: 210
+  - `ps_West-Bank`: 210
+  - `qa_Ar-Rayyan`: 210
+  - `sd_Khartoum`: 210
+  - `so_Banaadir`: 210
+  - `tn_Kairouan`: 114
+  - `om_Ash-Sharqiyah`: 32
+  - `qa_Doha`: 24
+
+### `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv`
+- Group: `supporting_labeled`
+- Schema: `nadi2021_labeled`
+- Rows: `5000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_tweet`: 0 empty, 1 under 3 tokens
+  sample short rows: 3564
+- Class counts for `#3_country_label`:
+  - `Egypt`: 1041
+  - `Iraq`: 664
+  - `Saudi_Arabia`: 520
+  - `Algeria`: 430
+  - `Oman`: 355
+  - `Libya`: 314
+  - `Syria`: 278
+  - `Morocco`: 207
+  - `Tunisia`: 173
+  - `Lebanon`: 157
+  - `United_Arab_Emirates`: 157
+  - `Kuwait`: 105
+  - `Yemen`: 105
+  - `Jordan`: 104
+  - `Palestine`: 104
+  - `Mauritania`: 53
+  - `Sudan`: 53
+  - `Bahrain`: 52
+  - `Qatar`: 52
+  - `Somalia`: 49
+  - `Djibouti`: 27
+- Class counts for `#4_province_label`:
+  - `ae_Dubai`: 53
+  - `dz_Biskra`: 53
+  - `dz_Béchar`: 53
+  - `dz_El-Oued`: 53
+  - `dz_Khenchela`: 53
+  - `dz_Oran`: 53
+  - `dz_Ouargla`: 53
+  - `eg_Asyut`: 53
+  - `iq_Al-Muthannia`: 53
+  - `iq_An-Najaf`: 53
+  - `iq_Arbil`: 53
+  - `iq_Babil`: 53
+  - `iq_Dihok`: 53
+  - `iq_Karbala`: 53
+  - `iq_Kirkuk`: 53
+  - `iq_Ninawa`: 53
+  - `kw_Jahra`: 53
+  - `lb_Akkar`: 53
+  - `ly_Al-Jabal-al-Akhdar`: 53
+  - `ly_Darnah`: 53
+  - `ma_Souss-Massa-Draa`: 53
+  - `mr_Nouakchott`: 53
+  - `om_Dhofar`: 53
+  - `om_Musandam`: 53
+  - `om_Muscat`: 53
+  - `sd_Khartoum`: 53
+  - `sy_As-Suwayda`: 53
+  - `sy_Hama`: 53
+  - `sy_Hims`: 53
+  - `tn_Sfax`: 53
+  - `ye_Ibb`: 53
+  - `ae_Abu-Dhabi`: 52
+  - `ae_Ras-Al-Khaymah`: 52
+  - `bh_Capital`: 52
+  - `dz_Constantine`: 52
+  - `eg_Alexandria`: 52
+  - `eg_Aswan`: 52
+  - `eg_Beheira`: 52
+  - `eg_Beni-Suef`: 52
+  - `eg_Dakahlia`: 52
+  - `eg_Faiyum`: 52
+  - `eg_Gharbia`: 52
+  - `eg_Ismailia`: 52
+  - `eg_Kafr-el-Sheikh`: 52
+  - `eg_Luxor`: 52
+  - `eg_Minya`: 52
+  - `eg_Monufia`: 52
+  - `eg_North-Sinai`: 52
+  - `eg_Port-Said`: 52
+  - `eg_Qena`: 52
+  - `eg_Red-Sea`: 52
+  - `eg_Sohag`: 52
+  - `eg_South-Sinai`: 52
+  - `eg_Suez`: 52
+  - `iq_Al-Anbar`: 52
+  - `iq_Baghdad`: 52
+  - `iq_Basra`: 52
+  - `iq_Wasit`: 52
+  - `jo_Aqaba`: 52
+  - `jo_Zarqa`: 52
+  - `kw_Hawalli`: 52
+  - `lb_North-Lebanon`: 52
+  - `lb_South-Lebanon`: 52
+  - `ly_Al-Butnan`: 52
+  - `ly_Benghazi`: 52
+  - `ly_Misrata`: 52
+  - `ly_Tripoli`: 52
+  - `ma_Marrakech-Tensift-Al-Haouz`: 52
+  - `ma_Tanger-Tetouan`: 52
+  - `om_Ad-Dakhiliyah`: 52
+  - `om_Al-Batnah`: 52
+  - `om_Ash-Sharqiyah`: 52
+  - `ps_Gaza-Strip`: 52
+  - `ps_West-Bank`: 52
+  - `qa_Ar-Rayyan`: 52
+  - `sa_Al-Madinah`: 52
+  - `sa_Al-Quassim`: 52
+  - `sa_Ar-Riyad`: 52
+  - `sa_Ash-Sharqiyah`: 52
+  - `sa_Asir`: 52
+  - `sa_Ha'il`: 52
+  - `sa_Jizan`: 52
+  - `sa_Makkah`: 52
+  - `sa_Najran`: 52
+  - `sa_Tabuk`: 52
+  - `sy_Aleppo`: 52
+  - `sy_Damascus-City`: 52
+  - `tn_Ariana`: 52
+  - `tn_Mahdia`: 52
+  - `ye_Aden`: 52
+  - `ma_Meknes-Tafilalet`: 50
+  - `om_Ad-Dhahirah`: 40
+  - `so_Banaadir`: 40
+  - `dz_Batna`: 34
+  - `iq_As-Sulaymaniyah`: 32
+  - `dj_Djibouti`: 27
+  - `dz_Bouira`: 26
+  - `tn_Bizerte`: 16
+  - `sy_Lattakia`: 15
+  - `so_Woqooyi-Galbeed`: 9
+
+### `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv`
+- Group: `supporting_labeled`
+- Schema: `nadi2021_labeled`
+- Rows: `21000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_tweet`: 0 empty, 8 under 3 tokens
+  sample short rows: 2003, 6273, 7902, 9422, 13768
+- Class counts for `#3_country_label`:
+  - `Egypt`: 4283
+  - `Iraq`: 2729
+  - `Saudi_Arabia`: 2140
+  - `Algeria`: 1809
+  - `Oman`: 1501
+  - `Syria`: 1287
+  - `Libya`: 1286
+  - `Tunisia`: 859
+  - `Morocco`: 858
+  - `Lebanon`: 644
+  - `United_Arab_Emirates`: 642
+  - `Jordan`: 429
+  - `Kuwait`: 429
+  - `Yemen`: 429
+  - `Palestine`: 428
+  - `Bahrain`: 215
+  - `Djibouti`: 215
+  - `Mauritania`: 215
+  - `Qatar`: 215
+  - `Sudan`: 215
+  - `Somalia`: 172
+- Class counts for `#4_province_label`:
+  - `bh_Capital`: 215
+  - `dj_Djibouti`: 215
+  - `dz_Batna`: 215
+  - `dz_Biskra`: 215
+  - `dz_Bouira`: 215
+  - `dz_Béchar`: 215
+  - `dz_Constantine`: 215
+  - `dz_El-Oued`: 215
+  - `dz_Oran`: 215
+  - `dz_Ouargla`: 215
+  - `eg_Kafr-el-Sheikh`: 215
+  - `eg_Monufia`: 215
+  - `eg_North-Sinai`: 215
+  - `iq_Al-Muthannia`: 215
+  - `iq_An-Najaf`: 215
+  - `iq_Arbil`: 215
+  - `iq_Babil`: 215
+  - `iq_Dihok`: 215
+  - `iq_Karbala`: 215
+  - `iq_Kirkuk`: 215
+  - `iq_Ninawa`: 215
+  - `jo_Aqaba`: 215
+  - `kw_Jahra`: 215
+  - `lb_Akkar`: 215
+  - `lb_North-Lebanon`: 215
+  - `ly_Al-Jabal-al-Akhdar`: 215
+  - `ly_Darnah`: 215
+  - `ma_Meknes-Tafilalet`: 215
+  - `ma_Souss-Massa-Draa`: 215
+  - `mr_Nouakchott`: 215
+  - `om_Ad-Dhahirah`: 215
+  - `om_Musandam`: 215
+  - `om_Muscat`: 215
+  - `qa_Ar-Rayyan`: 215
+  - `sd_Khartoum`: 215
+  - `sy_Aleppo`: 215
+  - `sy_Hama`: 215
+  - `sy_Lattakia`: 215
+  - `tn_Bizerte`: 215
+  - `tn_Mahdia`: 215
+  - `tn_Sfax`: 215
+  - `ye_Ibb`: 215
+  - `ae_Abu-Dhabi`: 214
+  - `ae_Dubai`: 214
+  - `ae_Ras-Al-Khaymah`: 214
+  - `eg_Alexandria`: 214
+  - `eg_Aswan`: 214
+  - `eg_Asyut`: 214
+  - `eg_Beheira`: 214
+  - `eg_Beni-Suef`: 214
+  - `eg_Dakahlia`: 214
+  - `eg_Faiyum`: 214
+  - `eg_Gharbia`: 214
+  - `eg_Ismailia`: 214
+  - `eg_Luxor`: 214
+  - `eg_Minya`: 214
+  - `eg_Port-Said`: 214
+  - `eg_Qena`: 214
+  - `eg_Red-Sea`: 214
+  - `eg_Sohag`: 214
+  - `eg_South-Sinai`: 214
+  - `eg_Suez`: 214
+  - `iq_Al-Anbar`: 214
+  - `iq_Baghdad`: 214
+  - `iq_Basra`: 214
+  - `iq_Wasit`: 214
+  - `jo_Zarqa`: 214
+  - `kw_Hawalli`: 214
+  - `lb_South-Lebanon`: 214
+  - `ly_Al-Butnan`: 214
+  - `ly_Benghazi`: 214
+  - `ly_Misrata`: 214
+  - `ly_Tripoli`: 214
+  - `ma_Marrakech-Tensift-Al-Haouz`: 214
+  - `ma_Tanger-Tetouan`: 214
+  - `om_Ad-Dakhiliyah`: 214
+  - `om_Al-Batnah`: 214
+  - `om_Ash-Sharqiyah`: 214
+  - `om_Dhofar`: 214
+  - `ps_Gaza-Strip`: 214
+  - `ps_West-Bank`: 214
+  - `sa_Al-Madinah`: 214
+  - `sa_Al-Quassim`: 214
+  - `sa_Ar-Riyad`: 214
+  - `sa_Ash-Sharqiyah`: 214
+  - `sa_Asir`: 214
+  - `sa_Ha'il`: 214
+  - `sa_Jizan`: 214
+  - `sa_Makkah`: 214
+  - `sa_Najran`: 214
+  - `sa_Tabuk`: 214
+  - `sy_As-Suwayda`: 214
+  - `sy_Damascus-City`: 214
+  - `sy_Hims`: 214
+  - `tn_Ariana`: 214
+  - `ye_Aden`: 214
+  - `iq_As-Sulaymaniyah`: 153
+  - `so_Banaadir`: 136
+  - `dz_Khenchela`: 89
+  - `so_Woqooyi-Galbeed`: 36
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv`
+- Group: `supporting_labeled`
+- Schema: `nadi2020_labeled`
+- Rows: `20370`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2 tweet_content`: 0 empty, 12 under 3 tokens
+  sample short rows: 243, 257, 1241, 1856, 3554
+- Class counts for `#3 country_label`:
+  - `Egypt`: 4473
+  - `Iraq`: 2556
+  - `Saudi_Arabia`: 2312
+  - `Algeria`: 1491
+  - `Oman`: 1098
+  - `Libya`: 1070
+  - `Morocco`: 1070
+  - `Syria`: 1070
+  - `UAE`: 1070
+  - `Yemen`: 851
+  - `Tunisia`: 750
+  - `Lebanon`: 639
+  - `Jordan`: 426
+  - `Kuwait`: 420
+  - `Palestine`: 420
+  - `Qatar`: 234
+  - `Bahrain`: 210
+  - `Sudan`: 210
+- Class counts for `#4 province_label`:
+  - `sa_Ash-Sharqiyah`: 395
+  - `ae_Abu-Dhabi`: 214
+  - `ae_Dubai`: 214
+  - `ae_Fujairah`: 214
+  - `ae_Ras-Al-Khaymah`: 214
+  - `ae_Umm-Al-Qaywayn`: 214
+  - `ly_Al-Butnan`: 214
+  - `ly_Al-Jabal-al-Akhdar`: 214
+  - `ly_Benghazi`: 214
+  - `ly_Misrata`: 214
+  - `ly_Tripoli`: 214
+  - `ma_Marrakech-Tensift-Al-Haouz`: 214
+  - `ma_Meknes-Tafilalet`: 214
+  - `ma_Oriental`: 214
+  - `ma_Souss-Massa-Draa`: 214
+  - `ma_Tanger-Tetouan`: 214
+  - `om_Al-Batnah`: 214
+  - `sy_Aleppo`: 214
+  - `sy_As-Suwayda`: 214
+  - `sy_Damascus-City`: 214
+  - `sy_Hims`: 214
+  - `sy_Lattakia`: 214
+  - `dz_Bordj-Bou-Arreridj‎`: 213
+  - `dz_Bouira`: 213
+  - `dz_Béchar`: 213
+  - `dz_Jijel`: 213
+  - `dz_Khenchela`: 213
+  - `dz_Oran`: 213
+  - `dz_Ouargla`: 213
+  - `eg_Alexandria`: 213
+  - `eg_Aswan`: 213
+  - `eg_Asyut`: 213
+  - `eg_Beheira`: 213
+  - `eg_Beni-Suef`: 213
+  - `eg_Cairo`: 213
+  - `eg_Dakahlia`: 213
+  - `eg_Faiyum`: 213
+  - `eg_Gharbia`: 213
+  - `eg_Ismailia`: 213
+  - `eg_Kafr-el-Sheikh`: 213
+  - `eg_Luxor`: 213
+  - `eg_Minya`: 213
+  - `eg_Monufia`: 213
+  - `eg_North-Sinai`: 213
+  - `eg_Port-Said`: 213
+  - `eg_Qena`: 213
+  - `eg_Red-Sea`: 213
+  - `eg_Sohag`: 213
+  - `eg_South-Sinai`: 213
+  - `eg_Suez`: 213
+  - `iq_Al-Anbar`: 213
+  - `iq_Al-Muthannia`: 213
+  - `iq_An-Najaf`: 213
+  - `iq_Arbil`: 213
+  - `iq_As-Sulaymaniyah`: 213
+  - `iq_Baghdad`: 213
+  - `iq_Basra`: 213
+  - `iq_Dihok`: 213
+  - `iq_Karbala`: 213
+  - `iq_Maysan`: 213
+  - `iq_Ninawa`: 213
+  - `iq_Wasit`: 213
+  - `jo_Aqaba`: 213
+  - `jo_Zarqa`: 213
+  - `lb_Akkar`: 213
+  - `lb_North-Lebanon`: 213
+  - `lb_South-Lebanon`: 213
+  - `om_Ad-Dakhiliyah`: 213
+  - `om_Dhofar`: 213
+  - `om_Musandam`: 213
+  - `om_Muscat`: 213
+  - `sa_Al-Madinah`: 213
+  - `sa_Al-Quassim`: 213
+  - `sa_Ar-Riyad`: 213
+  - `sa_Asir`: 213
+  - `sa_Ha'il`: 213
+  - `sa_Jizan`: 213
+  - `sa_Makkah`: 213
+  - `sa_Najran`: 213
+  - `sa_Tabuk`: 213
+  - `ye_Aden`: 213
+  - `ye_Al-Hudaydah`: 213
+  - `ye_Ibb`: 213
+  - `tn_Ariana`: 212
+  - `tn_Mahdia`: 212
+  - `tn_Sousse`: 212
+  - `ye_Dhamar`: 212
+  - `bh_Capital`: 210
+  - `kw_Hawalli`: 210
+  - `kw_Jahra`: 210
+  - `ps_Gaza-Strip`: 210
+  - `ps_West-Bank`: 210
+  - `qa_Ar-Rayyan`: 210
+  - `sd_Khartoum`: 210
+  - `tn_Kairouan`: 114
+  - `om_Ash-Sharqiyah`: 32
+  - `qa_Doha`: 24
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv`
+- Group: `supporting_labeled`
+- Schema: `nadi2021_labeled`
+- Rows: `20398`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_tweet`: 0 empty, 8 under 3 tokens
+  sample short rows: 1956, 6118, 7701, 9176, 13384
+- Class counts for `#3_country_label`:
+  - `Egypt`: 4283
+  - `Iraq`: 2729
+  - `Saudi_Arabia`: 2140
+  - `Algeria`: 1809
+  - `Oman`: 1501
+  - `Syria`: 1287
+  - `Libya`: 1286
+  - `Tunisia`: 859
+  - `Morocco`: 858
+  - `Lebanon`: 644
+  - `UAE`: 642
+  - `Jordan`: 429
+  - `Kuwait`: 429
+  - `Yemen`: 429
+  - `Palestine`: 428
+  - `Bahrain`: 215
+  - `Qatar`: 215
+  - `Sudan`: 215
+- Class counts for `#4_province_label`:
+  - `bh_Capital`: 215
+  - `dz_Batna`: 215
+  - `dz_Biskra`: 215
+  - `dz_Bouira`: 215
+  - `dz_Béchar`: 215
+  - `dz_Constantine`: 215
+  - `dz_El-Oued`: 215
+  - `dz_Oran`: 215
+  - `dz_Ouargla`: 215
+  - `eg_Kafr-el-Sheikh`: 215
+  - `eg_Monufia`: 215
+  - `eg_North-Sinai`: 215
+  - `iq_Al-Muthannia`: 215
+  - `iq_An-Najaf`: 215
+  - `iq_Arbil`: 215
+  - `iq_Babil`: 215
+  - `iq_Dihok`: 215
+  - `iq_Karbala`: 215
+  - `iq_Kirkuk`: 215
+  - `iq_Ninawa`: 215
+  - `jo_Aqaba`: 215
+  - `kw_Jahra`: 215
+  - `lb_Akkar`: 215
+  - `lb_North-Lebanon`: 215
+  - `ly_Al-Jabal-al-Akhdar`: 215
+  - `ly_Darnah`: 215
+  - `ma_Meknes-Tafilalet`: 215
+  - `ma_Souss-Massa-Draa`: 215
+  - `om_Ad-Dhahirah`: 215
+  - `om_Musandam`: 215
+  - `om_Muscat`: 215
+  - `qa_Ar-Rayyan`: 215
+  - `sd_Khartoum`: 215
+  - `sy_Aleppo`: 215
+  - `sy_Hama`: 215
+  - `sy_Lattakia`: 215
+  - `tn_Bizerte`: 215
+  - `tn_Mahdia`: 215
+  - `tn_Sfax`: 215
+  - `ye_Ibb`: 215
+  - `ae_Abu-Dhabi`: 214
+  - `ae_Dubai`: 214
+  - `ae_Ras-Al-Khaymah`: 214
+  - `eg_Alexandria`: 214
+  - `eg_Aswan`: 214
+  - `eg_Asyut`: 214
+  - `eg_Beheira`: 214
+  - `eg_Beni-Suef`: 214
+  - `eg_Dakahlia`: 214
+  - `eg_Faiyum`: 214
+  - `eg_Gharbia`: 214
+  - `eg_Ismailia`: 214
+  - `eg_Luxor`: 214
+  - `eg_Minya`: 214
+  - `eg_Port-Said`: 214
+  - `eg_Qena`: 214
+  - `eg_Red-Sea`: 214
+  - `eg_Sohag`: 214
+  - `eg_South-Sinai`: 214
+  - `eg_Suez`: 214
+  - `iq_Al-Anbar`: 214
+  - `iq_Baghdad`: 214
+  - `iq_Basra`: 214
+  - `iq_Wasit`: 214
+  - `jo_Zarqa`: 214
+  - `kw_Hawalli`: 214
+  - `lb_South-Lebanon`: 214
+  - `ly_Al-Butnan`: 214
+  - `ly_Benghazi`: 214
+  - `ly_Misrata`: 214
+  - `ly_Tripoli`: 214
+  - `ma_Marrakech-Tensift-Al-Haouz`: 214
+  - `ma_Tanger-Tetouan`: 214
+  - `om_Ad-Dakhiliyah`: 214
+  - `om_Al-Batnah`: 214
+  - `om_Ash-Sharqiyah`: 214
+  - `om_Dhofar`: 214
+  - `ps_Gaza-Strip`: 214
+  - `ps_West-Bank`: 214
+  - `sa_Al-Madinah`: 214
+  - `sa_Al-Quassim`: 214
+  - `sa_Ar-Riyad`: 214
+  - `sa_Ash-Sharqiyah`: 214
+  - `sa_Asir`: 214
+  - `sa_Ha'il`: 214
+  - `sa_Jizan`: 214
+  - `sa_Makkah`: 214
+  - `sa_Najran`: 214
+  - `sa_Tabuk`: 214
+  - `sy_As-Suwayda`: 214
+  - `sy_Damascus-City`: 214
+  - `sy_Hims`: 214
+  - `tn_Ariana`: 214
+  - `ye_Aden`: 214
+  - `iq_As-Sulaymaniyah`: 153
+  - `dz_Khenchela`: 89
+
+### `data/raw/nadi2020/NADI_release/unlabeled_10M.tsv`
+- Group: `unlabeled_id_only`
+- Schema: `nadi2020_unlabeled_ids`
+- Rows: `10000000`
+- Duplicate rows: `0`
+- Duplicate check: `skipped_large_id_only`
+
+### `data/raw/nadi2021/NADI2021_DEV.1.0/NADI2021-unlabeled_10M.tsv`
+- Group: `unlabeled_id_only`
+- Schema: `nadi2020_unlabeled_ids`
+- Rows: `10000000`
+- Duplicate rows: `0`
+- Duplicate check: `skipped_large_id_only`
+
+### `data/raw/nadi2020/test/NADI-2020_TEST_2.0/test_unlabeled.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2020_test_unlabeled`
+- Rows: `5000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2 tweet_content`: 0 empty, 1 under 3 tokens
+  sample short rows: 4055
+
+### `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/MSA_dev_labeled.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2021_labeled`
+- Rows: `5000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_tweet`: 0 empty, 6 under 3 tokens
+  sample short rows: 717, 2006, 2585, 3723, 4404
+- Class counts for `#3_country_label`:
+  - `Egypt`: 1032
+  - `Iraq`: 671
+  - `Saudi_Arabia`: 510
+  - `Algeria`: 427
+  - `Oman`: 341
+  - `Libya`: 310
+  - `Syria`: 309
+  - `Morocco`: 207
+  - `Tunisia`: 170
+  - `Lebanon`: 155
+  - `United_Arab_Emirates`: 154
+  - `Jordan`: 103
+  - `Kuwait`: 103
+  - `Palestine`: 102
+  - `Yemen`: 88
+  - `Somalia`: 63
+  - `Djibouti`: 52
+  - `Mauritania`: 52
+  - `Qatar`: 52
+  - `Bahrain`: 51
+  - `Sudan`: 48
+- Class counts for `#4_province_label`:
+  - `ae_Dubai`: 52
+  - `dj_Djibouti`: 52
+  - `dz_Batna`: 52
+  - `dz_Biskra`: 52
+  - `dz_Béchar`: 52
+  - `dz_El-Oued`: 52
+  - `dz_Khenchela`: 52
+  - `dz_Oran`: 52
+  - `dz_Ouargla`: 52
+  - `eg_Aswan`: 52
+  - `eg_Asyut`: 52
+  - `eg_Beheira`: 52
+  - `eg_Beni-Suef`: 52
+  - `eg_Faiyum`: 52
+  - `eg_Gharbia`: 52
+  - `eg_Ismailia`: 52
+  - `eg_Kafr-el-Sheikh`: 52
+  - `eg_Luxor`: 52
+  - `eg_Monufia`: 52
+  - `eg_North-Sinai`: 52
+  - `eg_Red-Sea`: 52
+  - `iq_Al-Muthannia`: 52
+  - `iq_Arbil`: 52
+  - `iq_As-Sulaymaniyah`: 52
+  - `iq_Babil`: 52
+  - `iq_Dihok`: 52
+  - `iq_Karbala`: 52
+  - `iq_Kirkuk`: 52
+  - `iq_Ninawa`: 52
+  - `jo_Aqaba`: 52
+  - `kw_Jahra`: 52
+  - `lb_Akkar`: 52
+  - `lb_South-Lebanon`: 52
+  - `ly_Al-Butnan`: 52
+  - `ly_Al-Jabal-al-Akhdar`: 52
+  - `ly_Darnah`: 52
+  - `ly_Misrata`: 52
+  - `ma_Meknes-Tafilalet`: 52
+  - `ma_Souss-Massa-Draa`: 52
+  - `ma_Tanger-Tetouan`: 52
+  - `mr_Nouakchott`: 52
+  - `om_Dhofar`: 52
+  - `om_Musandam`: 52
+  - `om_Muscat`: 52
+  - `qa_Ar-Rayyan`: 52
+  - `so_Banaadir`: 52
+  - `sy_Hama`: 52
+  - `sy_Hims`: 52
+  - `sy_Lattakia`: 52
+  - `tn_Mahdia`: 52
+  - `tn_Sfax`: 52
+  - `ae_Abu-Dhabi`: 51
+  - `ae_Ras-Al-Khaymah`: 51
+  - `bh_Capital`: 51
+  - `dz_Constantine`: 51
+  - `eg_Alexandria`: 51
+  - `eg_Dakahlia`: 51
+  - `eg_Minya`: 51
+  - `eg_Port-Said`: 51
+  - `eg_Qena`: 51
+  - `eg_Sohag`: 51
+  - `eg_South-Sinai`: 51
+  - `eg_Suez`: 51
+  - `iq_Al-Anbar`: 51
+  - `iq_An-Najaf`: 51
+  - `iq_Baghdad`: 51
+  - `iq_Basra`: 51
+  - `iq_Wasit`: 51
+  - `jo_Zarqa`: 51
+  - `kw_Hawalli`: 51
+  - `lb_North-Lebanon`: 51
+  - `ly_Benghazi`: 51
+  - `ly_Tripoli`: 51
+  - `ma_Marrakech-Tensift-Al-Haouz`: 51
+  - `om_Ad-Dakhiliyah`: 51
+  - `om_Al-Batnah`: 51
+  - `om_Ash-Sharqiyah`: 51
+  - `ps_Gaza-Strip`: 51
+  - `ps_West-Bank`: 51
+  - `sa_Al-Madinah`: 51
+  - `sa_Al-Quassim`: 51
+  - `sa_Ar-Riyad`: 51
+  - `sa_Ash-Sharqiyah`: 51
+  - `sa_Asir`: 51
+  - `sa_Ha'il`: 51
+  - `sa_Jizan`: 51
+  - `sa_Makkah`: 51
+  - `sa_Najran`: 51
+  - `sa_Tabuk`: 51
+  - `sy_Aleppo`: 51
+  - `sy_As-Suwayda`: 51
+  - `sy_Damascus-City`: 51
+  - `tn_Ariana`: 51
+  - `ye_Aden`: 51
+  - `sd_Khartoum`: 48
+  - `ye_Ibb`: 37
+  - `om_Ad-Dhahirah`: 32
+  - `tn_Bizerte`: 15
+  - `dz_Bouira`: 12
+  - `so_Woqooyi-Galbeed`: 11
+
+### `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.1+2.1_MSA/MSA_train_labeled.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2021_labeled`
+- Rows: `21000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_tweet`: 0 empty, 12 under 3 tokens
+  sample short rows: 25, 1818, 2382, 2586, 2681
+- Class counts for `#3_country_label`:
+  - `Egypt`: 4220
+  - `Iraq`: 2719
+  - `Saudi_Arabia`: 2110
+  - `Algeria`: 1899
+  - `Oman`: 1477
+  - `Libya`: 1266
+  - `Syria`: 1266
+  - `Morocco`: 844
+  - `Tunisia`: 844
+  - `Lebanon`: 633
+  - `United_Arab_Emirates`: 633
+  - `Jordan`: 422
+  - `Kuwait`: 422
+  - `Palestine`: 422
+  - `Yemen`: 422
+  - `Somalia`: 346
+  - `Bahrain`: 211
+  - `Djibouti`: 211
+  - `Mauritania`: 211
+  - `Qatar`: 211
+  - `Sudan`: 211
+- Class counts for `#4_province_label`:
+  - `ae_Abu-Dhabi`: 211
+  - `ae_Dubai`: 211
+  - `ae_Ras-Al-Khaymah`: 211
+  - `bh_Capital`: 211
+  - `dj_Djibouti`: 211
+  - `dz_Batna`: 211
+  - `dz_Biskra`: 211
+  - `dz_Bouira`: 211
+  - `dz_Béchar`: 211
+  - `dz_Constantine`: 211
+  - `dz_El-Oued`: 211
+  - `dz_Khenchela`: 211
+  - `dz_Oran`: 211
+  - `dz_Ouargla`: 211
+  - `eg_Alexandria`: 211
+  - `eg_Aswan`: 211
+  - `eg_Asyut`: 211
+  - `eg_Beheira`: 211
+  - `eg_Beni-Suef`: 211
+  - `eg_Dakahlia`: 211
+  - `eg_Faiyum`: 211
+  - `eg_Gharbia`: 211
+  - `eg_Ismailia`: 211
+  - `eg_Kafr-el-Sheikh`: 211
+  - `eg_Luxor`: 211
+  - `eg_Minya`: 211
+  - `eg_Monufia`: 211
+  - `eg_North-Sinai`: 211
+  - `eg_Port-Said`: 211
+  - `eg_Qena`: 211
+  - `eg_Red-Sea`: 211
+  - `eg_Sohag`: 211
+  - `eg_South-Sinai`: 211
+  - `eg_Suez`: 211
+  - `iq_Al-Anbar`: 211
+  - `iq_Al-Muthannia`: 211
+  - `iq_An-Najaf`: 211
+  - `iq_Arbil`: 211
+  - `iq_Babil`: 211
+  - `iq_Baghdad`: 211
+  - `iq_Basra`: 211
+  - `iq_Dihok`: 211
+  - `iq_Karbala`: 211
+  - `iq_Kirkuk`: 211
+  - `iq_Ninawa`: 211
+  - `iq_Wasit`: 211
+  - `jo_Aqaba`: 211
+  - `jo_Zarqa`: 211
+  - `kw_Hawalli`: 211
+  - `kw_Jahra`: 211
+  - `lb_Akkar`: 211
+  - `lb_North-Lebanon`: 211
+  - `lb_South-Lebanon`: 211
+  - `ly_Al-Butnan`: 211
+  - `ly_Al-Jabal-al-Akhdar`: 211
+  - `ly_Benghazi`: 211
+  - `ly_Darnah`: 211
+  - `ly_Misrata`: 211
+  - `ly_Tripoli`: 211
+  - `ma_Marrakech-Tensift-Al-Haouz`: 211
+  - `ma_Meknes-Tafilalet`: 211
+  - `ma_Souss-Massa-Draa`: 211
+  - `ma_Tanger-Tetouan`: 211
+  - `mr_Nouakchott`: 211
+  - `om_Ad-Dakhiliyah`: 211
+  - `om_Ad-Dhahirah`: 211
+  - `om_Al-Batnah`: 211
+  - `om_Ash-Sharqiyah`: 211
+  - `om_Dhofar`: 211
+  - `om_Musandam`: 211
+  - `om_Muscat`: 211
+  - `ps_Gaza-Strip`: 211
+  - `ps_West-Bank`: 211
+  - `qa_Ar-Rayyan`: 211
+  - `sa_Al-Madinah`: 211
+  - `sa_Al-Quassim`: 211
+  - `sa_Ar-Riyad`: 211
+  - `sa_Ash-Sharqiyah`: 211
+  - `sa_Asir`: 211
+  - `sa_Ha'il`: 211
+  - `sa_Jizan`: 211
+  - `sa_Makkah`: 211
+  - `sa_Najran`: 211
+  - `sa_Tabuk`: 211
+  - `sd_Khartoum`: 211
+  - `so_Banaadir`: 211
+  - `sy_Aleppo`: 211
+  - `sy_As-Suwayda`: 211
+  - `sy_Damascus-City`: 211
+  - `sy_Hama`: 211
+  - `sy_Hims`: 211
+  - `sy_Lattakia`: 211
+  - `tn_Ariana`: 211
+  - `tn_Bizerte`: 211
+  - `tn_Mahdia`: 211
+  - `tn_Sfax`: 211
+  - `ye_Aden`: 211
+  - `ye_Ibb`: 211
+  - `iq_As-Sulaymaniyah`: 187
+  - `so_Woqooyi-Galbeed`: 135
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023_Subtask1_DEV-checkpoint.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_st1_labeled_checkpoint`
+- Rows: `1800`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `content`: 0 empty, 0 under 3 tokens
+- Class counts for `label`:
+  - `Algeria`: 100
+  - `Bahrain`: 100
+  - `Egypt`: 100
+  - `Iraq`: 100
+  - `Jordan`: 100
+  - `Kuwait`: 100
+  - `Lebanon`: 100
+  - `Libya`: 100
+  - `Morocco`: 100
+  - `Oman`: 100
+  - `Palestine`: 100
+  - `Qatar`: 100
+  - `Saudi_Arabia`: 100
+  - `Sudan`: 100
+  - `Syria`: 100
+  - `Tunisia`: 100
+  - `UAE`: 100
+  - `Yemen`: 100
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/.ipynb_checkpoints/NADI2023_Subtask1_TRAIN-checkpoint.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_st1_labeled`
+- Rows: `18000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_content`: 0 empty, 1 under 3 tokens
+  sample short rows: 16685
+- Class counts for `#3_label`:
+  - `Algeria`: 1000
+  - `Bahrain`: 1000
+  - `Egypt`: 1000
+  - `Iraq`: 1000
+  - `Jordan`: 1000
+  - `Kuwait`: 1000
+  - `Lebanon`: 1000
+  - `Libya`: 1000
+  - `Morocco`: 1000
+  - `Oman`: 1000
+  - `Palestine`: 1000
+  - `Qatar`: 1000
+  - `Saudi_Arabia`: 1000
+  - `Sudan`: 1000
+  - `Syria`: 1000
+  - `Tunisia`: 1000
+  - `UAE`: 1000
+  - `Yemen`: 1000
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/MADAR-2018.tsv`
+- Group: `out_of_scope`
+- Schema: `madar_2018`
+- Rows: `40000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `sent`: 0 empty, 3487 under 3 tokens
+  sample short rows: 19, 100, 109, 110, 148
+- Class counts for `country`:
+  - `Egypt`: 4800
+  - `Iraq`: 4800
+  - `Jordan`: 3200
+  - `Libya`: 3200
+  - `Morocco`: 3200
+  - `Saudi_Arabia`: 3200
+  - `Syria`: 3200
+  - `Tunisia`: 3200
+  - `Algeria`: 1600
+  - `Lebanon`: 1600
+  - `Oman`: 1600
+  - `Palestine`: 1600
+  - `Qatar`: 1600
+  - `Sudan`: 1600
+  - `Yemen`: 1600
+- Class counts for `city`:
+  - `Aleppo`: 1600
+  - `Alexandria`: 1600
+  - `Algiers`: 1600
+  - `Amman`: 1600
+  - `Aswan`: 1600
+  - `Baghdad`: 1600
+  - `Basra`: 1600
+  - `Beirut`: 1600
+  - `Benghazi`: 1600
+  - `Cairo`: 1600
+  - `Damascus`: 1600
+  - `Doha`: 1600
+  - `Fes`: 1600
+  - `Jeddah`: 1600
+  - `Jerusalem`: 1600
+  - `Khartoum`: 1600
+  - `Mosul`: 1600
+  - `Muscat`: 1600
+  - `Rabat`: 1600
+  - `Riyadh`: 1600
+  - `Salt`: 1600
+  - `Sanaa`: 1600
+  - `Sfax`: 1600
+  - `Tripoli`: 1600
+  - `Tunis`: 1600
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask2/.ipynb_checkpoints/NADI2023_Subtask2B_DEV-checkpoint.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_mt_labeled`
+- Rows: `200`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `source_dialect`: 0 empty, 3 under 3 tokens
+  sample short rows: 32, 78, 93
+- Text column `target_msa`: 0 empty, 2 under 3 tokens
+  sample short rows: 78, 93
+- Class counts for `dialect_id`:
+  - `Egyptain`: 50
+  - `Emirati`: 50
+  - `Jordanian`: 50
+  - `Palestinian`: 50
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask2/subtask2_dev.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_mt_labeled`
+- Rows: `400`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `source_dialect`: 0 empty, 5 under 3 tokens
+  sample short rows: 102, 116, 138, 156, 192
+- Text column `target_msa`: 0 empty, 6 under 3 tokens
+  sample short rows: 102, 116, 138, 156, 189
+- Class counts for `dialect_id`:
+  - `Egyptain`: 100
+  - `Emirati`: 100
+  - `Jordanian`: 100
+  - `Palestinian`: 100
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask3/.ipynb_checkpoints/NADI2023_Subtask2B_DEV-checkpoint.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_mt_labeled`
+- Rows: `200`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `source_dialect`: 0 empty, 3 under 3 tokens
+  sample short rows: 32, 78, 93
+- Text column `target_msa`: 0 empty, 2 under 3 tokens
+  sample short rows: 78, 93
+- Class counts for `dialect_id`:
+  - `Egyptain`: 50
+  - `Emirati`: 50
+  - `Jordanian`: 50
+  - `Palestinian`: 50
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask3/subtask3_dev.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_mt_labeled`
+- Rows: `400`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `source_dialect`: 0 empty, 5 under 3 tokens
+  sample short rows: 102, 116, 138, 156, 192
+- Text column `target_msa`: 0 empty, 6 under 3 tokens
+  sample short rows: 102, 116, 138, 156, 189
+- Class counts for `dialect_id`:
+  - `Egyptain`: 100
+  - `Emirati`: 100
+  - `Jordanian`: 100
+  - `Palestinian`: 100
+
+### `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask1/NADI2023_Subtask1_TEST_Unlabeled.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_st1_test_unlabeled`
+- Rows: `3600`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_content`: 0 empty, 0 under 3 tokens
+
+### `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/NADI2023_Subtask2_TEST_Unlabeled.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_mt_test_unlabeled`
+- Rows: `2000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#3_source_dialect`: 0 empty, 15 under 3 tokens
+  sample short rows: 357, 568, 585, 612, 621
+- Class counts for `#2_dialect_id`:
+  - `Egyptain`: 500
+  - `Emirati`: 500
+  - `Jordanian`: 500
+  - `Palestinian`: 500
+
+### `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/NADI2023_Subtask3_TEST_Unlabeled.tsv`
+- Group: `out_of_scope`
+- Schema: `nadi2023_mt_test_unlabeled`
+- Rows: `2000`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#3_source_dialect`: 0 empty, 15 under 3 tokens
+  sample short rows: 357, 568, 585, 612, 621
+- Class counts for `#2_dialect_id`:
+  - `Egyptain`: 500
+  - `Emirati`: 500
+  - `Jordanian`: 500
+  - `Palestinian`: 500
