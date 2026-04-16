@@ -18,16 +18,22 @@ REPORT_JSON_NAME = "data_validation_report.json"
 REPORT_MARKDOWN_NAME = "data_validation_summary.md"
 REPORT_CSV_NAME = "data_validation_files.csv"
 FILE_GROUP_ORDER = (
-    "labeled_benchmark",
-    "supporting_labeled",
+    "benchmark_anchor",
+    "canonical_supporting",
+    "provenance_aux_eval",
     "unlabeled_id_only",
     "out_of_scope",
 )
 FILE_GROUP_TITLES = {
-    "labeled_benchmark": "Labeled Benchmark Files",
-    "supporting_labeled": "Supporting Labeled Files",
+    "benchmark_anchor": "Benchmark Anchor Files",
+    "canonical_supporting": "Canonical Supporting Files",
+    "provenance_aux_eval": "Provenance / Auxiliary Evaluation Files",
     "unlabeled_id_only": "Unlabeled ID-Only Files",
     "out_of_scope": "Out-of-Scope Files",
+}
+LABEL_NORMALIZATION = {
+    "UAE": "UAE",
+    "United_Arab_Emirates": "UAE",
 }
 
 
@@ -145,13 +151,15 @@ SCHEMA_SPECS: tuple[SchemaSpec, ...] = (
 )
 
 
-LABELED_BENCHMARK_SUFFIXES = {
+BENCHMARK_ANCHOR_SUFFIXES = {
     "nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
     "nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
 }
-SUPPORTING_LABELED_SUFFIXES = {
+CANONICAL_SUPPORTING_SUFFIXES = {
     "nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
     "nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
+}
+PROVENANCE_AUX_EVAL_SUFFIXES = {
     "nadi2020/NADI_release/train_labeled.tsv",
     "nadi2020/NADI_release/dev_labeled.tsv",
     "nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
@@ -171,13 +179,20 @@ def match_schema(columns: list[str]) -> SchemaSpec:
 
 def classify_file_group(path: Path, schema_name: str) -> str:
     normalized_path = path.as_posix()
-    if any(normalized_path.endswith(suffix) for suffix in LABELED_BENCHMARK_SUFFIXES):
-        return "labeled_benchmark"
-    if any(normalized_path.endswith(suffix) for suffix in SUPPORTING_LABELED_SUFFIXES):
-        return "supporting_labeled"
+    if any(normalized_path.endswith(suffix) for suffix in BENCHMARK_ANCHOR_SUFFIXES):
+        return "benchmark_anchor"
+    if any(normalized_path.endswith(suffix) for suffix in CANONICAL_SUPPORTING_SUFFIXES):
+        return "canonical_supporting"
+    if any(normalized_path.endswith(suffix) for suffix in PROVENANCE_AUX_EVAL_SUFFIXES):
+        return "provenance_aux_eval"
     if schema_name == "nadi2020_unlabeled_ids":
         return "unlabeled_id_only"
     return "out_of_scope"
+
+
+def normalize_raw_label(label: str) -> str:
+    cleaned = label.strip()
+    return LABEL_NORMALIZATION.get(cleaned, cleaned)
 
 
 def compute_row_fingerprint(values: list[str]) -> str:
@@ -337,50 +352,105 @@ def summarize_group(results: list[ValidationResult]) -> dict[str, int]:
     }
 
 
-def analyze_cross_file_overlap(results: list[ValidationResult]) -> dict[str, Any]:
+def collect_text_occurrences(result: ValidationResult, *, normalize_labels: bool) -> dict[str, list[dict[str, Any]]]:
+    occurrences: dict[str, list[dict[str, Any]]] = {}
+    path = Path(result.path)
+    with path.open("r", encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle, delimiter="\t")
+        for row_number, row in enumerate(reader, start=2):
+            text = (row.get(result.primary_text_column) or "").strip()
+            if not text:
+                continue
+            label = (row.get(result.primary_label_column) or "").strip() or "<EMPTY>"
+            stored_label = normalize_raw_label(label) if normalize_labels else label
+            text_hash = compute_text_fingerprint(text)
+            occurrences.setdefault(text_hash, []).append(
+                {
+                    "path": result.path,
+                    "row_number": row_number,
+                    "label": stored_label,
+                    "raw_label": label,
+                }
+            )
+    return occurrences
+
+
+def analyze_benchmark_safety(results: list[ValidationResult]) -> dict[str, Any]:
     benchmark_results = [
         result
         for result in results
-        if result.file_group in {"labeled_benchmark", "supporting_labeled"}
+        if result.file_group == "benchmark_anchor"
         and result.primary_text_column
         and result.primary_label_column
     ]
-    text_occurrences: dict[str, list[dict[str, Any]]] = {}
+    canonical_supporting_results = [
+        result
+        for result in results
+        if result.file_group == "canonical_supporting"
+        and result.primary_text_column
+        and result.primary_label_column
+    ]
+
+    benchmark_relevant_results = benchmark_results + canonical_supporting_results
+    benchmark_text_occurrences: dict[str, list[dict[str, Any]]] = {}
     pairwise_counts: Counter[tuple[str, str]] = Counter()
-    leakage_cases: list[dict[str, Any]] = []
+    for result in benchmark_relevant_results:
+        file_occurrences = collect_text_occurrences(result, normalize_labels=False)
+        for text_hash, occurrences in file_occurrences.items():
+            benchmark_text_occurrences.setdefault(text_hash, []).extend(occurrences)
 
-    for result in benchmark_results:
-        path = Path(result.path)
-        with path.open("r", encoding="utf-8", newline="") as handle:
-            reader = csv.DictReader(handle, delimiter="\t")
-            for row_number, row in enumerate(reader, start=2):
-                text = (row.get(result.primary_text_column) or "").strip()
-                if not text:
-                    continue
-                text_hash = compute_text_fingerprint(text)
-                label = (row.get(result.primary_label_column) or "").strip() or "<EMPTY>"
-                text_occurrences.setdefault(text_hash, []).append(
-                    {
-                        "path": result.path,
-                        "row_number": row_number,
-                        "label": label,
-                    }
-                )
-
-    texts_in_multiple_files = 0
-    for text_hash, occurrences in text_occurrences.items():
+    benchmark_relevant_texts_in_multiple_files = 0
+    for text_hash, occurrences in benchmark_text_occurrences.items():
         unique_files = sorted({occurrence["path"] for occurrence in occurrences})
         if len(unique_files) > 1:
-            texts_in_multiple_files += 1
+            benchmark_relevant_texts_in_multiple_files += 1
             for pair in combinations(unique_files, 2):
                 pairwise_counts[pair] += 1
 
+    benchmark_overlap_examples: list[dict[str, Any]] = []
+    benchmark_overlap_count = 0
+    if len(benchmark_results) >= 2:
+        benchmark_indexes = {
+            result.path: collect_text_occurrences(result, normalize_labels=False)
+            for result in benchmark_results
+        }
+        for result_a, result_b in combinations(benchmark_results, 2):
+            shared_hashes = sorted(
+                set(benchmark_indexes[result_a.path]).intersection(benchmark_indexes[result_b.path])
+            )
+            benchmark_overlap_count += len(shared_hashes)
+            for text_hash in shared_hashes[:10]:
+                if len(benchmark_overlap_examples) >= 20:
+                    break
+                benchmark_overlap_examples.append(
+                    {
+                        "text_hash": text_hash,
+                        "files": [result_a.path, result_b.path],
+                        "sample_rows": (
+                            benchmark_indexes[result_a.path][text_hash][:2]
+                            + benchmark_indexes[result_b.path][text_hash][:2]
+                        ),
+                    }
+                )
+
+    supporting_text_occurrences: dict[str, list[dict[str, Any]]] = {}
+    for result in canonical_supporting_results:
+        file_occurrences = collect_text_occurrences(result, normalize_labels=True)
+        for text_hash, occurrences in file_occurrences.items():
+            supporting_text_occurrences.setdefault(text_hash, []).extend(occurrences)
+
+    supporting_conflict_cases: list[dict[str, Any]] = []
+    supporting_overlap_texts = 0
+    for text_hash, occurrences in supporting_text_occurrences.items():
+        unique_files = sorted({occurrence["path"] for occurrence in occurrences})
+        if len(unique_files) > 1:
+            supporting_overlap_texts += 1
         unique_labels = sorted({occurrence["label"] for occurrence in occurrences})
         if len(unique_files) > 1 and len(unique_labels) > 1:
-            leakage_cases.append(
+            supporting_conflict_cases.append(
                 {
                     "text_hash": text_hash,
-                    "labels": unique_labels,
+                    "normalized_labels": unique_labels,
                     "files": unique_files,
                     "occurrence_count": len(occurrences),
                     "sample_rows": occurrences[:6],
@@ -398,18 +468,23 @@ def analyze_cross_file_overlap(results: list[ValidationResult]) -> dict[str, Any
             key=lambda item: (-item[1], item[0][0], item[0][1]),
         )
     ]
-    leakage_cases.sort(
+    supporting_conflict_cases.sort(
         key=lambda case: (-len(case["files"]), -case["occurrence_count"], case["text_hash"])
     )
 
     return {
-        "files_analyzed": [result.path for result in benchmark_results],
-        "file_count": len(benchmark_results),
-        "unique_text_count": len(text_occurrences),
-        "texts_in_multiple_files": texts_in_multiple_files,
-        "pairwise_overlap_counts": pairwise_overlap_counts,
-        "label_leakage_case_count": len(leakage_cases),
-        "label_leakage_examples": leakage_cases[:20],
+        "benchmark_anchor_files": [result.path for result in benchmark_results],
+        "canonical_supporting_files": [result.path for result in canonical_supporting_results],
+        "benchmark_relevant_file_count": len(benchmark_relevant_results),
+        "benchmark_relevant_unique_text_count": len(benchmark_text_occurrences),
+        "benchmark_relevant_texts_in_multiple_files": benchmark_relevant_texts_in_multiple_files,
+        "benchmark_relevant_pairwise_overlap_counts": pairwise_overlap_counts,
+        "benchmark_train_dev_exact_overlap_count": benchmark_overlap_count,
+        "benchmark_train_dev_overlap_examples": benchmark_overlap_examples,
+        "supporting_overlap_text_count": supporting_overlap_texts,
+        "supporting_conflict_case_count": len(supporting_conflict_cases),
+        "supporting_conflict_examples": supporting_conflict_cases[:20],
+        "label_normalization": LABEL_NORMALIZATION,
     }
 
 
@@ -431,10 +506,9 @@ def build_report_payload(results: list[ValidationResult], data_root: Path) -> di
         for group in FILE_GROUP_ORDER
     }
     summary_totals = {
-        "labeled_text_rows_scanned": (
-            group_totals["labeled_benchmark"]["row_count"]
-            + group_totals["supporting_labeled"]["row_count"]
-        ),
+        "benchmark_anchor_rows_scanned": group_totals["benchmark_anchor"]["row_count"],
+        "canonical_supporting_rows_scanned": group_totals["canonical_supporting"]["row_count"],
+        "provenance_aux_eval_rows_scanned": group_totals["provenance_aux_eval"]["row_count"],
         "unlabeled_id_only_rows_scanned": group_totals["unlabeled_id_only"]["row_count"],
         "out_of_scope_rows_scanned": group_totals["out_of_scope"]["row_count"],
     }
@@ -447,7 +521,7 @@ def build_report_payload(results: list[ValidationResult], data_root: Path) -> di
         "files_with_short_text": files_with_short_text,
         "summary_totals": summary_totals,
         "group_totals": group_totals,
-        "cross_file_overlap": analyze_cross_file_overlap(results),
+        "benchmark_safety": analyze_benchmark_safety(results),
         "results": [asdict(result) for result in results],
     }
 
@@ -501,50 +575,73 @@ def render_group_table(results: list[ValidationResult]) -> list[str]:
 
 
 def render_overlap_section(payload: dict[str, Any]) -> list[str]:
-    overlap = payload["cross_file_overlap"]
+    overlap = payload["benchmark_safety"]
     lines = [
-        "## Cross-File Overlap Checks",
+        "## Benchmark Safety Checks",
         "",
-        "- Scope: labeled benchmark files plus supporting labeled files only",
-        f"- Files analyzed: `{overlap['file_count']}`",
-        f"- Unique exact text hashes analyzed: `{overlap['unique_text_count']}`",
-        f"- Exact text hashes appearing in more than one file: `{overlap['texts_in_multiple_files']}`",
-        f"- Possible label leakage cases: `{overlap['label_leakage_case_count']}`",
+        "- Scope: benchmark anchor plus canonical supporting sources only",
+        "- Provenance / auxiliary evaluation files are excluded from canonical leakage accounting",
+        f"- Benchmark-relevant files analyzed: `{overlap['benchmark_relevant_file_count']}`",
+        f"- Benchmark-relevant unique exact text hashes: `{overlap['benchmark_relevant_unique_text_count']}`",
+        f"- Benchmark-relevant exact text hashes appearing in more than one file: `{overlap['benchmark_relevant_texts_in_multiple_files']}`",
+        f"- Exact train/dev overlaps inside the benchmark anchor: `{overlap['benchmark_train_dev_exact_overlap_count']}`",
+        f"- Supporting-source same-text conflicting-label cases: `{overlap['supporting_conflict_case_count']}`",
+        "- Policy: exact train/dev overlaps in the benchmark anchor should be removed from dev before benchmark-style evaluation",
+        "- Policy: same-text conflicting-label cases across the canonical supporting sources should be dropped from augmentation candidates",
+        "- Leakage accounting normalizes `UAE` and `United_Arab_Emirates` to `UAE`",
         "",
-        "### Pairwise Overlap Counts",
+        "### Benchmark-Relevant Pairwise Overlap Counts",
         "",
     ]
 
-    if overlap["pairwise_overlap_counts"]:
+    if overlap["benchmark_relevant_pairwise_overlap_counts"]:
         lines.extend(
             [
                 "| File A | File B | Shared exact texts |",
                 "| --- | --- | ---: |",
             ]
         )
-        for item in overlap["pairwise_overlap_counts"]:
+        for item in overlap["benchmark_relevant_pairwise_overlap_counts"]:
             lines.append(
                 f"| `{item['file_a']}` | `{item['file_b']}` | {item['shared_text_count']} |"
             )
     else:
-        lines.append("No cross-file text overlaps found in the analyzed labeled benchmark files.")
+        lines.append("No cross-file text overlaps found in the benchmark-relevant files.")
 
-    lines.extend(["", "### Possible Label Leakage Examples", ""])
-    if overlap["label_leakage_examples"]:
+    lines.extend(["", "### Benchmark Train/Dev Overlap Examples", ""])
+    if overlap["benchmark_train_dev_overlap_examples"]:
         lines.extend(
             [
-                "| Text hash | Labels | Files | Occurrences |",
+                "| Text hash | Files | Example rows |",
+                "| --- | --- | --- |",
+            ]
+        )
+        for item in overlap["benchmark_train_dev_overlap_examples"]:
+            files = ", ".join(f"`{Path(path).name}`" for path in item["files"])
+            rows = ", ".join(
+                f"`{Path(row['path']).name}:{row['row_number']}`"
+                for row in item["sample_rows"]
+            )
+            lines.append(f"| `{item['text_hash']}` | {files} | {rows} |")
+    else:
+        lines.append("No exact train/dev text overlaps were found inside the benchmark anchor.")
+
+    lines.extend(["", "### Supporting Conflict Examples", ""])
+    if overlap["supporting_conflict_examples"]:
+        lines.extend(
+            [
+                "| Text hash | Normalized labels | Files | Occurrences |",
                 "| --- | --- | --- | ---: |",
             ]
         )
-        for item in overlap["label_leakage_examples"]:
-            labels = ", ".join(f"`{label}`" for label in item["labels"])
+        for item in overlap["supporting_conflict_examples"]:
+            labels = ", ".join(f"`{label}`" for label in item["normalized_labels"])
             files = ", ".join(f"`{Path(path).name}`" for path in item["files"])
             lines.append(
                 f"| `{item['text_hash']}` | {labels} | {files} | {item['occurrence_count']} |"
             )
     else:
-        lines.append("No cross-file same-text different-label cases were found.")
+        lines.append("No canonical supporting-source same-text different-label cases were found.")
     lines.append("")
     return lines
 
@@ -560,7 +657,9 @@ def render_markdown(results: list[ValidationResult], payload: dict[str, Any]) ->
         f"- Data root: `{payload['data_root']}`",
         f"- Files scanned: `{payload['files_scanned']}`",
         f"- Total rows scanned: `{payload['total_rows_scanned']}`",
-        f"- Labeled text rows scanned: `{payload['summary_totals']['labeled_text_rows_scanned']}`",
+        f"- Benchmark anchor rows scanned: `{payload['summary_totals']['benchmark_anchor_rows_scanned']}`",
+        f"- Canonical supporting rows scanned: `{payload['summary_totals']['canonical_supporting_rows_scanned']}`",
+        f"- Provenance / auxiliary evaluation rows scanned: `{payload['summary_totals']['provenance_aux_eval_rows_scanned']}`",
         f"- Unlabeled ID-only rows scanned: `{payload['summary_totals']['unlabeled_id_only_rows_scanned']}`",
         f"- Out-of-scope rows scanned: `{payload['summary_totals']['out_of_scope_rows_scanned']}`",
         f"- Files with duplicate rows: `{payload['files_with_duplicates']}`",

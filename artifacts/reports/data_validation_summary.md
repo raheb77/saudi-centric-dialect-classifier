@@ -3,7 +3,9 @@
 - Data root: `data/raw`
 - Files scanned: `23`
 - Total rows scanned: `20212125`
-- Labeled text rows scanned: `112525`
+- Benchmark anchor rows scanned: `19800`
+- Canonical supporting rows scanned: `40768`
+- Provenance / auxiliary evaluation rows scanned: `51957`
 - Unlabeled ID-only rows scanned: `20000000`
 - Out-of-scope rows scanned: `99600`
 - Files with duplicate rows: `0`
@@ -12,7 +14,7 @@
 
 ## Grouped File Summary
 
-### Labeled Benchmark Files
+### Benchmark Anchor Files
 
 - Files: `2`
 - Rows: `19800`
@@ -25,13 +27,26 @@
 | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv` | `nadi2023_st1_labeled` | 1800 | 0 | `full` | 0 | 0 | - |
 | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | `nadi2023_st1_labeled` | 18000 | 0 | `full` | 0 | 1 | - |
 
-### Supporting Labeled Files
+### Canonical Supporting Files
 
-- Files: `6`
-- Rows: `92725`
+- Files: `2`
+- Rows: `40768`
 - Files with duplicates: `0`
 - Files with empty texts: `0`
-- Files with texts under 3 tokens: `6`
+- Files with texts under 3 tokens: `2`
+
+| File | Schema | Rows | Duplicates | Duplicate check | Empty texts | Short texts | Missing columns |
+| --- | --- | ---: | ---: | --- | ---: | ---: | --- |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `nadi2020_labeled` | 20370 | 0 | `full` | 0 | 12 | - |
+| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | `nadi2021_labeled` | 20398 | 0 | `full` | 0 | 8 | - |
+
+### Provenance / Auxiliary Evaluation Files
+
+- Files: `4`
+- Rows: `51957`
+- Files with duplicates: `0`
+- Files with empty texts: `0`
+- Files with texts under 3 tokens: `4`
 
 | File | Schema | Rows | Duplicates | Duplicate check | Empty texts | Short texts | Missing columns |
 | --- | --- | ---: | ---: | --- | ---: | ---: | --- |
@@ -39,8 +54,6 @@
 | `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `nadi2020_labeled` | 21000 | 0 | `full` | 0 | 12 | - |
 | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `nadi2021_labeled` | 5000 | 0 | `full` | 0 | 1 | - |
 | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `nadi2021_labeled` | 21000 | 0 | `full` | 0 | 8 | - |
-| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `nadi2020_labeled` | 20370 | 0 | `full` | 0 | 12 | - |
-| `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | `nadi2021_labeled` | 20398 | 0 | `full` | 0 | 8 | - |
 
 ### Unlabeled ID-Only Files
 
@@ -79,68 +92,50 @@
 | `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask2/NADI2023_Subtask2_TEST_Unlabeled.tsv` | `nadi2023_mt_test_unlabeled` | 2000 | 0 | `full` | 0 | 15 | - |
 | `data/raw/nadi2023/test/NADI2023_Release_Test/Subtask3/NADI2023_Subtask3_TEST_Unlabeled.tsv` | `nadi2023_mt_test_unlabeled` | 2000 | 0 | `full` | 0 | 15 | - |
 
-## Cross-File Overlap Checks
+## Benchmark Safety Checks
 
-- Scope: labeled benchmark files plus supporting labeled files only
-- Files analyzed: `8`
-- Unique exact text hashes analyzed: `71205`
-- Exact text hashes appearing in more than one file: `40482`
-- Possible label leakage cases: `1798`
+- Scope: benchmark anchor plus canonical supporting sources only
+- Provenance / auxiliary evaluation files are excluded from canonical leakage accounting
+- Benchmark-relevant files analyzed: `4`
+- Benchmark-relevant unique exact text hashes: `60180`
+- Benchmark-relevant exact text hashes appearing in more than one file: `171`
+- Exact train/dev overlaps inside the benchmark anchor: `6`
+- Supporting-source same-text conflicting-label cases: `2`
+- Policy: exact train/dev overlaps in the benchmark anchor should be removed from dev before benchmark-style evaluation
+- Policy: same-text conflicting-label cases across the canonical supporting sources should be dropped from augmentation candidates
+- Leakage accounting normalizes `UAE` and `United_Arab_Emirates` to `UAE`
 
-### Pairwise Overlap Counts
+### Benchmark-Relevant Pairwise Overlap Counts
 
 | File A | File B | Shared exact texts |
 | --- | --- | ---: |
-| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 20372 |
-| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 20221 |
-| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | 178 |
-| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 162 |
-| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 162 |
 | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 162 |
-| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | 32 |
-| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 30 |
-| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2020/NADI_release/train_labeled.tsv` | 29 |
-| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 28 |
-| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | 26 |
-| `data/raw/nadi2020/NADI_release/dev_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | 23 |
-| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | 23 |
 | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 6 |
-| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | 5 |
-| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | 5 |
-| `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 2 |
 | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 2 |
-| `data/raw/nadi2020/NADI_release/train_labeled.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 1 |
 | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv` | `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv` | 1 |
 
-### Possible Label Leakage Examples
+### Benchmark Train/Dev Overlap Examples
 
-| Text hash | Labels | Files | Occurrences |
+| Text hash | Files | Example rows |
+| --- | --- | --- |
+| `122874ea182df90ee81879b0b3732d6ba5eb3dc0` | `NADI2023_Subtask1_DEV.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | `NADI2023_Subtask1_DEV.tsv:1689`, `NADI2023_Subtask1_TRAIN.tsv:14172` |
+| `1f25e02318f388515a4c423b22a3ebcd4934bdeb` | `NADI2023_Subtask1_DEV.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | `NADI2023_Subtask1_DEV.tsv:1705`, `NADI2023_Subtask1_TRAIN.tsv:566` |
+| `5bbbe3a3499669d885eef52da6d9e06932e8420f` | `NADI2023_Subtask1_DEV.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | `NADI2023_Subtask1_DEV.tsv:1700`, `NADI2023_Subtask1_TRAIN.tsv:17318` |
+| `7269cf7aa18a4b5ac0e4cd65fe6e300d9926eed0` | `NADI2023_Subtask1_DEV.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | `NADI2023_Subtask1_DEV.tsv:636`, `NADI2023_Subtask1_TRAIN.tsv:9108` |
+| `928c479414b43312f954565b73429b78eb1e84db` | `NADI2023_Subtask1_DEV.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | `NADI2023_Subtask1_DEV.tsv:163`, `NADI2023_Subtask1_TRAIN.tsv:2368` |
+| `b13dc3def48541a44315add213bd8e34ba35a728` | `NADI2023_Subtask1_DEV.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | `NADI2023_Subtask1_DEV.tsv:230`, `NADI2023_Subtask1_TRAIN.tsv:3269` |
+
+### Supporting Conflict Examples
+
+| Text hash | Normalized labels | Files | Occurrences |
 | --- | --- | --- | ---: |
-| `85bdb9d3f435786bd767c8cf7a619f058499abdb` | `Lebanon`, `Syria` | `train_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2020-TWT.tsv`, `NADI2021-TWT.tsv` | 6 |
-| `4552ba417ddec7e927482f2c41f78c28f6ad5daa` | `Iraq`, `Sudan` | `train_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2020-TWT.tsv`, `NADI2021-TWT.tsv` | 4 |
-| `c1c103e31191b57161dfcb0cd3d2eec6d499e939` | `Iraq`, `Palestine` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 7 |
-| `c577fa0dbdbba07da9678201fdea0ab37813f26a` | `Jordan`, `Oman` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 6 |
-| `cad225b2eed8c7ea857517e37cf57b52ef2d6ff9` | `Egypt`, `Iraq`, `Morocco`, `United_Arab_Emirates` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 6 |
-| `ce4914b210f1cfc6ecb26e1b4bbce7c2e5b47c0d` | `Egypt`, `Iraq`, `Libya`, `Saudi_Arabia` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 6 |
-| `1aaea59a9d6dbecbe3d028e29789fea941b45512` | `Morocco`, `Saudi_Arabia`, `United_Arab_Emirates` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
-| `2a0ff161cc9917f2970172a2416fb58335c03aad` | `Egypt`, `Libya`, `Morocco` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
-| `3aa045e467c3bd92e6322304de58e36822f64a48` | `Lebanon`, `Palestine`, `Saudi_Arabia` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
-| `8bdc16ace7f760e2814601db0f9d8f0aafc69000` | `Algeria`, `Tunisia`, `UAE`, `United_Arab_Emirates` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
-| `c76807d5d5fd27f8df822eb513e3e4501ad2100c` | `Morocco`, `Syria` | `DA_dev_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2021-TWT.tsv` | 5 |
-| `cc6dd82f8f1a916310e0e94b00b51cfc39983ee0` | `Algeria`, `Egypt` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 5 |
-| `5a430057e36deac04bfb0e852f6d6527a0ec8618` | `Egypt`, `Iraq`, `Lebanon` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 4 |
-| `6096718d9fe885fdbdbb1e2fd34c9badf817fbbc` | `Algeria`, `Lebanon`, `Saudi_Arabia` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 4 |
-| `806ba866bb7ff645ce32cc87042eb5f6499bf464` | `Oman`, `Saudi_Arabia` | `DA_dev_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2021-TWT.tsv` | 4 |
-| `1628debafde1d7452c85c4b4f37a2c13c283d598` | `Egypt`, `Yemen` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 3 |
-| `1cbe2629787899800f65ad277a529c7e5999aaba` | `Egypt`, `Jordan` | `DA_dev_labeled.tsv`, `DA_train_labeled.tsv`, `NADI2021-TWT.tsv` | 3 |
-| `2bf93c5f0b6777317de8c1c6e2c1803d06cbeabc` | `Iraq`, `Syria` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 3 |
-| `2c13929fe59d51ff665c367ebbf56b18147c1524` | `Egypt`, `Lebanon` | `dev_labeled.tsv`, `train_labeled.tsv`, `NADI2020-TWT.tsv` | 3 |
-| `39e9514dbdda624466d503b2937ca03a695533fc` | `Kuwait`, `UAE`, `United_Arab_Emirates` | `DA_train_labeled.tsv`, `NADI2021-TWT.tsv`, `NADI2023_Subtask1_TRAIN.tsv` | 3 |
+| `85bdb9d3f435786bd767c8cf7a619f058499abdb` | `Lebanon`, `Syria` | `NADI2020-TWT.tsv`, `NADI2021-TWT.tsv` | 3 |
+| `4552ba417ddec7e927482f2c41f78c28f6ad5daa` | `Iraq`, `Sudan` | `NADI2020-TWT.tsv`, `NADI2021-TWT.tsv` | 2 |
 
 ## Per-File Details
 
 ### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv`
-- Group: `labeled_benchmark`
+- Group: `benchmark_anchor`
 - Schema: `nadi2023_st1_labeled`
 - Rows: `1800`
 - Duplicate rows: `0`
@@ -167,7 +162,7 @@
   - `Yemen`: 100
 
 ### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv`
-- Group: `labeled_benchmark`
+- Group: `benchmark_anchor`
 - Schema: `nadi2023_st1_labeled`
 - Rows: `18000`
 - Duplicate rows: `0`
@@ -194,8 +189,259 @@
   - `UAE`: 1000
   - `Yemen`: 1000
 
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv`
+- Group: `canonical_supporting`
+- Schema: `nadi2020_labeled`
+- Rows: `20370`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2 tweet_content`: 0 empty, 12 under 3 tokens
+  sample short rows: 243, 257, 1241, 1856, 3554
+- Class counts for `#3 country_label`:
+  - `Egypt`: 4473
+  - `Iraq`: 2556
+  - `Saudi_Arabia`: 2312
+  - `Algeria`: 1491
+  - `Oman`: 1098
+  - `Libya`: 1070
+  - `Morocco`: 1070
+  - `Syria`: 1070
+  - `UAE`: 1070
+  - `Yemen`: 851
+  - `Tunisia`: 750
+  - `Lebanon`: 639
+  - `Jordan`: 426
+  - `Kuwait`: 420
+  - `Palestine`: 420
+  - `Qatar`: 234
+  - `Bahrain`: 210
+  - `Sudan`: 210
+- Class counts for `#4 province_label`:
+  - `sa_Ash-Sharqiyah`: 395
+  - `ae_Abu-Dhabi`: 214
+  - `ae_Dubai`: 214
+  - `ae_Fujairah`: 214
+  - `ae_Ras-Al-Khaymah`: 214
+  - `ae_Umm-Al-Qaywayn`: 214
+  - `ly_Al-Butnan`: 214
+  - `ly_Al-Jabal-al-Akhdar`: 214
+  - `ly_Benghazi`: 214
+  - `ly_Misrata`: 214
+  - `ly_Tripoli`: 214
+  - `ma_Marrakech-Tensift-Al-Haouz`: 214
+  - `ma_Meknes-Tafilalet`: 214
+  - `ma_Oriental`: 214
+  - `ma_Souss-Massa-Draa`: 214
+  - `ma_Tanger-Tetouan`: 214
+  - `om_Al-Batnah`: 214
+  - `sy_Aleppo`: 214
+  - `sy_As-Suwayda`: 214
+  - `sy_Damascus-City`: 214
+  - `sy_Hims`: 214
+  - `sy_Lattakia`: 214
+  - `dz_Bordj-Bou-Arreridj‎`: 213
+  - `dz_Bouira`: 213
+  - `dz_Béchar`: 213
+  - `dz_Jijel`: 213
+  - `dz_Khenchela`: 213
+  - `dz_Oran`: 213
+  - `dz_Ouargla`: 213
+  - `eg_Alexandria`: 213
+  - `eg_Aswan`: 213
+  - `eg_Asyut`: 213
+  - `eg_Beheira`: 213
+  - `eg_Beni-Suef`: 213
+  - `eg_Cairo`: 213
+  - `eg_Dakahlia`: 213
+  - `eg_Faiyum`: 213
+  - `eg_Gharbia`: 213
+  - `eg_Ismailia`: 213
+  - `eg_Kafr-el-Sheikh`: 213
+  - `eg_Luxor`: 213
+  - `eg_Minya`: 213
+  - `eg_Monufia`: 213
+  - `eg_North-Sinai`: 213
+  - `eg_Port-Said`: 213
+  - `eg_Qena`: 213
+  - `eg_Red-Sea`: 213
+  - `eg_Sohag`: 213
+  - `eg_South-Sinai`: 213
+  - `eg_Suez`: 213
+  - `iq_Al-Anbar`: 213
+  - `iq_Al-Muthannia`: 213
+  - `iq_An-Najaf`: 213
+  - `iq_Arbil`: 213
+  - `iq_As-Sulaymaniyah`: 213
+  - `iq_Baghdad`: 213
+  - `iq_Basra`: 213
+  - `iq_Dihok`: 213
+  - `iq_Karbala`: 213
+  - `iq_Maysan`: 213
+  - `iq_Ninawa`: 213
+  - `iq_Wasit`: 213
+  - `jo_Aqaba`: 213
+  - `jo_Zarqa`: 213
+  - `lb_Akkar`: 213
+  - `lb_North-Lebanon`: 213
+  - `lb_South-Lebanon`: 213
+  - `om_Ad-Dakhiliyah`: 213
+  - `om_Dhofar`: 213
+  - `om_Musandam`: 213
+  - `om_Muscat`: 213
+  - `sa_Al-Madinah`: 213
+  - `sa_Al-Quassim`: 213
+  - `sa_Ar-Riyad`: 213
+  - `sa_Asir`: 213
+  - `sa_Ha'il`: 213
+  - `sa_Jizan`: 213
+  - `sa_Makkah`: 213
+  - `sa_Najran`: 213
+  - `sa_Tabuk`: 213
+  - `ye_Aden`: 213
+  - `ye_Al-Hudaydah`: 213
+  - `ye_Ibb`: 213
+  - `tn_Ariana`: 212
+  - `tn_Mahdia`: 212
+  - `tn_Sousse`: 212
+  - `ye_Dhamar`: 212
+  - `bh_Capital`: 210
+  - `kw_Hawalli`: 210
+  - `kw_Jahra`: 210
+  - `ps_Gaza-Strip`: 210
+  - `ps_West-Bank`: 210
+  - `qa_Ar-Rayyan`: 210
+  - `sd_Khartoum`: 210
+  - `tn_Kairouan`: 114
+  - `om_Ash-Sharqiyah`: 32
+  - `qa_Doha`: 24
+
+### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv`
+- Group: `canonical_supporting`
+- Schema: `nadi2021_labeled`
+- Rows: `20398`
+- Duplicate rows: `0`
+- Duplicate check: `full`
+- Text column `#2_tweet`: 0 empty, 8 under 3 tokens
+  sample short rows: 1956, 6118, 7701, 9176, 13384
+- Class counts for `#3_country_label`:
+  - `Egypt`: 4283
+  - `Iraq`: 2729
+  - `Saudi_Arabia`: 2140
+  - `Algeria`: 1809
+  - `Oman`: 1501
+  - `Syria`: 1287
+  - `Libya`: 1286
+  - `Tunisia`: 859
+  - `Morocco`: 858
+  - `Lebanon`: 644
+  - `UAE`: 642
+  - `Jordan`: 429
+  - `Kuwait`: 429
+  - `Yemen`: 429
+  - `Palestine`: 428
+  - `Bahrain`: 215
+  - `Qatar`: 215
+  - `Sudan`: 215
+- Class counts for `#4_province_label`:
+  - `bh_Capital`: 215
+  - `dz_Batna`: 215
+  - `dz_Biskra`: 215
+  - `dz_Bouira`: 215
+  - `dz_Béchar`: 215
+  - `dz_Constantine`: 215
+  - `dz_El-Oued`: 215
+  - `dz_Oran`: 215
+  - `dz_Ouargla`: 215
+  - `eg_Kafr-el-Sheikh`: 215
+  - `eg_Monufia`: 215
+  - `eg_North-Sinai`: 215
+  - `iq_Al-Muthannia`: 215
+  - `iq_An-Najaf`: 215
+  - `iq_Arbil`: 215
+  - `iq_Babil`: 215
+  - `iq_Dihok`: 215
+  - `iq_Karbala`: 215
+  - `iq_Kirkuk`: 215
+  - `iq_Ninawa`: 215
+  - `jo_Aqaba`: 215
+  - `kw_Jahra`: 215
+  - `lb_Akkar`: 215
+  - `lb_North-Lebanon`: 215
+  - `ly_Al-Jabal-al-Akhdar`: 215
+  - `ly_Darnah`: 215
+  - `ma_Meknes-Tafilalet`: 215
+  - `ma_Souss-Massa-Draa`: 215
+  - `om_Ad-Dhahirah`: 215
+  - `om_Musandam`: 215
+  - `om_Muscat`: 215
+  - `qa_Ar-Rayyan`: 215
+  - `sd_Khartoum`: 215
+  - `sy_Aleppo`: 215
+  - `sy_Hama`: 215
+  - `sy_Lattakia`: 215
+  - `tn_Bizerte`: 215
+  - `tn_Mahdia`: 215
+  - `tn_Sfax`: 215
+  - `ye_Ibb`: 215
+  - `ae_Abu-Dhabi`: 214
+  - `ae_Dubai`: 214
+  - `ae_Ras-Al-Khaymah`: 214
+  - `eg_Alexandria`: 214
+  - `eg_Aswan`: 214
+  - `eg_Asyut`: 214
+  - `eg_Beheira`: 214
+  - `eg_Beni-Suef`: 214
+  - `eg_Dakahlia`: 214
+  - `eg_Faiyum`: 214
+  - `eg_Gharbia`: 214
+  - `eg_Ismailia`: 214
+  - `eg_Luxor`: 214
+  - `eg_Minya`: 214
+  - `eg_Port-Said`: 214
+  - `eg_Qena`: 214
+  - `eg_Red-Sea`: 214
+  - `eg_Sohag`: 214
+  - `eg_South-Sinai`: 214
+  - `eg_Suez`: 214
+  - `iq_Al-Anbar`: 214
+  - `iq_Baghdad`: 214
+  - `iq_Basra`: 214
+  - `iq_Wasit`: 214
+  - `jo_Zarqa`: 214
+  - `kw_Hawalli`: 214
+  - `lb_South-Lebanon`: 214
+  - `ly_Al-Butnan`: 214
+  - `ly_Benghazi`: 214
+  - `ly_Misrata`: 214
+  - `ly_Tripoli`: 214
+  - `ma_Marrakech-Tensift-Al-Haouz`: 214
+  - `ma_Tanger-Tetouan`: 214
+  - `om_Ad-Dakhiliyah`: 214
+  - `om_Al-Batnah`: 214
+  - `om_Ash-Sharqiyah`: 214
+  - `om_Dhofar`: 214
+  - `ps_Gaza-Strip`: 214
+  - `ps_West-Bank`: 214
+  - `sa_Al-Madinah`: 214
+  - `sa_Al-Quassim`: 214
+  - `sa_Ar-Riyad`: 214
+  - `sa_Ash-Sharqiyah`: 214
+  - `sa_Asir`: 214
+  - `sa_Ha'il`: 214
+  - `sa_Jizan`: 214
+  - `sa_Makkah`: 214
+  - `sa_Najran`: 214
+  - `sa_Tabuk`: 214
+  - `sy_As-Suwayda`: 214
+  - `sy_Damascus-City`: 214
+  - `sy_Hims`: 214
+  - `tn_Ariana`: 214
+  - `ye_Aden`: 214
+  - `iq_As-Sulaymaniyah`: 153
+  - `dz_Khenchela`: 89
+
 ### `data/raw/nadi2020/NADI_release/dev_labeled.tsv`
-- Group: `supporting_labeled`
+- Group: `provenance_aux_eval`
 - Schema: `nadi2020_labeled`
 - Rows: `4957`
 - Duplicate rows: `0`
@@ -327,7 +573,7 @@
   - `lb_Akkar`: 6
 
 ### `data/raw/nadi2020/NADI_release/train_labeled.tsv`
-- Group: `supporting_labeled`
+- Group: `provenance_aux_eval`
 - Schema: `nadi2020_labeled`
 - Rows: `21000`
 - Duplicate rows: `0`
@@ -459,7 +705,7 @@
   - `qa_Doha`: 24
 
 ### `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv`
-- Group: `supporting_labeled`
+- Group: `provenance_aux_eval`
 - Schema: `nadi2021_labeled`
 - Rows: `5000`
 - Duplicate rows: `0`
@@ -591,7 +837,7 @@
   - `so_Woqooyi-Galbeed`: 9
 
 ### `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv`
-- Group: `supporting_labeled`
+- Group: `provenance_aux_eval`
 - Schema: `nadi2021_labeled`
 - Rows: `21000`
 - Duplicate rows: `0`
@@ -721,257 +967,6 @@
   - `so_Banaadir`: 136
   - `dz_Khenchela`: 89
   - `so_Woqooyi-Galbeed`: 36
-
-### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv`
-- Group: `supporting_labeled`
-- Schema: `nadi2020_labeled`
-- Rows: `20370`
-- Duplicate rows: `0`
-- Duplicate check: `full`
-- Text column `#2 tweet_content`: 0 empty, 12 under 3 tokens
-  sample short rows: 243, 257, 1241, 1856, 3554
-- Class counts for `#3 country_label`:
-  - `Egypt`: 4473
-  - `Iraq`: 2556
-  - `Saudi_Arabia`: 2312
-  - `Algeria`: 1491
-  - `Oman`: 1098
-  - `Libya`: 1070
-  - `Morocco`: 1070
-  - `Syria`: 1070
-  - `UAE`: 1070
-  - `Yemen`: 851
-  - `Tunisia`: 750
-  - `Lebanon`: 639
-  - `Jordan`: 426
-  - `Kuwait`: 420
-  - `Palestine`: 420
-  - `Qatar`: 234
-  - `Bahrain`: 210
-  - `Sudan`: 210
-- Class counts for `#4 province_label`:
-  - `sa_Ash-Sharqiyah`: 395
-  - `ae_Abu-Dhabi`: 214
-  - `ae_Dubai`: 214
-  - `ae_Fujairah`: 214
-  - `ae_Ras-Al-Khaymah`: 214
-  - `ae_Umm-Al-Qaywayn`: 214
-  - `ly_Al-Butnan`: 214
-  - `ly_Al-Jabal-al-Akhdar`: 214
-  - `ly_Benghazi`: 214
-  - `ly_Misrata`: 214
-  - `ly_Tripoli`: 214
-  - `ma_Marrakech-Tensift-Al-Haouz`: 214
-  - `ma_Meknes-Tafilalet`: 214
-  - `ma_Oriental`: 214
-  - `ma_Souss-Massa-Draa`: 214
-  - `ma_Tanger-Tetouan`: 214
-  - `om_Al-Batnah`: 214
-  - `sy_Aleppo`: 214
-  - `sy_As-Suwayda`: 214
-  - `sy_Damascus-City`: 214
-  - `sy_Hims`: 214
-  - `sy_Lattakia`: 214
-  - `dz_Bordj-Bou-Arreridj‎`: 213
-  - `dz_Bouira`: 213
-  - `dz_Béchar`: 213
-  - `dz_Jijel`: 213
-  - `dz_Khenchela`: 213
-  - `dz_Oran`: 213
-  - `dz_Ouargla`: 213
-  - `eg_Alexandria`: 213
-  - `eg_Aswan`: 213
-  - `eg_Asyut`: 213
-  - `eg_Beheira`: 213
-  - `eg_Beni-Suef`: 213
-  - `eg_Cairo`: 213
-  - `eg_Dakahlia`: 213
-  - `eg_Faiyum`: 213
-  - `eg_Gharbia`: 213
-  - `eg_Ismailia`: 213
-  - `eg_Kafr-el-Sheikh`: 213
-  - `eg_Luxor`: 213
-  - `eg_Minya`: 213
-  - `eg_Monufia`: 213
-  - `eg_North-Sinai`: 213
-  - `eg_Port-Said`: 213
-  - `eg_Qena`: 213
-  - `eg_Red-Sea`: 213
-  - `eg_Sohag`: 213
-  - `eg_South-Sinai`: 213
-  - `eg_Suez`: 213
-  - `iq_Al-Anbar`: 213
-  - `iq_Al-Muthannia`: 213
-  - `iq_An-Najaf`: 213
-  - `iq_Arbil`: 213
-  - `iq_As-Sulaymaniyah`: 213
-  - `iq_Baghdad`: 213
-  - `iq_Basra`: 213
-  - `iq_Dihok`: 213
-  - `iq_Karbala`: 213
-  - `iq_Maysan`: 213
-  - `iq_Ninawa`: 213
-  - `iq_Wasit`: 213
-  - `jo_Aqaba`: 213
-  - `jo_Zarqa`: 213
-  - `lb_Akkar`: 213
-  - `lb_North-Lebanon`: 213
-  - `lb_South-Lebanon`: 213
-  - `om_Ad-Dakhiliyah`: 213
-  - `om_Dhofar`: 213
-  - `om_Musandam`: 213
-  - `om_Muscat`: 213
-  - `sa_Al-Madinah`: 213
-  - `sa_Al-Quassim`: 213
-  - `sa_Ar-Riyad`: 213
-  - `sa_Asir`: 213
-  - `sa_Ha'il`: 213
-  - `sa_Jizan`: 213
-  - `sa_Makkah`: 213
-  - `sa_Najran`: 213
-  - `sa_Tabuk`: 213
-  - `ye_Aden`: 213
-  - `ye_Al-Hudaydah`: 213
-  - `ye_Ibb`: 213
-  - `tn_Ariana`: 212
-  - `tn_Mahdia`: 212
-  - `tn_Sousse`: 212
-  - `ye_Dhamar`: 212
-  - `bh_Capital`: 210
-  - `kw_Hawalli`: 210
-  - `kw_Jahra`: 210
-  - `ps_Gaza-Strip`: 210
-  - `ps_West-Bank`: 210
-  - `qa_Ar-Rayyan`: 210
-  - `sd_Khartoum`: 210
-  - `tn_Kairouan`: 114
-  - `om_Ash-Sharqiyah`: 32
-  - `qa_Doha`: 24
-
-### `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv`
-- Group: `supporting_labeled`
-- Schema: `nadi2021_labeled`
-- Rows: `20398`
-- Duplicate rows: `0`
-- Duplicate check: `full`
-- Text column `#2_tweet`: 0 empty, 8 under 3 tokens
-  sample short rows: 1956, 6118, 7701, 9176, 13384
-- Class counts for `#3_country_label`:
-  - `Egypt`: 4283
-  - `Iraq`: 2729
-  - `Saudi_Arabia`: 2140
-  - `Algeria`: 1809
-  - `Oman`: 1501
-  - `Syria`: 1287
-  - `Libya`: 1286
-  - `Tunisia`: 859
-  - `Morocco`: 858
-  - `Lebanon`: 644
-  - `UAE`: 642
-  - `Jordan`: 429
-  - `Kuwait`: 429
-  - `Yemen`: 429
-  - `Palestine`: 428
-  - `Bahrain`: 215
-  - `Qatar`: 215
-  - `Sudan`: 215
-- Class counts for `#4_province_label`:
-  - `bh_Capital`: 215
-  - `dz_Batna`: 215
-  - `dz_Biskra`: 215
-  - `dz_Bouira`: 215
-  - `dz_Béchar`: 215
-  - `dz_Constantine`: 215
-  - `dz_El-Oued`: 215
-  - `dz_Oran`: 215
-  - `dz_Ouargla`: 215
-  - `eg_Kafr-el-Sheikh`: 215
-  - `eg_Monufia`: 215
-  - `eg_North-Sinai`: 215
-  - `iq_Al-Muthannia`: 215
-  - `iq_An-Najaf`: 215
-  - `iq_Arbil`: 215
-  - `iq_Babil`: 215
-  - `iq_Dihok`: 215
-  - `iq_Karbala`: 215
-  - `iq_Kirkuk`: 215
-  - `iq_Ninawa`: 215
-  - `jo_Aqaba`: 215
-  - `kw_Jahra`: 215
-  - `lb_Akkar`: 215
-  - `lb_North-Lebanon`: 215
-  - `ly_Al-Jabal-al-Akhdar`: 215
-  - `ly_Darnah`: 215
-  - `ma_Meknes-Tafilalet`: 215
-  - `ma_Souss-Massa-Draa`: 215
-  - `om_Ad-Dhahirah`: 215
-  - `om_Musandam`: 215
-  - `om_Muscat`: 215
-  - `qa_Ar-Rayyan`: 215
-  - `sd_Khartoum`: 215
-  - `sy_Aleppo`: 215
-  - `sy_Hama`: 215
-  - `sy_Lattakia`: 215
-  - `tn_Bizerte`: 215
-  - `tn_Mahdia`: 215
-  - `tn_Sfax`: 215
-  - `ye_Ibb`: 215
-  - `ae_Abu-Dhabi`: 214
-  - `ae_Dubai`: 214
-  - `ae_Ras-Al-Khaymah`: 214
-  - `eg_Alexandria`: 214
-  - `eg_Aswan`: 214
-  - `eg_Asyut`: 214
-  - `eg_Beheira`: 214
-  - `eg_Beni-Suef`: 214
-  - `eg_Dakahlia`: 214
-  - `eg_Faiyum`: 214
-  - `eg_Gharbia`: 214
-  - `eg_Ismailia`: 214
-  - `eg_Luxor`: 214
-  - `eg_Minya`: 214
-  - `eg_Port-Said`: 214
-  - `eg_Qena`: 214
-  - `eg_Red-Sea`: 214
-  - `eg_Sohag`: 214
-  - `eg_South-Sinai`: 214
-  - `eg_Suez`: 214
-  - `iq_Al-Anbar`: 214
-  - `iq_Baghdad`: 214
-  - `iq_Basra`: 214
-  - `iq_Wasit`: 214
-  - `jo_Zarqa`: 214
-  - `kw_Hawalli`: 214
-  - `lb_South-Lebanon`: 214
-  - `ly_Al-Butnan`: 214
-  - `ly_Benghazi`: 214
-  - `ly_Misrata`: 214
-  - `ly_Tripoli`: 214
-  - `ma_Marrakech-Tensift-Al-Haouz`: 214
-  - `ma_Tanger-Tetouan`: 214
-  - `om_Ad-Dakhiliyah`: 214
-  - `om_Al-Batnah`: 214
-  - `om_Ash-Sharqiyah`: 214
-  - `om_Dhofar`: 214
-  - `ps_Gaza-Strip`: 214
-  - `ps_West-Bank`: 214
-  - `sa_Al-Madinah`: 214
-  - `sa_Al-Quassim`: 214
-  - `sa_Ar-Riyad`: 214
-  - `sa_Ash-Sharqiyah`: 214
-  - `sa_Asir`: 214
-  - `sa_Ha'il`: 214
-  - `sa_Jizan`: 214
-  - `sa_Makkah`: 214
-  - `sa_Najran`: 214
-  - `sa_Tabuk`: 214
-  - `sy_As-Suwayda`: 214
-  - `sy_Damascus-City`: 214
-  - `sy_Hims`: 214
-  - `tn_Ariana`: 214
-  - `ye_Aden`: 214
-  - `iq_As-Sulaymaniyah`: 153
-  - `dz_Khenchela`: 89
 
 ### `data/raw/nadi2020/NADI_release/unlabeled_10M.tsv`
 - Group: `unlabeled_id_only`

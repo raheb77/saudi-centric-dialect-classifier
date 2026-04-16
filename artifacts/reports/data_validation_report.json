@@ -6,24 +6,33 @@
   "files_with_empty_text": 0,
   "files_with_short_text": 18,
   "summary_totals": {
-    "labeled_text_rows_scanned": 112525,
+    "benchmark_anchor_rows_scanned": 19800,
+    "canonical_supporting_rows_scanned": 40768,
+    "provenance_aux_eval_rows_scanned": 51957,
     "unlabeled_id_only_rows_scanned": 20000000,
     "out_of_scope_rows_scanned": 99600
   },
   "group_totals": {
-    "labeled_benchmark": {
+    "benchmark_anchor": {
       "file_count": 2,
       "row_count": 19800,
       "files_with_duplicates": 0,
       "files_with_empty_text": 0,
       "files_with_short_text": 1
     },
-    "supporting_labeled": {
-      "file_count": 6,
-      "row_count": 92725,
+    "canonical_supporting": {
+      "file_count": 2,
+      "row_count": 40768,
       "files_with_duplicates": 0,
       "files_with_empty_text": 0,
-      "files_with_short_text": 6
+      "files_with_short_text": 2
+    },
+    "provenance_aux_eval": {
+      "file_count": 4,
+      "row_count": 51957,
+      "files_with_duplicates": 0,
+      "files_with_empty_text": 0,
+      "files_with_short_text": 4
     },
     "unlabeled_id_only": {
       "file_count": 2,
@@ -40,85 +49,23 @@
       "files_with_short_text": 11
     }
   },
-  "cross_file_overlap": {
-    "files_analyzed": [
-      "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-      "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-      "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-      "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-      "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-      "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
+  "benchmark_safety": {
+    "benchmark_anchor_files": [
       "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
       "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
     ],
-    "file_count": 8,
-    "unique_text_count": 71205,
-    "texts_in_multiple_files": 40482,
-    "pairwise_overlap_counts": [
-      {
-        "file_a": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-        "shared_text_count": 20372
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-        "shared_text_count": 20221
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-        "file_b": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-        "shared_text_count": 178
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-        "shared_text_count": 162
-      },
-      {
-        "file_a": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-        "shared_text_count": 162
-      },
+    "canonical_supporting_files": [
+      "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
+      "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv"
+    ],
+    "benchmark_relevant_file_count": 4,
+    "benchmark_relevant_unique_text_count": 60180,
+    "benchmark_relevant_texts_in_multiple_files": 171,
+    "benchmark_relevant_pairwise_overlap_counts": [
       {
         "file_a": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
         "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
         "shared_text_count": 162
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-        "file_b": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-        "shared_text_count": 32
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-        "shared_text_count": 30
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-        "file_b": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-        "shared_text_count": 29
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-        "shared_text_count": 28
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-        "file_b": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-        "shared_text_count": 26
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-        "file_b": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-        "shared_text_count": 23
-      },
-      {
-        "file_a": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-        "shared_text_count": 23
       },
       {
         "file_a": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
@@ -126,29 +73,9 @@
         "shared_text_count": 6
       },
       {
-        "file_a": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-        "file_b": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-        "shared_text_count": 5
-      },
-      {
-        "file_a": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-        "shared_text_count": 5
-      },
-      {
-        "file_a": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
-        "shared_text_count": 2
-      },
-      {
         "file_a": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
         "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
         "shared_text_count": 2
-      },
-      {
-        "file_a": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-        "file_b": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
-        "shared_text_count": 1
       },
       {
         "file_a": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
@@ -156,784 +83,207 @@
         "shared_text_count": 1
       }
     ],
-    "label_leakage_case_count": 1798,
-    "label_leakage_examples": [
+    "benchmark_train_dev_exact_overlap_count": 6,
+    "benchmark_train_dev_overlap_examples": [
+      {
+        "text_hash": "122874ea182df90ee81879b0b3732d6ba5eb3dc0",
+        "files": [
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
+        ],
+        "sample_rows": [
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+            "row_number": 1689,
+            "label": "Bahrain",
+            "raw_label": "Bahrain"
+          },
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
+            "row_number": 14172,
+            "label": "Bahrain",
+            "raw_label": "Bahrain"
+          }
+        ]
+      },
+      {
+        "text_hash": "1f25e02318f388515a4c423b22a3ebcd4934bdeb",
+        "files": [
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
+        ],
+        "sample_rows": [
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+            "row_number": 1705,
+            "label": "Qatar",
+            "raw_label": "Qatar"
+          },
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
+            "row_number": 566,
+            "label": "Qatar",
+            "raw_label": "Qatar"
+          }
+        ]
+      },
+      {
+        "text_hash": "5bbbe3a3499669d885eef52da6d9e06932e8420f",
+        "files": [
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
+        ],
+        "sample_rows": [
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+            "row_number": 1700,
+            "label": "UAE",
+            "raw_label": "UAE"
+          },
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
+            "row_number": 17318,
+            "label": "UAE",
+            "raw_label": "UAE"
+          }
+        ]
+      },
+      {
+        "text_hash": "7269cf7aa18a4b5ac0e4cd65fe6e300d9926eed0",
+        "files": [
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
+        ],
+        "sample_rows": [
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+            "row_number": 636,
+            "label": "Palestine",
+            "raw_label": "Palestine"
+          },
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
+            "row_number": 9108,
+            "label": "Palestine",
+            "raw_label": "Palestine"
+          }
+        ]
+      },
+      {
+        "text_hash": "928c479414b43312f954565b73429b78eb1e84db",
+        "files": [
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
+        ],
+        "sample_rows": [
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+            "row_number": 163,
+            "label": "Kuwait",
+            "raw_label": "Kuwait"
+          },
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
+            "row_number": 2368,
+            "label": "Kuwait",
+            "raw_label": "Kuwait"
+          }
+        ]
+      },
+      {
+        "text_hash": "b13dc3def48541a44315add213bd8e34ba35a728",
+        "files": [
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
+        ],
+        "sample_rows": [
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
+            "row_number": 230,
+            "label": "UAE",
+            "raw_label": "UAE"
+          },
+          {
+            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
+            "row_number": 3269,
+            "label": "UAE",
+            "raw_label": "UAE"
+          }
+        ]
+      }
+    ],
+    "supporting_overlap_text_count": 162,
+    "supporting_conflict_case_count": 2,
+    "supporting_conflict_examples": [
       {
         "text_hash": "85bdb9d3f435786bd767c8cf7a619f058499abdb",
-        "labels": [
+        "normalized_labels": [
           "Lebanon",
           "Syria"
         ],
         "files": [
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
           "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
           "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv"
         ],
-        "occurrence_count": 6,
+        "occurrence_count": 3,
         "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 3095,
-            "label": "Syria"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 16579,
-            "label": "Lebanon"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 3740,
-            "label": "Syria"
-          },
           {
             "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
             "row_number": 3011,
-            "label": "Syria"
+            "label": "Syria",
+            "raw_label": "Syria"
           },
           {
             "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
             "row_number": 16084,
-            "label": "Lebanon"
+            "label": "Lebanon",
+            "raw_label": "Lebanon"
           },
           {
             "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
             "row_number": 3648,
-            "label": "Syria"
+            "label": "Syria",
+            "raw_label": "Syria"
           }
         ]
       },
       {
         "text_hash": "4552ba417ddec7e927482f2c41f78c28f6ad5daa",
-        "labels": [
+        "normalized_labels": [
           "Iraq",
           "Sudan"
         ],
         "files": [
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
           "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
           "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv"
         ],
-        "occurrence_count": 4,
+        "occurrence_count": 2,
         "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 6254,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 14967,
-            "label": "Sudan"
-          },
           {
             "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
             "row_number": 6072,
-            "label": "Iraq"
+            "label": "Iraq",
+            "raw_label": "Iraq"
           },
           {
             "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
             "row_number": 14556,
-            "label": "Sudan"
-          }
-        ]
-      },
-      {
-        "text_hash": "c1c103e31191b57161dfcb0cd3d2eec6d499e939",
-        "labels": [
-          "Iraq",
-          "Palestine"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 7,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 2085,
-            "label": "Palestine"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 4858,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 12500,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 15313,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 4719,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 12116,
-            "label": "Iraq"
-          }
-        ]
-      },
-      {
-        "text_hash": "c577fa0dbdbba07da9678201fdea0ab37813f26a",
-        "labels": [
-          "Jordan",
-          "Oman"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 6,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 1524,
-            "label": "Jordan"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 4319,
-            "label": "Jordan"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 697,
-            "label": "Oman"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 18359,
-            "label": "Oman"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 678,
-            "label": "Oman"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 17812,
-            "label": "Oman"
-          }
-        ]
-      },
-      {
-        "text_hash": "cad225b2eed8c7ea857517e37cf57b52ef2d6ff9",
-        "labels": [
-          "Egypt",
-          "Iraq",
-          "Morocco",
-          "United_Arab_Emirates"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 6,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 290,
-            "label": "United_Arab_Emirates"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 1808,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 8785,
-            "label": "Morocco"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 18533,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 8521,
-            "label": "Morocco"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 17980,
-            "label": "Iraq"
-          }
-        ]
-      },
-      {
-        "text_hash": "ce4914b210f1cfc6ecb26e1b4bbce7c2e5b47c0d",
-        "labels": [
-          "Egypt",
-          "Iraq",
-          "Libya",
-          "Saudi_Arabia"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 6,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 683,
-            "label": "Libya"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 3702,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 7201,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 17625,
-            "label": "Saudi_Arabia"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 6988,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 17097,
-            "label": "Saudi_Arabia"
-          }
-        ]
-      },
-      {
-        "text_hash": "1aaea59a9d6dbecbe3d028e29789fea941b45512",
-        "labels": [
-          "Morocco",
-          "Saudi_Arabia",
-          "United_Arab_Emirates"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 5,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 4774,
-            "label": "United_Arab_Emirates"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 16166,
-            "label": "Morocco"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 18628,
-            "label": "Saudi_Arabia"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 15680,
-            "label": "Morocco"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 18070,
-            "label": "Saudi_Arabia"
-          }
-        ]
-      },
-      {
-        "text_hash": "2a0ff161cc9917f2970172a2416fb58335c03aad",
-        "labels": [
-          "Egypt",
-          "Libya",
-          "Morocco"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 5,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 991,
-            "label": "Morocco"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 1793,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 4945,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 6173,
-            "label": "Libya"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 5991,
-            "label": "Libya"
-          }
-        ]
-      },
-      {
-        "text_hash": "3aa045e467c3bd92e6322304de58e36822f64a48",
-        "labels": [
-          "Lebanon",
-          "Palestine",
-          "Saudi_Arabia"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 5,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 1829,
-            "label": "Lebanon"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 9280,
-            "label": "Palestine"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 12032,
-            "label": "Saudi_Arabia"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 8998,
-            "label": "Palestine"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 11660,
-            "label": "Saudi_Arabia"
-          }
-        ]
-      },
-      {
-        "text_hash": "8bdc16ace7f760e2814601db0f9d8f0aafc69000",
-        "labels": [
-          "Algeria",
-          "Tunisia",
-          "UAE",
-          "United_Arab_Emirates"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 5,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 4209,
-            "label": "Algeria"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 2000,
-            "label": "Tunisia"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 15699,
-            "label": "United_Arab_Emirates"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 1943,
-            "label": "Tunisia"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 15226,
-            "label": "UAE"
-          }
-        ]
-      },
-      {
-        "text_hash": "c76807d5d5fd27f8df822eb513e3e4501ad2100c",
-        "labels": [
-          "Morocco",
-          "Syria"
-        ],
-        "files": [
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv"
-        ],
-        "occurrence_count": 5,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-            "row_number": 4044,
-            "label": "Morocco"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 20575,
-            "label": "Syria"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 20666,
-            "label": "Syria"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-            "row_number": 19985,
-            "label": "Syria"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-            "row_number": 20074,
-            "label": "Syria"
-          }
-        ]
-      },
-      {
-        "text_hash": "cc6dd82f8f1a916310e0e94b00b51cfc39983ee0",
-        "labels": [
-          "Algeria",
-          "Egypt"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 5,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 2726,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 9903,
-            "label": "Algeria"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 18061,
-            "label": "Algeria"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 9597,
-            "label": "Algeria"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 17523,
-            "label": "Algeria"
-          }
-        ]
-      },
-      {
-        "text_hash": "5a430057e36deac04bfb0e852f6d6527a0ec8618",
-        "labels": [
-          "Egypt",
-          "Iraq",
-          "Lebanon"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 4,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 660,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 4322,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 2957,
-            "label": "Lebanon"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 2876,
-            "label": "Lebanon"
-          }
-        ]
-      },
-      {
-        "text_hash": "6096718d9fe885fdbdbb1e2fd34c9badf817fbbc",
-        "labels": [
-          "Algeria",
-          "Lebanon",
-          "Saudi_Arabia"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 4,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 1147,
-            "label": "Saudi_Arabia"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 2908,
-            "label": "Lebanon"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 18280,
-            "label": "Algeria"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 17735,
-            "label": "Algeria"
-          }
-        ]
-      },
-      {
-        "text_hash": "806ba866bb7ff645ce32cc87042eb5f6499bf464",
-        "labels": [
-          "Oman",
-          "Saudi_Arabia"
-        ],
-        "files": [
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv"
-        ],
-        "occurrence_count": 4,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-            "row_number": 790,
-            "label": "Oman"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-            "row_number": 1499,
-            "label": "Saudi_Arabia"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 14265,
-            "label": "Oman"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-            "row_number": 13867,
-            "label": "Oman"
-          }
-        ]
-      },
-      {
-        "text_hash": "1628debafde1d7452c85c4b4f37a2c13c283d598",
-        "labels": [
-          "Egypt",
-          "Yemen"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 3,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 3743,
-            "label": "Yemen"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 7778,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 7546,
-            "label": "Egypt"
-          }
-        ]
-      },
-      {
-        "text_hash": "1cbe2629787899800f65ad277a529c7e5999aaba",
-        "labels": [
-          "Egypt",
-          "Jordan"
-        ],
-        "files": [
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv"
-        ],
-        "occurrence_count": 3,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
-            "row_number": 2580,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 9745,
-            "label": "Jordan"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-            "row_number": 9489,
-            "label": "Jordan"
-          }
-        ]
-      },
-      {
-        "text_hash": "2bf93c5f0b6777317de8c1c6e2c1803d06cbeabc",
-        "labels": [
-          "Iraq",
-          "Syria"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 3,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 882,
-            "label": "Syria"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 9520,
-            "label": "Iraq"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 9228,
-            "label": "Iraq"
-          }
-        ]
-      },
-      {
-        "text_hash": "2c13929fe59d51ff665c367ebbf56b18147c1524",
-        "labels": [
-          "Egypt",
-          "Lebanon"
-        ],
-        "files": [
-          "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-          "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv"
-        ],
-        "occurrence_count": 3,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
-            "row_number": 561,
-            "label": "Lebanon"
-          },
-          {
-            "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
-            "row_number": 7195,
-            "label": "Egypt"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
-            "row_number": 6982,
-            "label": "Egypt"
-          }
-        ]
-      },
-      {
-        "text_hash": "39e9514dbdda624466d503b2937ca03a695533fc",
-        "labels": [
-          "Kuwait",
-          "UAE",
-          "United_Arab_Emirates"
-        ],
-        "files": [
-          "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-          "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv"
-        ],
-        "occurrence_count": 3,
-        "sample_rows": [
-          {
-            "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
-            "row_number": 2584,
-            "label": "United_Arab_Emirates"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
-            "row_number": 2523,
-            "label": "UAE"
-          },
-          {
-            "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
-            "row_number": 4045,
-            "label": "Kuwait"
+            "label": "Sudan",
+            "raw_label": "Sudan"
           }
         ]
       }
-    ]
+    ],
+    "label_normalization": {
+      "UAE": "UAE",
+      "United_Arab_Emirates": "UAE"
+    }
   },
   "results": [
     {
       "path": "data/raw/nadi2020/NADI_release/dev_labeled.tsv",
       "schema_name": "nadi2020_labeled",
-      "file_group": "supporting_labeled",
+      "file_group": "provenance_aux_eval",
       "file_size_bytes": 814932,
       "columns": [
         "#1 tweet_ID",
@@ -1092,7 +442,7 @@
     {
       "path": "data/raw/nadi2020/NADI_release/train_labeled.tsv",
       "schema_name": "nadi2020_labeled",
-      "file_group": "supporting_labeled",
+      "file_group": "provenance_aux_eval",
       "file_size_bytes": 3613892,
       "columns": [
         "#1 tweet_ID",
@@ -1636,7 +986,7 @@
     {
       "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
       "schema_name": "nadi2021_labeled",
-      "file_group": "supporting_labeled",
+      "file_group": "provenance_aux_eval",
       "file_size_bytes": 600738,
       "columns": [
         "#1_tweetid",
@@ -1792,7 +1142,7 @@
     {
       "path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv",
       "schema_name": "nadi2021_labeled",
-      "file_group": "supporting_labeled",
+      "file_group": "provenance_aux_eval",
       "file_size_bytes": 2575320,
       "columns": [
         "#1_tweetid",
@@ -2131,7 +1481,7 @@
     {
       "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv",
       "schema_name": "nadi2020_labeled",
-      "file_group": "supporting_labeled",
+      "file_group": "canonical_supporting",
       "file_size_bytes": 3441380,
       "columns": [
         "#1 tweet_ID",
@@ -2285,7 +1635,7 @@
     {
       "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv",
       "schema_name": "nadi2021_labeled",
-      "file_group": "supporting_labeled",
+      "file_group": "canonical_supporting",
       "file_size_bytes": 2480168,
       "columns": [
         "#1_tweetid",
@@ -2438,7 +1788,7 @@
     {
       "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv",
       "schema_name": "nadi2023_st1_labeled",
-      "file_group": "labeled_benchmark",
+      "file_group": "benchmark_anchor",
       "file_size_bytes": 287204,
       "columns": [
         "#1_id",
@@ -2486,7 +1836,7 @@
     {
       "path": "data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv",
       "schema_name": "nadi2023_st1_labeled",
-      "file_group": "labeled_benchmark",
+      "file_group": "benchmark_anchor",
       "file_size_bytes": 2902763,
       "columns": [
         "#1_id",

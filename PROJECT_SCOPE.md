@@ -69,3 +69,11 @@ This project is Saudi-centered, so v1 keeps `Saudi` as its own class and does no
 The bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files are the canonical supporting sources for v1 because they are already aligned to the NADI 2023 Subtask 1 benchmark label space. The standalone NADI 2020 and NADI 2021 local releases are kept documented in the repo for provenance, inspection, and possible auxiliary evaluation, but they are not automatically merged into the initial v1 training pool.
 
 `MADAR-2018.tsv` is intentionally not the primary v1 benchmark source because it is a translated sentence resource with city and country metadata, not the main Twitter benchmark that anchors the project. It is documented as a later out-of-domain reference set and is not part of the initial v1 training mixture.
+
+## Benchmark Safety Policy
+- `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv` are the benchmark anchor.
+- `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` are the only canonical supporting sources for v1 augmentation planning.
+- Standalone NADI 2020 and NADI 2021 DA releases remain provenance / auxiliary evaluation assets and are excluded from canonical leakage accounting.
+- Exact text overlap between NADI 2023 train and dev must be removed from dev before benchmark-style evaluation.
+- Same exact text with conflicting labels across the canonical supporting sources must be dropped from augmentation candidates.
+- For leakage accounting, `UAE` and `United_Arab_Emirates` are treated as the same canonical raw label.

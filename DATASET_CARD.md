@@ -103,6 +103,14 @@ Drop examples that are:
 - Unclear or weakly informative
 - Outside the v1 raw-label mapping
 
+## Benchmark Safety Policy
+- Benchmark anchor: `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv`
+- Canonical supporting sources: bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv`
+- Provenance / auxiliary evaluation only: standalone NADI 2020 and standalone NADI 2021 DA releases
+- Not part of the initial v1 training mixture: `MADAR-2018.tsv`
+
+For benchmark-style evaluation, any exact text overlap between the NADI 2023 train and dev files should be removed from dev before scoring. For augmentation planning, any exact text that appears across the canonical supporting sources with conflicting labels should be dropped. Leakage accounting should normalize `UAE` and `United_Arab_Emirates` to the same canonical raw label before conflict checks.
+
 ## Files Present but Not Used as V1 Text Data
 The local raw directory also contains material that should be documented but not treated as v1 training text:
 

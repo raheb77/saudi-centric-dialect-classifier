@@ -59,6 +59,13 @@ If the raw source geography maps to an in-scope v1 label but the text itself loo
 ### MADAR Examples
 `MADAR-2018.tsv` is documented as a reference / future OOD source. If it is used later, keep the same four-label mapping and the same drop rules. Its translated travel domain means it should not silently be treated as equivalent to Twitter data.
 
+### Benchmark Safety and Source Conflicts
+`NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv` are the benchmark anchor. Any exact text overlap between these two files should be removed from dev before benchmark-style evaluation rather than tolerated as harmless duplication.
+
+For augmentation planning, only the bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files count as canonical supporting sources. If the same exact text appears across those supporting sources with conflicting labels after normalizing `UAE` and `United_Arab_Emirates` to the same canonical raw label, drop that text from augmentation candidates.
+
+The standalone NADI 2020 and NADI 2021 DA releases remain provenance / auxiliary evaluation assets. They can inform inspection, but they should not be treated as automatic members of the canonical augmentation pool.
+
 ## Recommended Review Workflow
 1. Check that the raw source label is eligible for one of the four v1 labels.
 2. Check script, length, and text quality.

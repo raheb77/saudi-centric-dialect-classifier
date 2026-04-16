@@ -77,11 +77,27 @@ def test_generate_validation_reports_detects_cross_file_overlap_and_leakage(tmp_
         ],
     )
     write_tsv(
+        data_root / "nadi2023" / "NADI2023_Release_Train" / "Subtask1" / "NADI2023_Subtask1_DEV.tsv",
+        ["#1_id", "#2_content", "#3_label"],
+        [
+            ["3", "نص مشترك جدا", "Saudi_Arabia"],
+            ["4", "نص تطوير", "Egypt"],
+        ],
+    )
+    write_tsv(
         data_root / "nadi2023" / "NADI2023_Release_Train" / "Subtask1" / "NADI2020-TWT.tsv",
         ["#1 tweet_ID", "#2 tweet_content", "#3 country_label", "#4 province_label"],
         [
-            ["A", "نص مشترك جدا", "Egypt", "eg_Cairo"],
-            ["B", "نص داعم", "Saudi_Arabia", "sa_Riyadh"],
+            ["A", "نص داعم", "UAE", "ae_Dubai"],
+            ["B", "نص آخر", "Saudi_Arabia", "sa_Riyadh"],
+        ],
+    )
+    write_tsv(
+        data_root / "nadi2023" / "NADI2023_Release_Train" / "Subtask1" / "NADI2021-TWT.tsv",
+        ["#1_tweetid", "#2_tweet", "#3_country_label", "#4_province_label"],
+        [
+            ["C", "نص داعم", "United_Arab_Emirates", "ae_Abu-Dhabi"],
+            ["D", "نص آخر", "Egypt", "eg_Cairo"],
         ],
     )
     write_tsv(
@@ -89,14 +105,23 @@ def test_generate_validation_reports_detects_cross_file_overlap_and_leakage(tmp_
         ["#1 tweet_ID"],
         [["X"], ["Y"]],
     )
+    write_tsv(
+        data_root / "nadi2020" / "NADI_release" / "train_labeled.tsv",
+        ["#1 tweet_ID", "#2 tweet_content", "#3 country_label", "#4 province_label"],
+        [["P", "نص مرجعي", "Saudi_Arabia", "sa_Riyadh"]],
+    )
 
     reports = generate_validation_reports(data_root, output_dir)
     payload = json.loads(reports["json"].read_text(encoding="utf-8"))
 
-    assert payload["summary_totals"]["labeled_text_rows_scanned"] == 4
+    assert payload["summary_totals"]["benchmark_anchor_rows_scanned"] == 4
+    assert payload["summary_totals"]["canonical_supporting_rows_scanned"] == 4
+    assert payload["summary_totals"]["provenance_aux_eval_rows_scanned"] == 1
     assert payload["summary_totals"]["unlabeled_id_only_rows_scanned"] == 2
-    assert payload["group_totals"]["labeled_benchmark"]["file_count"] == 1
-    assert payload["group_totals"]["supporting_labeled"]["file_count"] == 1
+    assert payload["group_totals"]["benchmark_anchor"]["file_count"] == 2
+    assert payload["group_totals"]["canonical_supporting"]["file_count"] == 2
+    assert payload["group_totals"]["provenance_aux_eval"]["file_count"] == 1
     assert payload["group_totals"]["unlabeled_id_only"]["file_count"] == 1
-    assert payload["cross_file_overlap"]["texts_in_multiple_files"] == 1
-    assert payload["cross_file_overlap"]["label_leakage_case_count"] == 1
+    assert payload["benchmark_safety"]["benchmark_relevant_texts_in_multiple_files"] == 3
+    assert payload["benchmark_safety"]["benchmark_train_dev_exact_overlap_count"] == 1
+    assert payload["benchmark_safety"]["supporting_conflict_case_count"] == 1
