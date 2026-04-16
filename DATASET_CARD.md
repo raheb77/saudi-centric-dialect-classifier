@@ -19,6 +19,18 @@ The current local leakage-aware interim generation step produces:
 - `data/interim/dev_core.csv`: 999 rows from `NADI2023_Subtask1_DEV.tsv` after removing 6 exact benchmark train/dev overlaps
 - `data/interim/train_aug_candidates.csv`: 27,629 rows from bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` after dropping out-of-scope rows, train/dev overlap rows, and same-text conflicting-label cases in the canonical supporting pool
 
+## Preprocessing
+The preprocessing stage operates only on the interim CSVs and writes parallel outputs under `data/processed/` without modifying `data/raw/`.
+
+- Removes URLs
+- Replaces user mentions with `<USER>`
+- Preserves hashtag text while removing `#`
+- Removes Arabic diacritics
+- Normalizes Alef variants and final `ى` to `ي`
+- Reduces repeated letter elongation to at most 2
+- Preserves emojis and English tokens
+- Keeps both `original_text` and `processed_text` for traceability
+
 ## Local Raw Sources
 Row counts below refer to non-header rows in the local copies.
 
