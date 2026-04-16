@@ -1,0 +1,81 @@
+{
+  "provider": "gemini_generate_content",
+  "model": "gemini-3.1-flash-lite-preview",
+  "train_rows": 10000,
+  "dev_rows": 999,
+  "few_shot_support_examples_per_class": 2,
+  "few_shot_support_examples": [
+    {
+      "source_id": "subtask1_train_10492",
+      "macro_label": "Saudi",
+      "processed_text": "يا قوي يا حرامي ساهر"
+    },
+    {
+      "source_id": "subtask1_train_445",
+      "macro_label": "Saudi",
+      "processed_text": "تذكره مجانيه للي يبي يحضر"
+    },
+    {
+      "source_id": "subtask1_train_9718",
+      "macro_label": "Egyptian",
+      "processed_text": "انا مشوفتش اوسخ من كده"
+    },
+    {
+      "source_id": "subtask1_train_4298",
+      "macro_label": "Egyptian",
+      "processed_text": "وحشتني اوي علي فكره بقه"
+    },
+    {
+      "source_id": "subtask1_train_5745",
+      "macro_label": "Levantine",
+      "processed_text": "مش كل شي كل شي"
+    },
+    {
+      "source_id": "subtask1_train_10147",
+      "macro_label": "Levantine",
+      "processed_text": "تبا و تب ليش هيك"
+    },
+    {
+      "source_id": "subtask1_train_13697",
+      "macro_label": "Maghrebi",
+      "processed_text": "مول كرش باقي ما شبع"
+    },
+    {
+      "source_id": "subtask1_train_3155",
+      "macro_label": "Maghrebi",
+      "processed_text": "لي عندو شي فم يربطو"
+    }
+  ],
+  "zero_shot": {
+    "accuracy": 0.8678678678678678,
+    "macro_f1": 0.8330107302184784,
+    "usage": {
+      "prompt_tokens": 41262,
+      "completion_tokens": 18142,
+      "total_tokens": 59404
+    },
+    "latency": {
+      "request_count": 40,
+      "total_ms": 81747.97562202002,
+      "avg_request_ms": 2043.6993905505005,
+      "avg_row_ms": 81.82980542744747
+    },
+    "estimated_cost_usd": null
+  },
+  "few_shot": {
+    "accuracy": 0.8748748748748749,
+    "macro_f1": 0.8414330449563122,
+    "usage": {
+      "prompt_tokens": 47262,
+      "completion_tokens": 18156,
+      "total_tokens": 65418
+    },
+    "latency": {
+      "request_count": 40,
+      "total_ms": 77529.31008399173,
+      "avg_request_ms": 1938.2327520997933,
+      "avg_row_ms": 77.60691700099272
+    },
+    "estimated_cost_usd": null
+  }
+}

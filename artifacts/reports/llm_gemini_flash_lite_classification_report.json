@@ -1,0 +1,80 @@
+{
+  "zero_shot": {
+    "Saudi": {
+      "precision": 0.5625,
+      "recall": 0.99,
+      "f1-score": 0.717391304347826,
+      "support": 100.0
+    },
+    "Egyptian": {
+      "precision": 0.7131782945736435,
+      "recall": 0.92,
+      "f1-score": 0.8034934497816594,
+      "support": 100.0
+    },
+    "Levantine": {
+      "precision": 0.9598853868194842,
+      "recall": 0.8395989974937343,
+      "f1-score": 0.8957219251336899,
+      "support": 399.0
+    },
+    "Maghrebi": {
+      "precision": 0.9884057971014493,
+      "recall": 0.8525,
+      "f1-score": 0.9154362416107382,
+      "support": 400.0
+    },
+    "accuracy": 0.8678678678678678,
+    "macro avg": {
+      "precision": 0.8059923696236442,
+      "recall": 0.9005247493734336,
+      "f1-score": 0.8330107302184784,
+      "support": 999.0
+    },
+    "weighted avg": {
+      "precision": 0.906831248887806,
+      "recall": 0.8678678678678678,
+      "f1-score": 0.8765325527383244,
+      "support": 999.0
+    }
+  },
+  "few_shot": {
+    "Saudi": {
+      "precision": 0.5892857142857143,
+      "recall": 0.99,
+      "f1-score": 0.7388059701492538,
+      "support": 100.0
+    },
+    "Egyptian": {
+      "precision": 0.728,
+      "recall": 0.91,
+      "f1-score": 0.8088888888888889,
+      "support": 100.0
+    },
+    "Levantine": {
+      "precision": 0.9526462395543176,
+      "recall": 0.8571428571428571,
+      "f1-score": 0.9023746701846965,
+      "support": 399.0
+    },
+    "Maghrebi": {
+      "precision": 0.9855907780979827,
+      "recall": 0.855,
+      "f1-score": 0.9156626506024096,
+      "support": 400.0
+    },
+    "accuracy": 0.8748748748748749,
+    "macro avg": {
+      "precision": 0.8138806829845036,
+      "recall": 0.9030357142857143,
+      "f1-score": 0.8414330449563122,
+      "support": 999.0
+    },
+    "weighted avg": {
+      "precision": 0.9069777099598971,
+      "recall": 0.8748748748748749,
+      "f1-score": 0.8819640035520241,
+      "support": 999.0
+    }
+  }
+}
