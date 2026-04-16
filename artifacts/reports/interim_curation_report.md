@@ -117,6 +117,8 @@ This report describes leakage-aware interim dataset generation from the local NA
 - Dev rows removed for benchmark overlap: `6`
 - Aug candidate text hashes already present in train_core: `1`
 - Aug candidate rows removed for train_core overlap: `1`
+- Aug candidate text hashes already present in dev_core: `0`
+- Aug candidate rows removed for dev_core overlap: `0`
 
 ### Benchmark Overlap Examples
 
@@ -129,16 +131,21 @@ This report describes leakage-aware interim dataset generation from the local NA
 | `5bbbe3a3499669d885eef52da6d9e06932e8420f` | `NADI2023_Subtask1_DEV` | `subtask1_dev_1699` | 1700 |
 | `1f25e02318f388515a4c423b22a3ebcd4934bdeb` | `NADI2023_Subtask1_DEV` | `subtask1_dev_1704` | 1705 |
 
-### Train-Core Overlap Examples
+### Aug-vs-Train Overlap Examples
 
 | Text hash | Source dataset | Source ID | Row | Label |
 | --- | --- | --- | ---: | --- |
 | `e9b11bcfb5006715b2cd24a1dde53ad964201863` | `NADI2021_TWT` | `TRAIN_14641` | 14237 | `Egypt` |
 
+### Aug-vs-Dev Overlap Examples
+
+No aug-vs-dev overlap examples recorded.
+
 ## Conflict Removals
 
 - Supporting conflict text hashes: `64`
 - Supporting rows removed for conflict: `166`
+- Conservative rule: any same exact text with conflicting labels anywhere in the canonical supporting pool is dropped from augmentation candidates.
 - Label normalization used for conflict accounting:
   - `UAE` -> `UAE`
   - `United_Arab_Emirates` -> `UAE`

@@ -2,7 +2,7 @@
 
 This repository defines a hiring-grade Arabic dialect classification project centered on Saudi identification. The v1 task is a four-way short-text classification problem over `Saudi`, `Egyptian`, `Levantine`, and `Maghrebi`.
 
-Current state: documentation and validation are in place. No preprocessing pipeline or model code has been implemented yet.
+Current state: documentation, validation, and leakage-aware interim curation are in place. No preprocessing pipeline or model code has been implemented yet.
 
 ## V1 Scope
 - Arabic script only
@@ -24,14 +24,15 @@ Saudi is intentionally separate from Gulf in v1. The local benchmark sources are
 - Standalone NADI 2020 and NADI 2021 DA local releases: provenance, inspection, and possible auxiliary evaluation only
 - Reference / future OOD source: `MADAR-2018.tsv`, not part of the initial v1 training mixture
 
-The repo contains only local raw-source documentation at this stage. NADI 2023 Subtask 1 is the main benchmark anchor. The bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files are the canonical v1 supporting sources because they are benchmark-aligned with that package. The standalone NADI 2020 and NADI 2021 DA releases are documented for provenance, inspection, and possible auxiliary evaluation only, and are not automatically merged into the initial v1 training pool to avoid accidental duplication. `MADAR-2018.tsv` is documented as a future out-of-domain reference rather than part of the initial training mixture.
+The repo now includes local raw-source documentation, validation utilities, and leakage-aware interim curation outputs. NADI 2023 Subtask 1 is the main benchmark anchor. The bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files are the canonical v1 supporting sources because they are benchmark-aligned with that package. The standalone NADI 2020 and NADI 2021 DA releases are documented for provenance, inspection, and possible auxiliary evaluation only, and are not automatically merged into the initial v1 training pool to avoid accidental duplication. `MADAR-2018.tsv` is documented as a future out-of-domain reference rather than part of the initial training mixture.
 
 ## Benchmark Safety
 - `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv` are the benchmark anchor.
 - Bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` are the canonical supporting sources for augmentation planning.
 - Standalone NADI 2020 and NADI 2021 DA releases are provenance / auxiliary evaluation only.
 - Exact text overlap between NADI 2023 train and dev must be removed from dev before benchmark-style evaluation.
-- Same exact text with conflicting labels across the canonical supporting sources must be dropped from augmentation candidates after normalizing `UAE` and `United_Arab_Emirates`.
+- Any exact text already present in `train_core` or `dev_core` must be removed from augmentation candidates.
+- Any same exact text with conflicting labels anywhere in the canonical supporting pool must be dropped from augmentation candidates after normalizing `UAE` and `United_Arab_Emirates`.
 
 ## Documentation
 - `PROJECT_SCOPE.md`: task definition, label policy, and Saudi-vs-Gulf rationale
@@ -51,8 +52,8 @@ The repo contains only local raw-source documentation at this stage. NADI 2023 S
 ## Not Yet Implemented
 - no model code
 - no preprocessing code
-- no curated processed dataset
+- no preprocessing-ready processed dataset
 - no benchmark results
 - no experiment tracking outputs
 
-The current deliverable is an internally consistent documentation pack that defines the task before implementation begins.
+Current deliverables include the documentation pack, validation reports, and leakage-aware interim curation outputs.

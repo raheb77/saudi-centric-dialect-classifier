@@ -70,6 +70,7 @@ def test_generate_interim_datasets_applies_mapping_and_leakage_rules(tmp_path: P
             ["b1", "نص متعارض", "Lebanon", "lb_Beirut"],
             ["b2", "نص موحد", "United_Arab_Emirates", "ae_Abu-Dhabi"],
             ["b3", "نص صالح 2", "Egypt", "eg_Faiyum"],
+            ["b4", "نص تطوير", "Syria", "sy_Damascus-City"],
         ],
     )
 
@@ -89,6 +90,8 @@ def test_generate_interim_datasets_applies_mapping_and_leakage_rules(tmp_path: P
     assert report["outputs"]["train_core"]["dropped_by_reason"]["out_of_scope_country"] == 1
     assert report["outputs"]["dev_core"]["dropped_by_reason"]["benchmark_exact_overlap_with_train"] == 1
     assert report["outputs"]["train_aug_candidates"]["dropped_by_reason"]["overlap_with_train_core"] == 1
+    assert report["outputs"]["train_aug_candidates"]["dropped_by_reason"]["overlap_with_dev_core"] == 1
     assert report["outputs"]["train_aug_candidates"]["dropped_by_reason"]["conflicting_supporting_label"] == 2
     assert report["outputs"]["train_aug_candidates"]["dropped_by_reason"]["out_of_scope_country"] == 2
+    assert report["overlap_removals"]["aug_dev_core_overlap_text_hash_count"] == 1
     assert report["conflict_removals"]["supporting_conflict_text_hash_count"] == 1

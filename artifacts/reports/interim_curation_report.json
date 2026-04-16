@@ -112,9 +112,9 @@
         "source_row_number": 1705
       }
     ],
-    "train_core_overlap_text_hash_count": 1,
-    "train_core_overlap_rows_removed": 1,
-    "train_core_overlap_examples": [
+    "aug_train_core_overlap_text_hash_count": 1,
+    "aug_train_core_overlap_rows_removed": 1,
+    "aug_train_core_overlap_examples": [
       {
         "text_hash": "e9b11bcfb5006715b2cd24a1dde53ad964201863",
         "source_dataset": "NADI2021_TWT",
@@ -122,7 +122,10 @@
         "source_row_number": 14237,
         "normalized_raw_label": "Egypt"
       }
-    ]
+    ],
+    "aug_dev_core_overlap_text_hash_count": 0,
+    "aug_dev_core_overlap_rows_removed": 0,
+    "aug_dev_core_overlap_examples": []
   },
   "conflict_removals": {
     "label_normalization": {

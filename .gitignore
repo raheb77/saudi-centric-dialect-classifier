@@ -1,4 +1,6 @@
 data/raw/
+data/interim/
+data/processed/
 *.zip
 __MACOSX/
 .ipynb_checkpoints/

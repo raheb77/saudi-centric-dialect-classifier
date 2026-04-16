@@ -75,5 +75,6 @@ The bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files are the canonical su
 - `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` are the only canonical supporting sources for v1 augmentation planning.
 - Standalone NADI 2020 and NADI 2021 DA releases remain provenance / auxiliary evaluation assets and are excluded from canonical leakage accounting.
 - Exact text overlap between NADI 2023 train and dev must be removed from dev before benchmark-style evaluation.
-- Same exact text with conflicting labels across the canonical supporting sources must be dropped from augmentation candidates.
+- Any exact text already present in the curated benchmark train or dev split must be removed from augmentation candidates.
+- Any same exact text with conflicting labels anywhere in the canonical supporting pool must be dropped from augmentation candidates.
 - For leakage accounting, `UAE` and `United_Arab_Emirates` are treated as the same canonical raw label.

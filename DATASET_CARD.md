@@ -1,7 +1,7 @@
 # Dataset Card
 
 ## Summary
-This project does not introduce a new raw corpus. It documents a Saudi-centered four-label classification task that will later be curated from local files already present under `data/raw/`.
+This project does not introduce a new raw corpus. It documents a Saudi-centered four-label classification task curated from local files already present under `data/raw/`, with leakage-aware interim outputs now generated for the benchmark anchor and canonical supporting pool.
 
 The source hierarchy is:
 
@@ -10,7 +10,14 @@ The source hierarchy is:
 - Standalone local NADI 2020 and NADI 2021 DA releases: provenance, inspection, and possible auxiliary evaluation only
 - Reference / future OOD source: MADAR-2018
 
-All counts below come from the inspected local files or the bundled local release notes. No final curated v1 dataset size is claimed yet, because filtering and label mapping have not been implemented.
+All counts below come from the inspected local files, the bundled local release notes, or the current local interim curation outputs. No final preprocessing-ready v1 dataset size is claimed yet.
+
+## Current Interim Outputs
+The current local leakage-aware interim generation step produces:
+
+- `data/interim/train_core.csv`: 10,000 rows from `NADI2023_Subtask1_TRAIN.tsv`
+- `data/interim/dev_core.csv`: 999 rows from `NADI2023_Subtask1_DEV.tsv` after removing 6 exact benchmark train/dev overlaps
+- `data/interim/train_aug_candidates.csv`: 27,629 rows from bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` after dropping out-of-scope rows, train/dev overlap rows, and same-text conflicting-label cases in the canonical supporting pool
 
 ## Local Raw Sources
 Row counts below refer to non-header rows in the local copies.
@@ -109,7 +116,7 @@ Drop examples that are:
 - Provenance / auxiliary evaluation only: standalone NADI 2020 and standalone NADI 2021 DA releases
 - Not part of the initial v1 training mixture: `MADAR-2018.tsv`
 
-For benchmark-style evaluation, any exact text overlap between the NADI 2023 train and dev files should be removed from dev before scoring. For augmentation planning, any exact text that appears across the canonical supporting sources with conflicting labels should be dropped. Leakage accounting should normalize `UAE` and `United_Arab_Emirates` to the same canonical raw label before conflict checks.
+For benchmark-style evaluation, any exact text overlap between the NADI 2023 train and dev files should be removed from dev before scoring. For augmentation planning, any exact text already present in `train_core` or `dev_core` should be removed from augmentation candidates. Any same exact text anywhere in the canonical supporting pool with conflicting labels should be dropped conservatively. Leakage accounting should normalize `UAE` and `United_Arab_Emirates` to the same canonical raw label before conflict checks.
 
 ## Files Present but Not Used as V1 Text Data
 The local raw directory also contains material that should be documented but not treated as v1 training text:
@@ -125,4 +132,4 @@ The local raw directory also contains material that should be documented but not
 ## Known Limitations
 - The benchmark anchor is Twitter-domain text, while MADAR is translated travel-domain text. That domain mismatch is why MADAR is documented as a future OOD source rather than a primary benchmark or part of the initial v1 training mixture.
 - The four v1 labels are grouped project labels layered on top of country- or city-level raw sources.
-- No final train/dev/test curation logic has been executed yet, so this card defines source policy rather than a finished processed dataset.
+- The current outputs are leakage-aware interim curation artifacts, not a preprocessing-ready final dataset.

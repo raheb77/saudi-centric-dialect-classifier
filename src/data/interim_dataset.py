@@ -189,12 +189,14 @@ def build_dev_core(
     records: list[Record],
     train_text_hashes: set[str],
     output_path: Path,
-) -> tuple[list[Record], OutputStats, list[dict[str, Any]]]:
+) -> tuple[list[Record], OutputStats, dict[str, Any]]:
     kept: list[Record] = []
+    overlap_hashes: set[str] = set()
     overlap_examples: list[dict[str, Any]] = []
     stats = OutputStats(name="dev_core", path=output_path.as_posix())
     for record in records:
         if record.text_hash in train_text_hashes:
+            overlap_hashes.add(record.text_hash)
             record_drop(stats, "benchmark_exact_overlap_with_train")
             if len(overlap_examples) < 20:
                 overlap_examples.append(
@@ -212,7 +214,14 @@ def build_dev_core(
         kept.append(record)
     write_output_csv(output_path, kept)
     summarize_kept(kept, stats)
-    return kept, stats, overlap_examples
+    overlap_summary = {
+        "benchmark_train_dev_exact_overlap_text_hash_count": len(overlap_hashes),
+        "dev_rows_removed_for_benchmark_overlap": stats.dropped_by_reason[
+            "benchmark_exact_overlap_with_train"
+        ],
+        "benchmark_overlap_examples": overlap_examples,
+    }
+    return kept, stats, overlap_summary
 
 
 def find_supporting_conflicts(records: list[Record]) -> tuple[set[str], list[dict[str, Any]]]:
@@ -251,6 +260,7 @@ def find_supporting_conflicts(records: list[Record]) -> tuple[set[str], list[dic
 def build_train_aug_candidates(
     records: list[Record],
     train_core_text_hashes: set[str],
+    dev_core_text_hashes: set[str],
     output_path: Path,
 ) -> tuple[list[Record], OutputStats, dict[str, Any], dict[str, Any]]:
     kept: list[Record] = []
@@ -258,6 +268,8 @@ def build_train_aug_candidates(
     conflict_hashes, conflict_examples = find_supporting_conflicts(records)
     train_overlap_hashes: set[str] = set()
     train_overlap_examples: list[dict[str, Any]] = []
+    dev_overlap_hashes: set[str] = set()
+    dev_overlap_examples: list[dict[str, Any]] = []
 
     for record in records:
         if record.text_hash in conflict_hashes:
@@ -277,6 +289,20 @@ def build_train_aug_candidates(
                     }
                 )
             continue
+        if record.text_hash in dev_core_text_hashes:
+            dev_overlap_hashes.add(record.text_hash)
+            record_drop(stats, "overlap_with_dev_core")
+            if len(dev_overlap_examples) < 20:
+                dev_overlap_examples.append(
+                    {
+                        "text_hash": record.text_hash,
+                        "source_dataset": record.source_dataset,
+                        "source_id": record.source_id,
+                        "source_row_number": record.source_row_number,
+                        "normalized_raw_label": record.normalized_raw_label,
+                    }
+                )
+            continue
         if record.macro_label is None:
             record_drop(stats, "out_of_scope_country")
             continue
@@ -285,9 +311,12 @@ def build_train_aug_candidates(
     write_output_csv(output_path, kept)
     summarize_kept(kept, stats)
     overlap_summary = {
-        "train_core_overlap_text_hash_count": len(train_overlap_hashes),
-        "train_core_overlap_rows_removed": stats.dropped_by_reason["overlap_with_train_core"],
-        "train_core_overlap_examples": train_overlap_examples,
+        "aug_train_core_overlap_text_hash_count": len(train_overlap_hashes),
+        "aug_train_core_overlap_rows_removed": stats.dropped_by_reason["overlap_with_train_core"],
+        "aug_train_core_overlap_examples": train_overlap_examples,
+        "aug_dev_core_overlap_text_hash_count": len(dev_overlap_hashes),
+        "aug_dev_core_overlap_rows_removed": stats.dropped_by_reason["overlap_with_dev_core"],
+        "aug_dev_core_overlap_examples": dev_overlap_examples,
     }
     conflict_summary = {
         "supporting_conflict_text_hash_count": len(conflict_hashes),
@@ -305,7 +334,7 @@ def build_curation_summary(
     train_stats: OutputStats,
     dev_stats: OutputStats,
     aug_stats: OutputStats,
-    dev_overlap_examples: list[dict[str, Any]],
+    dev_overlap_summary: dict[str, Any],
     aug_overlap_summary: dict[str, Any],
     aug_conflict_summary: dict[str, Any],
 ) -> dict[str, Any]:
@@ -333,11 +362,7 @@ def build_curation_summary(
         "overall_kept_by_macro_label": counter_to_sorted_dict(overall_kept_by_macro_label),
         "overall_dropped_by_reason": counter_to_sorted_dict(overall_dropped_by_reason),
         "overlap_removals": {
-            "benchmark_train_dev_exact_overlap_text_hash_count": len(dev_overlap_examples),
-            "dev_rows_removed_for_benchmark_overlap": dev_stats.dropped_by_reason[
-                "benchmark_exact_overlap_with_train"
-            ],
-            "benchmark_overlap_examples": dev_overlap_examples,
+            **dev_overlap_summary,
             **aug_overlap_summary,
         },
         "conflict_removals": {
@@ -415,8 +440,10 @@ def write_markdown_report(path: Path, payload: dict[str, Any]) -> None:
             "",
             f"- Benchmark train/dev exact overlap text hashes: `{overlap['benchmark_train_dev_exact_overlap_text_hash_count']}`",
             f"- Dev rows removed for benchmark overlap: `{overlap['dev_rows_removed_for_benchmark_overlap']}`",
-            f"- Aug candidate text hashes already present in train_core: `{overlap['train_core_overlap_text_hash_count']}`",
-            f"- Aug candidate rows removed for train_core overlap: `{overlap['train_core_overlap_rows_removed']}`",
+            f"- Aug candidate text hashes already present in train_core: `{overlap['aug_train_core_overlap_text_hash_count']}`",
+            f"- Aug candidate rows removed for train_core overlap: `{overlap['aug_train_core_overlap_rows_removed']}`",
+            f"- Aug candidate text hashes already present in dev_core: `{overlap['aug_dev_core_overlap_text_hash_count']}`",
+            f"- Aug candidate rows removed for dev_core overlap: `{overlap['aug_dev_core_overlap_rows_removed']}`",
             "",
             "### Benchmark Overlap Examples",
             "",
@@ -431,16 +458,26 @@ def write_markdown_report(path: Path, payload: dict[str, Any]) -> None:
             )
     else:
         lines.append("No benchmark overlap examples recorded.")
-    lines.extend(["", "### Train-Core Overlap Examples", ""])
-    if overlap["train_core_overlap_examples"]:
+    lines.extend(["", "### Aug-vs-Train Overlap Examples", ""])
+    if overlap["aug_train_core_overlap_examples"]:
         lines.extend(["| Text hash | Source dataset | Source ID | Row | Label |", "| --- | --- | --- | ---: | --- |"])
-        for example in overlap["train_core_overlap_examples"]:
+        for example in overlap["aug_train_core_overlap_examples"]:
             lines.append(
                 f"| `{example['text_hash']}` | `{example['source_dataset']}` | `{example['source_id']}` | "
                 f"{example['source_row_number']} | `{example['normalized_raw_label']}` |"
             )
     else:
-        lines.append("No train_core overlap examples recorded.")
+        lines.append("No aug-vs-train overlap examples recorded.")
+    lines.extend(["", "### Aug-vs-Dev Overlap Examples", ""])
+    if overlap["aug_dev_core_overlap_examples"]:
+        lines.extend(["| Text hash | Source dataset | Source ID | Row | Label |", "| --- | --- | --- | ---: | --- |"])
+        for example in overlap["aug_dev_core_overlap_examples"]:
+            lines.append(
+                f"| `{example['text_hash']}` | `{example['source_dataset']}` | `{example['source_id']}` | "
+                f"{example['source_row_number']} | `{example['normalized_raw_label']}` |"
+            )
+    else:
+        lines.append("No aug-vs-dev overlap examples recorded.")
     lines.append("")
 
     conflict = payload["conflict_removals"]
@@ -450,6 +487,7 @@ def write_markdown_report(path: Path, payload: dict[str, Any]) -> None:
             "",
             f"- Supporting conflict text hashes: `{conflict['supporting_conflict_text_hash_count']}`",
             f"- Supporting rows removed for conflict: `{conflict['supporting_conflict_rows_removed']}`",
+            "- Conservative rule: any same exact text with conflicting labels anywhere in the canonical supporting pool is dropped from augmentation candidates.",
             "- Label normalization used for conflict accounting:",
             f"  - `UAE` -> `{conflict['label_normalization']['UAE']}`",
             "  - `United_Arab_Emirates` -> `UAE`",
@@ -485,14 +523,16 @@ def generate_interim_datasets(data_root: Path, interim_dir: Path, report_dir: Pa
     train_core, train_stats = build_train_core(train_records, train_core_path)
     train_text_hashes = {record.text_hash for record in train_core}
     raw_train_text_hashes = {record.text_hash for record in train_records}
-    dev_core, dev_stats, dev_overlap_examples = build_dev_core(
+    dev_core, dev_stats, dev_overlap_summary = build_dev_core(
         dev_records,
         raw_train_text_hashes,
         dev_core_path,
     )
+    dev_text_hashes = {record.text_hash for record in dev_core}
     _, aug_stats, aug_overlap_summary, aug_conflict_summary = build_train_aug_candidates(
         aug_records,
         train_text_hashes,
+        dev_text_hashes,
         train_aug_path,
     )
 
@@ -500,7 +540,7 @@ def generate_interim_datasets(data_root: Path, interim_dir: Path, report_dir: Pa
         train_stats,
         dev_stats,
         aug_stats,
-        dev_overlap_examples,
+        dev_overlap_summary,
         aug_overlap_summary,
         aug_conflict_summary,
     )

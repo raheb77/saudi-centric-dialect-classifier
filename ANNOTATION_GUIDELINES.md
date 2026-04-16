@@ -62,7 +62,9 @@ If the raw source geography maps to an in-scope v1 label but the text itself loo
 ### Benchmark Safety and Source Conflicts
 `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv` are the benchmark anchor. Any exact text overlap between these two files should be removed from dev before benchmark-style evaluation rather than tolerated as harmless duplication.
 
-For augmentation planning, only the bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files count as canonical supporting sources. If the same exact text appears across those supporting sources with conflicting labels after normalizing `UAE` and `United_Arab_Emirates` to the same canonical raw label, drop that text from augmentation candidates.
+For augmentation planning, only the bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files count as canonical supporting sources. If the same exact text appears anywhere in that canonical supporting pool with conflicting labels after normalizing `UAE` and `United_Arab_Emirates` to the same canonical raw label, drop that text from augmentation candidates. This conservative curation rule applies even when the conflicting duplicates happen inside one supporting file rather than across both files, because the text is still label-ambiguous and unsafe to use for augmentation.
+
+Validation reports are narrower on purpose. The validation utility reports cross-file supporting conflicts because its benchmark-safety summary is focused on inter-file overlap and leakage auditing. Interim curation is stricter: once a same-text conflict is observed anywhere in the canonical supporting pool, that text is removed from augmentation candidates.
 
 The standalone NADI 2020 and NADI 2021 DA releases remain provenance / auxiliary evaluation assets. They can inform inspection, but they should not be treated as automatic members of the canonical augmentation pool.
 
