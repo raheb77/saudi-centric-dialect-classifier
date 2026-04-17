@@ -570,6 +570,33 @@ def _load_predictions_if_exists(path: Path, *, prediction_keys: tuple[str, ...])
     return [row for row in rows if all(key in row for key in prediction_keys)]
 
 
+def compute_tracked_confusion_counts(
+    true_labels: list[str],
+    predicted_labels: list[str],
+) -> dict[str, int]:
+    counts = Counter(zip(true_labels, predicted_labels, strict=True))
+    return {
+        f"{true_label}->{predicted_label}": int(counts.get((true_label, predicted_label), 0))
+        for true_label, predicted_label in ERROR_ANALYSIS_DIRECTIONS
+    }
+
+
+def build_per_class_metrics(
+    report: dict[str, Any],
+    *,
+    label_order: tuple[str, ...],
+) -> dict[str, dict[str, float | int]]:
+    return {
+        label: {
+            "precision": float(report[label]["precision"]),
+            "recall": float(report[label]["recall"]),
+            "f1": float(report[label]["f1-score"]),
+            "support": int(report[label]["support"]),
+        }
+        for label in label_order
+    }
+
+
 def build_comparison_rows(report_dir: Path) -> list[list[str]]:
     rows: list[list[str]] = []
     classical = _load_json_if_exists(report_dir / "classical_baseline_metrics.json")
@@ -839,6 +866,12 @@ def write_reports(
     error_analysis_path = config.output.report_dir / f"{prefix}_error_analysis.md"
 
     label_predictions = [config.label_order[index] for index in results["eval"]["predictions"]]
+    true_label_names = [config.label_order[index] for index in results["eval"]["labels"]]
+    tracked_confusion_counts = compute_tracked_confusion_counts(true_label_names, label_predictions)
+    per_class_metrics = build_per_class_metrics(
+        results["eval"]["classification_report"],
+        label_order=config.label_order,
+    )
     metrics_payload = {
         "model_name_or_path": config.model.name_or_path,
         "train_rows": results["train_rows"],
@@ -853,6 +886,9 @@ def write_reports(
         "eval_loss": results["eval"]["loss"],
         "accuracy": results["eval"]["accuracy"],
         "macro_f1": results["eval"]["macro_f1"],
+        "per_class_metrics": per_class_metrics,
+        "tracked_confusion_counts": tracked_confusion_counts,
+        "config_deviations": {},
         "training_history": results["history"],
     }
     metrics_path.write_text(json.dumps(metrics_payload, ensure_ascii=False, indent=2), encoding="utf-8")

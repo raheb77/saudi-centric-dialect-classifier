@@ -1,0 +1,56 @@
+data:
+  train_path: data/processed/train_core.csv
+  dev_path: data/processed/dev_core.csv
+  text_column: processed_text
+  target_column: macro_label
+
+labels:
+  order:
+    - Saudi
+    - Egyptian
+    - Levantine
+    - Maghrebi
+
+model:
+  name_or_path: UBC-NLP/MARBERT
+  num_labels: 4
+  max_length: 128
+
+training:
+  batch_size: 32
+  eval_batch_size: 64
+  learning_rate: 2.0e-5
+  weight_decay: 0.01
+  num_epochs: 5
+  warmup_ratio: 0.1
+  gradient_accumulation_steps: 1
+  max_grad_norm: 1.0
+  num_workers: 0
+
+optimizer:
+  type: adamw_torch
+
+scheduler:
+  type: linear_with_warmup
+
+early_stopping:
+  metric: eval_macro_f1
+  mode: max
+  patience: 2
+  min_delta: 0.001
+
+loss:
+  type: cross_entropy
+  class_weights: balanced
+
+seed: 123
+
+reproducibility:
+  deterministic_algorithms: true
+  cudnn_deterministic: true
+  cudnn_benchmark: false
+
+output:
+  report_dir: artifacts/reports
+  checkpoint_dir: artifacts/checkpoints/marbert_seed_123
+  prefix: marbert_seed_123

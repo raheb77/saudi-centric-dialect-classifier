@@ -1,0 +1,52 @@
+{
+  "model_name_or_path": "UBC-NLP/MARBERT",
+  "train_rows": 10000,
+  "dev_rows": 999,
+  "seed": 42,
+  "device": "cpu",
+  "parameter_dtype": "torch.float32",
+  "best_epoch": 5,
+  "best_eval_macro_f1": 0.9658030734064622,
+  "checkpoint_dir": "artifacts/checkpoints/marbert_base",
+  "class_weights": "balanced",
+  "eval_loss": 0.2017296724454001,
+  "accuracy": 0.9719719719719719,
+  "macro_f1": 0.9658030734064622,
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.46874936615824697,
+      "eval_loss": 0.17061786017976366,
+      "eval_accuracy": 0.9619619619619619,
+      "eval_macro_f1": 0.9548207562955758
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.1302746177047491,
+      "eval_loss": 0.19598772811579393,
+      "eval_accuracy": 0.964964964964965,
+      "eval_macro_f1": 0.9563107576032219
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.054707272677496074,
+      "eval_loss": 0.16027029895329023,
+      "eval_accuracy": 0.9679679679679679,
+      "eval_macro_f1": 0.9626098739333917
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.022858137091062963,
+      "eval_loss": 0.2030542593811069,
+      "eval_accuracy": 0.9669669669669669,
+      "eval_macro_f1": 0.9592010679032102
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.010164290330372751,
+      "eval_loss": 0.2017296724454001,
+      "eval_accuracy": 0.9719719719719719,
+      "eval_macro_f1": 0.9658030734064622
+    }
+  ]
+}

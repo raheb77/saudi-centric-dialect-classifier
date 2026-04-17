@@ -1,0 +1,64 @@
+{
+  "train_rows": 10000,
+  "dev_rows": 998,
+  "hard_checks": {
+    "source_id_overlap": {
+      "count": 0,
+      "representative_pairs": []
+    },
+    "original_text_overlap": {
+      "count": 0,
+      "representative_pairs": []
+    },
+    "processed_text_overlap": {
+      "count": 0,
+      "representative_pairs": []
+    }
+  },
+  "soft_checks": {
+    "train_processed_text_duplicate_groups": {
+      "count": 16,
+      "additional_rows": 17,
+      "representative_groups": [
+        [
+          "subtask1_train_5120",
+          "subtask1_train_11764",
+          "subtask1_train_16924"
+        ],
+        [
+          "subtask1_train_10727",
+          "subtask1_train_12439"
+        ],
+        [
+          "subtask1_train_11510",
+          "subtask1_train_15504"
+        ],
+        [
+          "subtask1_train_12428",
+          "subtask1_train_17155"
+        ],
+        [
+          "subtask1_train_12497",
+          "subtask1_train_15871"
+        ]
+      ]
+    },
+    "dev_processed_text_duplicate_groups": {
+      "count": 0,
+      "additional_rows": 0,
+      "representative_groups": []
+    },
+    "dev_rows_with_near_duplicate_in_train": {
+      "count": 1,
+      "threshold": 0.9,
+      "representative_pairs": [
+        {
+          "train_source_id": "subtask1_train_9967",
+          "dev_source_id": "subtask1_dev_856",
+          "token_jaccard": 0.92
+        }
+      ]
+    }
+  },
+  "status": "pass"
+}
