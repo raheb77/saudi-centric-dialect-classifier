@@ -1,0 +1,305 @@
+{
+  "seed_runs": [
+    {
+      "model_name_or_path": "UBC-NLP/MARBERT",
+      "train_rows": 10000,
+      "dev_rows": 998,
+      "seed": 42,
+      "device": "cuda",
+      "parameter_dtype": "torch.float32",
+      "best_epoch": 5,
+      "best_eval_macro_f1": 0.959520211095972,
+      "checkpoint_dir": "artifacts/checkpoints/marbert_seed_42",
+      "class_weights": "balanced",
+      "eval_loss": 0.2202035237648683,
+      "accuracy": 0.966933867735471,
+      "macro_f1": 0.959520211095972,
+      "per_class_metrics": {
+        "Saudi": {
+          "precision": 0.9509803921568627,
+          "recall": 0.97,
+          "f1": 0.9603960396039604,
+          "support": 100
+        },
+        "Egyptian": {
+          "precision": 0.9387755102040817,
+          "recall": 0.9292929292929293,
+          "f1": 0.934010152284264,
+          "support": 99
+        },
+        "Levantine": {
+          "precision": 0.9821428571428571,
+          "recall": 0.9649122807017544,
+          "f1": 0.9734513274336283,
+          "support": 399
+        },
+        "Maghrebi": {
+          "precision": 0.9630541871921182,
+          "recall": 0.9775,
+          "f1": 0.9702233250620348,
+          "support": 400
+        }
+      },
+      "tracked_confusion_counts": {
+        "Saudi->Levantine": 1,
+        "Saudi->Maghrebi": 2,
+        "Egyptian->Maghrebi": 4,
+        "Egyptian->Levantine": 2
+      },
+      "config_deviations": {},
+      "training_history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.4721024153828621,
+          "eval_loss": 0.27939475382974965,
+          "eval_accuracy": 0.9488977955911824,
+          "eval_macro_f1": 0.9317508856675956
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.13650507756322622,
+          "eval_loss": 0.36845341402447535,
+          "eval_accuracy": 0.9458917835671342,
+          "eval_macro_f1": 0.9347465644352713
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.05716434730105102,
+          "eval_loss": 0.34494592335993396,
+          "eval_accuracy": 0.9569138276553106,
+          "eval_macro_f1": 0.9463350531287598
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.02091873033894226,
+          "eval_loss": 0.1827245009745768,
+          "eval_accuracy": 0.9639278557114228,
+          "eval_macro_f1": 0.9547581884010975
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.005674267910979689,
+          "eval_loss": 0.2202036960091524,
+          "eval_accuracy": 0.966933867735471,
+          "eval_macro_f1": 0.959520211095972
+        }
+      ]
+    },
+    {
+      "model_name_or_path": "UBC-NLP/MARBERT",
+      "train_rows": 10000,
+      "dev_rows": 998,
+      "seed": 123,
+      "device": "cuda",
+      "parameter_dtype": "torch.float32",
+      "best_epoch": 5,
+      "best_eval_macro_f1": 0.968251926537558,
+      "checkpoint_dir": "artifacts/checkpoints/marbert_seed_123",
+      "class_weights": "balanced",
+      "eval_loss": 0.19528848381866076,
+      "accuracy": 0.9719438877755511,
+      "macro_f1": 0.968251926537558,
+      "per_class_metrics": {
+        "Saudi": {
+          "precision": 0.9705882352941176,
+          "recall": 0.99,
+          "f1": 0.9801980198019802,
+          "support": 100
+        },
+        "Egyptian": {
+          "precision": 0.9489795918367347,
+          "recall": 0.9393939393939394,
+          "f1": 0.9441624365482234,
+          "support": 99
+        },
+        "Levantine": {
+          "precision": 0.9702233250620348,
+          "recall": 0.9799498746867168,
+          "f1": 0.9750623441396509,
+          "support": 399
+        },
+        "Maghrebi": {
+          "precision": 0.979746835443038,
+          "recall": 0.9675,
+          "f1": 0.9735849056603774,
+          "support": 400
+        }
+      },
+      "tracked_confusion_counts": {
+        "Saudi->Levantine": 0,
+        "Saudi->Maghrebi": 1,
+        "Egyptian->Maghrebi": 3,
+        "Egyptian->Levantine": 2
+      },
+      "config_deviations": {},
+      "training_history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.4865142372369766,
+          "eval_loss": 0.20396833727976124,
+          "eval_accuracy": 0.9498997995991983,
+          "eval_macro_f1": 0.9324190343216519
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.12297938666716218,
+          "eval_loss": 0.16645192245921056,
+          "eval_accuracy": 0.9639278557114228,
+          "eval_macro_f1": 0.9582763089822021
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.04228360536023974,
+          "eval_loss": 0.2787747796408399,
+          "eval_accuracy": 0.9619238476953907,
+          "eval_macro_f1": 0.9533836892029294
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.017923909600265325,
+          "eval_loss": 0.18160667727684568,
+          "eval_accuracy": 0.966933867735471,
+          "eval_macro_f1": 0.9608548257950523
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.007640367782115937,
+          "eval_loss": 0.19528859066506307,
+          "eval_accuracy": 0.9719438877755511,
+          "eval_macro_f1": 0.968251926537558
+        }
+      ]
+    },
+    {
+      "model_name_or_path": "UBC-NLP/MARBERT",
+      "train_rows": 10000,
+      "dev_rows": 998,
+      "seed": 7,
+      "device": "cuda",
+      "parameter_dtype": "torch.float32",
+      "best_epoch": 1,
+      "best_eval_macro_f1": 0.956087626526943,
+      "checkpoint_dir": "artifacts/checkpoints/marbert_seed_7",
+      "class_weights": "balanced",
+      "eval_loss": 0.1782901045196281,
+      "accuracy": 0.9649298597194389,
+      "macro_f1": 0.956087626526943,
+      "per_class_metrics": {
+        "Saudi": {
+          "precision": 0.9313725490196079,
+          "recall": 0.95,
+          "f1": 0.9405940594059405,
+          "support": 100
+        },
+        "Egyptian": {
+          "precision": 0.9782608695652174,
+          "recall": 0.9090909090909091,
+          "f1": 0.9424083769633508,
+          "support": 99
+        },
+        "Levantine": {
+          "precision": 0.9650872817955112,
+          "recall": 0.9699248120300752,
+          "f1": 0.9675,
+          "support": 399
+        },
+        "Maghrebi": {
+          "precision": 0.9702233250620348,
+          "recall": 0.9775,
+          "f1": 0.9738480697384807,
+          "support": 400
+        }
+      },
+      "tracked_confusion_counts": {
+        "Saudi->Levantine": 3,
+        "Saudi->Maghrebi": 2,
+        "Egyptian->Maghrebi": 5,
+        "Egyptian->Levantine": 3
+      },
+      "config_deviations": {},
+      "training_history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.46390380778312684,
+          "eval_loss": 0.17829011837561767,
+          "eval_accuracy": 0.9649298597194389,
+          "eval_macro_f1": 0.956087626526943
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.11913803094327449,
+          "eval_loss": 0.15995873713899472,
+          "eval_accuracy": 0.9559118236472945,
+          "eval_macro_f1": 0.94738240512774
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.05594197615217417,
+          "eval_loss": 0.17452075635502956,
+          "eval_accuracy": 0.9609218436873748,
+          "eval_macro_f1": 0.9538746539306332
+        }
+      ]
+    }
+  ],
+  "aggregates": {
+    "n_seeds": 3,
+    "accuracy": {
+      "mean": 0.9679358717434869,
+      "std": 0.0036127768291222065,
+      "values": [
+        0.966933867735471,
+        0.9719438877755511,
+        0.9649298597194389
+      ]
+    },
+    "macro_f1": {
+      "mean": 0.961286588053491,
+      "std": 0.006271571920507845,
+      "values": [
+        0.959520211095972,
+        0.968251926537558,
+        0.956087626526943
+      ]
+    },
+    "per_class_f1": {
+      "Saudi": {
+        "mean": 0.9603960396039604,
+        "std": 0.01980198019801982,
+        "values": [
+          0.9603960396039604,
+          0.9801980198019802,
+          0.9405940594059405
+        ]
+      },
+      "Egyptian": {
+        "mean": 0.9401936552652794,
+        "std": 0.005426413465079001,
+        "values": [
+          0.934010152284264,
+          0.9441624365482234,
+          0.9424083769633508
+        ]
+      },
+      "Levantine": {
+        "mean": 0.972004557191093,
+        "std": 0.003983355410033347,
+        "values": [
+          0.9734513274336283,
+          0.9750623441396509,
+          0.9675
+        ]
+      },
+      "Maghrebi": {
+        "mean": 0.9725521001536309,
+        "std": 0.002021066278831555,
+        "values": [
+          0.9702233250620348,
+          0.9735849056603774,
+          0.9738480697384807
+        ]
+      }
+    }
+  },
+  "macro_f1_stability_label": "acceptable stability"
+}

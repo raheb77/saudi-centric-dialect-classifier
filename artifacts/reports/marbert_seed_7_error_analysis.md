@@ -6,25 +6,25 @@ This report summarizes the tracked confusion directions for MARBERT on `dev_core
 
 | True Label | Predicted Label | MARBERT |
 | --- | --- | --- |
-| Saudi | Levantine | 1 |
+| Saudi | Levantine | 3 |
 | Saudi | Maghrebi | 2 |
-| Egyptian | Maghrebi | 4 |
-| Egyptian | Levantine | 2 |
+| Egyptian | Maghrebi | 5 |
+| Egyptian | Levantine | 3 |
 
 ## Top 10 Off-Diagonal Confusions
 
 | True Label | Predicted Label | Count |
 | --- | --- | --- |
-| Levantine | Maghrebi | 9 |
-| Egyptian | Maghrebi | 4 |
-| Maghrebi | Levantine | 4 |
-| Levantine | Egyptian | 3 |
-| Maghrebi | Egyptian | 3 |
-| Egyptian | Levantine | 2 |
-| Levantine | Saudi | 2 |
-| Maghrebi | Saudi | 2 |
+| Maghrebi | Levantine | 8 |
+| Egyptian | Maghrebi | 5 |
+| Levantine | Maghrebi | 5 |
+| Levantine | Saudi | 5 |
+| Egyptian | Levantine | 3 |
+| Saudi | Levantine | 3 |
+| Levantine | Egyptian | 2 |
 | Saudi | Maghrebi | 2 |
 | Egyptian | Saudi | 1 |
+| Maghrebi | Saudi | 1 |
 
 ## Interpretation
 

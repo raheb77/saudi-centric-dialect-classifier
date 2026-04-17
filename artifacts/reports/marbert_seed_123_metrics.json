@@ -1,0 +1,85 @@
+{
+  "model_name_or_path": "UBC-NLP/MARBERT",
+  "train_rows": 10000,
+  "dev_rows": 998,
+  "seed": 123,
+  "device": "cuda",
+  "parameter_dtype": "torch.float32",
+  "best_epoch": 5,
+  "best_eval_macro_f1": 0.968251926537558,
+  "checkpoint_dir": "artifacts/checkpoints/marbert_seed_123",
+  "class_weights": "balanced",
+  "eval_loss": 0.19528848381866076,
+  "accuracy": 0.9719438877755511,
+  "macro_f1": 0.968251926537558,
+  "per_class_metrics": {
+    "Saudi": {
+      "precision": 0.9705882352941176,
+      "recall": 0.99,
+      "f1": 0.9801980198019802,
+      "support": 100
+    },
+    "Egyptian": {
+      "precision": 0.9489795918367347,
+      "recall": 0.9393939393939394,
+      "f1": 0.9441624365482234,
+      "support": 99
+    },
+    "Levantine": {
+      "precision": 0.9702233250620348,
+      "recall": 0.9799498746867168,
+      "f1": 0.9750623441396509,
+      "support": 399
+    },
+    "Maghrebi": {
+      "precision": 0.979746835443038,
+      "recall": 0.9675,
+      "f1": 0.9735849056603774,
+      "support": 400
+    }
+  },
+  "tracked_confusion_counts": {
+    "Saudi->Levantine": 0,
+    "Saudi->Maghrebi": 1,
+    "Egyptian->Maghrebi": 3,
+    "Egyptian->Levantine": 2
+  },
+  "config_deviations": {},
+  "training_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.4865142372369766,
+      "eval_loss": 0.20396833727976124,
+      "eval_accuracy": 0.9498997995991983,
+      "eval_macro_f1": 0.9324190343216519
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.12297938666716218,
+      "eval_loss": 0.16645192245921056,
+      "eval_accuracy": 0.9639278557114228,
+      "eval_macro_f1": 0.9582763089822021
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.04228360536023974,
+      "eval_loss": 0.2787747796408399,
+      "eval_accuracy": 0.9619238476953907,
+      "eval_macro_f1": 0.9533836892029294
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.017923909600265325,
+      "eval_loss": 0.18160667727684568,
+      "eval_accuracy": 0.966933867735471,
+      "eval_macro_f1": 0.9608548257950523
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.007640367782115937,
+      "eval_loss": 0.19528859066506307,
+      "eval_accuracy": 0.9719438877755511,
+      "eval_macro_f1": 0.968251926537558
+    }
+  ]
+}
