@@ -1,17 +1,18 @@
 # Error Analysis
 
-This document summarizes the current repository-level error picture from the classical TF-IDF + Logistic Regression baseline evaluated on `data/processed/dev_core.csv`.
+This document records the completed-project error picture while keeping the classical TF-IDF + Logistic Regression baseline as the main qualitative reference. The classical baseline was evaluated on the original `999`-row `dev_core` view and remains the clearest view into the task's lexical failure modes.
 
-It is intended as a stable comparison reference for later baselines, especially:
+Later baselines are now complete. MARBERT on the cleaned `998`-row benchmark-safe dev split materially reduced the tracked Saudi/Egyptian confusion directions, but the analysis below remains useful because it explains why those directions were hard in the first place.
 
-- a future LLM baseline
-- a future fine-tuned Arabic encoder
+## Classical Reference Result
 
-The current baseline reaches `0.8869` accuracy and `0.8483` macro F1 on `dev_core`, but its errors are not evenly distributed across labels. The main pattern is asymmetry: the single-country labels `Saudi` and `Egyptian` are more often absorbed into the broader grouped labels `Levantine` and `Maghrebi` than the reverse.
+- Split: original `dev_core` (`999` rows)
+- Accuracy: `0.8869`
+- Macro F1: `0.8483`
 
 ## Confusion Summary
 
-The table below focuses on the four confusion directions that matter most for the current Saudi-centered task definition. `Share of class errors` is the proportion of all errors for that true class.
+The table below focuses on the four confusion directions that matter most for the Saudi-centered task definition. `Share of class errors` is the proportion of all errors for that true class in the classical baseline.
 
 | True Label | Predicted Label | Count | Share of Class Errors |
 | --- | --- | ---: | ---: |
@@ -110,17 +111,38 @@ These cases typically have one or more of the following properties:
 - softened colloquial writing that reduces strong locality
 - topic-heavy text where dialect signal is weaker than discourse signal
 
-For later LLM and encoder comparisons, not every error should be read as a model deficiency of the same kind. Some errors are probably recoverable with better modeling; others may reflect genuine label ambiguity under a short-text, no-metadata setting.
+Not every remaining error in the completed project should be read as a model deficiency of the same kind. Some errors are recoverable with stronger modeling; others reflect genuine label ambiguity under a short-text, no-metadata setting.
 
-## Implications for Later Baselines
+## Completed-Project Context
 
-- A stronger model should be expected to reduce some `Saudi` and `Egyptian` absorption into broader grouped labels, but not eliminate all such cases.
-- Improvement should be judged not only by overall macro F1, but also by whether the four tracked confusion directions shrink meaningfully.
-- Later models should be compared against this document, not only against the aggregate confusion matrix, because the current failure mode is structured rather than random.
+The classical reference remains useful because it exposes the main task difficulty, but the completed project state now includes stronger baselines and an encoder result.
+
+On the tracked Saudi/Egyptian confusion directions, MARBERT on the cleaned `998`-row dev split reduced the counts to:
+
+| True Label | Predicted Label | Classical (`999` rows) | MARBERT (`998` rows) |
+| --- | --- | ---: | ---: |
+| `Saudi` | `Levantine` | 15 | 1 |
+| `Saudi` | `Maghrebi` | 11 | 2 |
+| `Egyptian` | `Maghrebi` | 22 | 4 |
+| `Egyptian` | `Levantine` | 13 | 2 |
+
+Interpretation:
+
+- The contraction in these counts is large enough to support the claim that the encoder materially reduced the tracked failure modes.
+- Because the classical and MARBERT counts come from different dev views (`999` vs `998`), treat this as direction-of-change evidence rather than a perfectly like-for-like confusion table.
+- The classical analysis still explains the linguistic pressure points that later models had to overcome.
+
+## Implications for the Final Comparison
+
+- Overall macro F1 is important, but the tracked Saudi/Egyptian confusion directions remain the clearest diagnostic for whether a stronger model is improving the Saudi-centered task rather than merely shifting aggregate accuracy.
+- MARBERT improved both overall clean performance and the tracked confusion directions.
+- OOD degradation and robustness sensitivity remain real constraints even after the encoder improvement.
 
 ## Related Documents
 
-- [PROJECT_SCOPE.md](PROJECT_SCOPE.md)
-- [DATASET_CARD.md](DATASET_CARD.md)
-- [artifacts/reports/classical_baseline_confusion_matrix.csv](artifacts/reports/classical_baseline_confusion_matrix.csv)
-- [artifacts/reports/classical_baseline_error_analysis.md](artifacts/reports/classical_baseline_error_analysis.md)
+- [PROJECT_SCOPE.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/PROJECT_SCOPE.md)
+- [DATASET_CARD.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/DATASET_CARD.md)
+- [MODEL_CARD.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/MODEL_CARD.md)
+- [artifacts/reports/classical_baseline_confusion_matrix.csv](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/classical_baseline_confusion_matrix.csv)
+- [artifacts/reports/marbert_seed_42_confusion_matrix.csv](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/marbert_seed_42_confusion_matrix.csv)
+- [artifacts/reports/final_model_comparison.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/final_model_comparison.md)

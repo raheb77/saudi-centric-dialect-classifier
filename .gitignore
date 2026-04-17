@@ -1,26 +1,28 @@
+# Local source and derived text artifacts
 data/raw/
 data/interim/
 data/processed/
-*.zip
-__MACOSX/
-.ipynb_checkpoints/
-*.pyc
-.DS_Store
-.venv/
 
-artifacts/reports/*_dev_predictions.csv
-artifacts/reports/classical_baseline_error_analysis.md
-
-artifacts/reports/llm_*_dev_predictions.csv
-
-artifacts/reports/llm_sonnet_full_dev_predictions.csv
-
-artifacts/reports/llm_sonnet_*_predictions.csv
-
-# Model checkpoints (too large for git)
+# Local model artifacts and transient run outputs
 artifacts/checkpoints/
 artifacts/hf_cache/
-
 artifacts/reports/*_train.log
+artifacts/reports/*_dev_predictions.csv
+artifacts/reports/*_predictions.csv
+artifacts/reports/*_before_dedup.json
+artifacts/reports/*_before_dedup.csv
+artifacts/reports/*_before_dedup.md
+artifacts/reports/validation_latest/
+artifacts/reports/classical_baseline_error_analysis.md
 
-artifacts/reports/*_train.log
+# Python and notebook caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local environment and OS files
+.venv/
+.DS_Store
+__MACOSX/
+*.zip

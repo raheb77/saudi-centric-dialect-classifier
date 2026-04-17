@@ -1,103 +1,21 @@
 # Dataset Card
 
 ## Summary
-This project does not introduce a new raw corpus. It documents a Saudi-centered four-label classification task curated from local files already present under `data/raw/`, with leakage-aware interim outputs now generated for the benchmark anchor and canonical supporting pool.
 
-The source hierarchy is:
+This repository does not publish a new raw corpus. It documents and evaluates a Saudi-centered four-label dialect classification task built from local NADI files already present under `data/raw/`.
 
-- Primary benchmark source: NADI 2023 Subtask 1
-- Canonical benchmark-aligned supporting sources for v1: bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` inside the NADI 2023 Subtask 1 package
-- Standalone local NADI 2020 and NADI 2021 DA releases: provenance, inspection, and possible auxiliary evaluation only
-- Reference / future OOD source: MADAR-2018
+The current project state includes:
 
-All counts below come from the inspected local files, the bundled local release notes, or the current local interim curation outputs. No final preprocessing-ready v1 dataset size is claimed yet.
+- validated local raw-source inventories
+- leakage-aware interim curation
+- processed benchmark files
+- in-domain baseline and encoder evaluations
+- OOD leakage pre-checks and OOD evaluation
+- robustness reporting
 
-## Current Interim Outputs
-The current local leakage-aware interim generation step produces:
+The final reported models in this repository use the benchmark anchor training split `train_core`. The benchmark-aligned supporting pool `train_aug_candidates` is curated and documented, but it is not merged into the final reported baseline or MARBERT runs.
 
-- `data/interim/train_core.csv`: 10,000 rows from `NADI2023_Subtask1_TRAIN.tsv`
-- `data/interim/dev_core.csv`: 999 rows from `NADI2023_Subtask1_DEV.tsv` after removing 6 exact benchmark train/dev overlaps
-- `data/interim/train_aug_candidates.csv`: 27,629 rows from bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` after dropping out-of-scope rows, train/dev overlap rows, and same-text conflicting-label cases in the canonical supporting pool
-
-## Preprocessing
-The preprocessing stage operates only on the interim CSVs and writes parallel outputs under `data/processed/` without modifying `data/raw/`.
-
-- Removes URLs
-- Replaces user mentions with `<USER>`
-- Preserves hashtag text while removing `#`
-- Removes Arabic diacritics
-- Normalizes Alef variants and final `ى` to `ي`
-- Strips tatweel / kashida (`ـ`)
-- Reduces repeated letter elongation to at most 2
-- Preserves emojis and English tokens
-- Preserves the source placeholder `NUM` as-is; phase 5 does not normalize it to `<NUM>`
-- Keeps both `original_text` and `processed_text` for traceability
-
-## Local Raw Sources
-Row counts below refer to non-header rows in the local copies.
-
-### Primary Benchmark Source
-- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv`
-  - 18,000 rows
-  - Columns: `#1_id`, `#2_content`, `#3_label`
-  - 18 observed country labels
-- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv`
-  - 1,800 rows
-  - Same schema as train
-  - Same 18 observed country labels
-
-Observed country labels in the local NADI 2023 Subtask 1 train/dev files:
-`Algeria`, `Bahrain`, `Egypt`, `Iraq`, `Jordan`, `Kuwait`, `Lebanon`, `Libya`, `Morocco`, `Oman`, `Palestine`, `Qatar`, `Saudi_Arabia`, `Sudan`, `Syria`, `Tunisia`, `UAE`, `Yemen`
-
-### Canonical Benchmark-Aligned Supporting Sources
-- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv`
-  - 20,370 rows
-  - Columns: `#1 tweet_ID`, `#2 tweet_content`, `#3 country_label`, `#4 province_label`
-  - 18 observed country labels aligned with the NADI 2023 Subtask 1 label space
-- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv`
-  - 20,398 rows
-  - Columns: `#1_tweetid`, `#2_tweet`, `#3_country_label`, `#4_province_label`
-  - 18 observed country labels aligned with the NADI 2023 Subtask 1 label space
-
-These two bundled files are the canonical supporting sources for v1 because they are already packaged with NADI 2023 Subtask 1 and align to its 18-country benchmark label space.
-
-### Standalone Provenance and Auxiliary Evaluation Releases
-- `data/raw/nadi2020/NADI_release/train_labeled.tsv`
-  - 21,000 rows
-  - Country and province labels
-- `data/raw/nadi2020/NADI_release/dev_labeled.tsv`
-  - 4,957 rows
-  - Country and province labels
-- `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_train_labeled.tsv`
-  - 21,000 rows
-  - Country and province labels
-- `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv`
-  - 5,000 rows
-  - Country and province labels
-
-The standalone NADI 2020 and NADI 2021 DA releases cover 21 country labels in the inspected local files. They include countries not present in the NADI 2023 Subtask 1 benchmark label space, such as `Djibouti`, `Mauritania`, and `Somalia`. They are documented here for provenance, inspection, and possible auxiliary evaluation only, and are not automatically merged into the initial v1 training pool to avoid accidental duplication with the benchmark-aligned copies bundled inside NADI 2023.
-
-### Reference / Future OOD Source
-- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/MADAR-2018.tsv`
-  - 40,000 rows
-  - Columns: `sentID.BTEC`, `split`, `lang`, `sent`, `city`, `country`
-  - 15 observed countries with city metadata
-  - Not part of the initial v1 training mixture
-
-Observed countries in the local MADAR file:
-`Algeria`, `Egypt`, `Iraq`, `Jordan`, `Lebanon`, `Libya`, `Morocco`, `Oman`, `Palestine`, `Qatar`, `Saudi_Arabia`, `Sudan`, `Syria`, `Tunisia`, `Yemen`
-
-Observed Saudi city labels in the local MADAR file:
-`Jeddah`, `Riyadh`
-
-## Observed Schema Differences Across Sources
-- NADI 2023 Subtask 1 uses a simpler three-column schema and country labels only.
-- NADI 2020 and NADI 2021 DA include both country and province labels.
-- MADAR-2018 uses city and country metadata and is sentence-based rather than Twitter-native.
-- Raw country naming is not fully normalized across releases. For example, NADI 2023 uses `UAE`, while standalone NADI 2020 and NADI 2021 DA use `United_Arab_Emirates`.
-
-## Intended V1 Label Derivation
-The final v1 labels will be derived later by mapping raw provenance labels into the project label set:
+## V1 Label Mapping
 
 | v1 label | Raw labels mapped into v1 |
 | --- | --- |
@@ -106,44 +24,154 @@ The final v1 labels will be derived later by mapping raw provenance labels into 
 | `Levantine` | `Jordan`, `Lebanon`, `Palestine`, `Syria` |
 | `Maghrebi` | `Algeria`, `Libya`, `Morocco`, `Tunisia` |
 
-Examples from other countries remain available in the raw packages but are out of scope for the v1 four-way task and should be dropped during curation.
+All other raw source labels are out of scope for v1 and are dropped rather than forced into the four-label taxonomy.
 
-## Selection and Exclusion Policy
-Keep only examples that satisfy all of the following:
+## Source Hierarchy
 
-- Arabic script
-- Short-text / sentence-level length
-- Dialectal Arabic with enough signal for a confident four-way label
-- A raw source label that maps into one of the four v1 labels
+- Primary benchmark source: NADI 2023 Subtask 1 train/dev
+- Canonical benchmark-aligned supporting sources: bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` inside the NADI 2023 package
+- Standalone local NADI 2020 and NADI 2021 DA releases: audited OOD sources and provenance assets
+- Reference / future OOD source: `MADAR-2018.tsv`
 
-Drop examples that are:
+## Completed Data Pipeline
 
-- Arabizi or non-Arabic-script dominant
-- MSA-heavy
-- Mixed dialect
-- Unclear or weakly informative
-- Outside the v1 raw-label mapping
+The current repository state covers the full data pipeline needed for the checked-in reports:
+
+1. Raw-file validation and schema inspection
+2. Leakage-aware interim curation
+3. Preprocessing into `original_text` and `processed_text`
+4. Benchmark leakage audit for the encoder-safe dev split
+5. OOD leakage pre-check for standalone NADI 2020 and NADI 2021 DA dev splits
+
+## Benchmark-Core Splits
+
+### Interim Benchmark Files
+
+- `data/interim/train_core.csv`: `10000` rows from `NADI2023_Subtask1_TRAIN.tsv`
+- `data/interim/dev_core.csv`: `999` rows from `NADI2023_Subtask1_DEV.tsv` after removing `6` exact benchmark train/dev overlaps
+- `data/interim/train_aug_candidates.csv`: `27629` rows from bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` after dropping out-of-scope rows, benchmark overlaps, and same-text conflicting-label cases
+
+### Processed Benchmark Files
+
+- `data/processed/train_core.csv`: processed counterpart of `train_core`
+- `data/processed/dev_core.csv`: current cleaned processed dev reference used by MARBERT and robustness reporting
+- Cleaned processed dev size: `998`
+
+Current reporting split note:
+
+- Classical, Gemini, and Sonnet full-dev reports use the original `999`-row `dev_core` view.
+- MARBERT, the MARBERT stability summary, and robustness evaluation use the cleaned benchmark-safe `998`-row processed dev view.
+- The final comparison documents keep this distinction explicit instead of collapsing the two views into one unlabeled number.
+
+## OOD Sources Used
+
+The repository audited and evaluated two standalone OOD candidate splits after applying the same four-label mapping and preprocessing policy used in-domain.
+
+| OOD Source | Raw Rows | Kept Rows | Exact Overlap vs train/dev | Near-Duplicate Risk vs train_core | Status |
+| --- | ---: | ---: | ---: | ---: | --- |
+| NADI 2020 dev | `4957` | `3267` | `0` | `0` | acceptable as OOD evaluation source |
+| NADI 2021 DA dev | `5000` | `3328` | `0` | `0` | acceptable as OOD evaluation source |
+
+Mapped label counts:
+
+| OOD Source | Saudi | Egyptian | Levantine | Maghrebi |
+| --- | ---: | ---: | ---: | ---: |
+| NADI 2020 dev | `579` | `1070` | `581` | `1037` |
+| NADI 2021 DA dev | `520` | `1041` | `643` | `1124` |
+
+## Preprocessing
+
+The preprocessing stage operates on interim CSVs and writes parallel outputs under `data/processed/` without modifying `data/raw/`.
+
+- removes URLs
+- normalizes mentions to `<USER>`
+- preserves hashtag text while stripping `#`
+- removes Arabic diacritics
+- normalizes Alef variants and final `ى` to `ي`
+- strips tatweel / kashida
+- reduces repeated elongation to at most `2`
+- preserves emojis and English tokens
+- preserves the source placeholder `NUM`
+- keeps both `original_text` and `processed_text` for traceability
+
+## Local Raw Sources
+
+Row counts below refer to non-header rows in the inspected local files.
+
+### Primary Benchmark Source
+
+- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_TRAIN.tsv`
+  - `18000` rows
+  - schema: `#1_id`, `#2_content`, `#3_label`
+- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2023_Subtask1_DEV.tsv`
+  - `1800` rows
+  - same schema as train
+
+Observed country labels in the local NADI 2023 Subtask 1 train/dev files:
+`Algeria`, `Bahrain`, `Egypt`, `Iraq`, `Jordan`, `Kuwait`, `Lebanon`, `Libya`, `Morocco`, `Oman`, `Palestine`, `Qatar`, `Saudi_Arabia`, `Sudan`, `Syria`, `Tunisia`, `UAE`, `Yemen`
+
+### Canonical Benchmark-Aligned Supporting Sources
+
+- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2020-TWT.tsv`
+  - `20370` rows
+  - schema: `#1 tweet_ID`, `#2 tweet_content`, `#3 country_label`, `#4 province_label`
+- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/NADI2021-TWT.tsv`
+  - `20398` rows
+  - schema: `#1_tweetid`, `#2_tweet`, `#3_country_label`, `#4_province_label`
+
+These bundled files are the canonical supporting sources because they align to the NADI 2023 label space and are the only supporting files used in the interim-candidate curation step.
+
+### Standalone Provenance and OOD Evaluation Releases
+
+- `data/raw/nadi2020/NADI_release/dev_labeled.tsv`
+  - `4957` rows
+- `data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv`
+  - `5000` rows
+
+The standalone NADI 2020 and NADI 2021 DA releases contain additional country labels outside the NADI 2023 benchmark space, including `Djibouti`, `Mauritania`, and `Somalia`. In the current repository state they are used as audited OOD evaluation sources, not as automatic training data.
+
+### Reference / Future OOD Source
+
+- `data/raw/nadi2023/NADI2023_Release_Train/Subtask1/MADAR-2018.tsv`
+  - `40000` rows
+  - schema: `sentID.BTEC`, `split`, `lang`, `sent`, `city`, `country`
+  - not part of the current reported training or OOD evaluation mix
+
+## Packaging Boundary and Local-Only Artifacts
+
+The repository contains local text-bearing artifacts that support experimentation but should not be treated as public packaging targets.
+
+Remain local-only:
+
+- `data/raw/`
+- `data/interim/`
+- `data/processed/`
+- prediction CSVs that contain `original_text` or `processed_text`
+- checkpoints and HF cache directories
+
+Reason:
+
+- the local NADI license notes and release restrictions do not support republishing raw tweet text as a public packaged artifact
+- interim and processed CSVs retain tweet text or transformed tweet text for local reproducibility only
+
+Packaging-safe outputs are the aggregate artifacts:
+
+- code, configs, tests, and top-level documentation
+- metrics JSON files
+- confusion matrices
+- markdown summaries and audit reports
 
 ## Benchmark Safety Policy
-- Benchmark anchor: `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv`
-- Canonical supporting sources: bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv`
-- Provenance / auxiliary evaluation only: standalone NADI 2020 and standalone NADI 2021 DA releases
-- Not part of the initial v1 training mixture: `MADAR-2018.tsv`
 
-For benchmark-style evaluation, any exact text overlap between the NADI 2023 train and dev files should be removed from dev before scoring. For augmentation planning, any exact text already present in `train_core` or `dev_core` should be removed from augmentation candidates. Any same exact text anywhere in the canonical supporting pool with conflicting labels should be dropped conservatively. Leakage accounting should normalize `UAE` and `United_Arab_Emirates` to the same canonical raw label before conflict checks.
-
-## Files Present but Not Used as V1 Text Data
-The local raw directory also contains material that should be documented but not treated as v1 training text:
-
-- unlabeled tweet-ID files
-- unlabeled test inputs
-- scorer scripts
-- release readmes and license files
-- MT task files from NADI 2023 Subtasks 2 and 3
-- example gold and submission files
-- package artifacts such as `.DS_Store` and `.ipynb_checkpoints`
+- `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv` are the benchmark anchor
+- exact train/dev overlap is removed before benchmark-safe encoder reporting
+- canonical supporting sources are filtered against benchmark overlap and same-text conflicting-label cases
+- standalone NADI 2020 and NADI 2021 DA dev splits require leakage pre-checks before OOD use
+- current OOD pre-checks passed with zero exact overlaps on `source_id`, `original_text`, and `processed_text`
 
 ## Known Limitations
-- The benchmark anchor is Twitter-domain text, while MADAR is translated travel-domain text. That domain mismatch is why MADAR is documented as a future OOD source rather than a primary benchmark or part of the initial v1 training mixture.
-- The four v1 labels are grouped project labels layered on top of country- or city-level raw sources.
-- The current outputs include both leakage-aware interim curation artifacts and processed CSVs, but they are not yet final experiment datasets.
+
+- The four v1 labels are project groupings layered on top of country-level raw labels.
+- The benchmark anchor is tweet-domain text, while MADAR is sentence-domain text.
+- The repository currently contains both a `999`-row original dev reporting view and a cleaned `998`-row encoder-safe dev view, so report interpretation must keep the split label explicit.
+- Local text-bearing artifacts are available for internal reproducibility but are not intended as public release assets.

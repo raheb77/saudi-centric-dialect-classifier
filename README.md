@@ -1,58 +1,171 @@
 # Saudi-Centric Dialect Classifier
 
-This repository defines a hiring-grade Arabic dialect classification project centered on Saudi identification. The v1 task is a four-way short-text classification problem over `Saudi`, `Egyptian`, `Levantine`, and `Maghrebi`.
+This repository contains a completed Arabic dialect classification artifact centered on Saudi identification. The v1 task is four-way short-text classification over `Saudi`, `Egyptian`, `Levantine`, and `Maghrebi`, using only local source files already present under `data/raw/`.
 
-Current state: documentation, validation, leakage-aware interim curation, and preprocessing are in place. No baseline or model code has been implemented yet.
+The project now includes benchmark-aware data validation, leakage-aware curation, a classical TF-IDF baseline, prompt-based Gemini and Sonnet baselines, a fine-tuned MARBERT encoder, OOD leakage pre-checks, OOD evaluation, robustness evaluation, and a final packaging audit.
 
-## V1 Scope
-- Arabic script only
-- No Arabizi in v1
-- Short-text / sentence-level classification only
-- Drop uncertain, mixed-dialect, and MSA-heavy samples
-- Use only local files already present under `data/raw/`
+## Task
 
-Saudi is intentionally separate from Gulf in v1. The local benchmark sources are country-level and include `Saudi_Arabia` as a distinct label alongside other Gulf-country labels, so collapsing them into `Gulf` would weaken the Saudi-centered goal of the project.
+- Input: one short Arabic-script tweet or sentence
+- Output labels: `Saudi`, `Egyptian`, `Levantine`, `Maghrebi`
+- Scope exclusions: no Arabizi, no long-form text, no uncertain / mixed / MSA-heavy samples
+- Data policy: use only local files already present under `data/raw/`
 
-## Target Applications
-- Saudi-market customer-support message routing and intent benchmarking
-- Saudi-focused evaluation of Arabic assistants, chatbots, and search UX
-- Dialect-aware benchmarking for products intended for users in Saudi Arabia
+## Experimental Arc
 
-## Source Hierarchy
-- Primary benchmark source: NADI 2023 Subtask 1
-- Canonical benchmark-aligned supporting sources for v1: bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` inside the NADI 2023 Subtask 1 package
-- Standalone NADI 2020 and NADI 2021 DA local releases: provenance, inspection, and possible auxiliary evaluation only
-- Reference / future OOD source: `MADAR-2018.tsv`, not part of the initial v1 training mixture
+1. Data validation:
+   local raw-source schemas, row counts, and label inventories were validated and documented.
+2. Leakage-aware curation:
+   `train_core`, `dev_core`, and `train_aug_candidates` were generated from the benchmark anchor and canonical supporting sources.
+3. Preprocessing:
+   URLs, mentions, diacritics, Alef variants, tatweel, and elongation were normalized into parallel processed CSVs.
+4. Classical baseline:
+   TF-IDF + Logistic Regression established the lexical baseline on the original `dev_core` view.
+5. LLM baselines:
+   Gemini Flash-Lite and Claude Sonnet were evaluated in zero-shot and few-shot settings on the same original `dev_core` view.
+6. Encoder baseline:
+   `UBC-NLP/MARBERT` was fine-tuned and reported on the cleaned 998-row benchmark-safe dev split, then checked across three seeds.
+7. OOD checks and OOD evaluation:
+   standalone NADI 2020 and NADI 2021 DA dev splits passed exact-overlap pre-checks and were evaluated as OOD sources.
+8. Robustness evaluation:
+   deterministic perturbation families were applied to the cleaned dev split to compare sensitivity rather than only clean accuracy.
 
-The repo now includes local raw-source documentation, validation utilities, leakage-aware interim curation outputs, and processed CSVs for baseline-ready text cleanup. NADI 2023 Subtask 1 is the main benchmark anchor. The bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` files are the canonical v1 supporting sources because they are benchmark-aligned with that package. The standalone NADI 2020 and NADI 2021 DA releases are documented for provenance, inspection, and possible auxiliary evaluation only, and are not automatically merged into the initial v1 training pool to avoid accidental duplication. `MADAR-2018.tsv` is documented as a future out-of-domain reference rather than part of the initial training mixture.
+## Final In-Domain Results
 
-## Benchmark Safety
-- `NADI2023_Subtask1_TRAIN.tsv` and `NADI2023_Subtask1_DEV.tsv` are the benchmark anchor.
-- Bundled `NADI2020-TWT.tsv` and `NADI2021-TWT.tsv` are the canonical supporting sources for augmentation planning.
-- Standalone NADI 2020 and NADI 2021 DA releases are provenance / auxiliary evaluation only.
-- Exact text overlap between NADI 2023 train and dev must be removed from dev before benchmark-style evaluation.
-- Any exact text already present in `train_core` or `dev_core` must be removed from augmentation candidates.
-- Any same exact text with conflicting labels anywhere in the canonical supporting pool must be dropped from augmentation candidates after normalizing `UAE` and `United_Arab_Emirates`.
+| Model / Setting | Evaluation Split | Accuracy | Macro F1 | Notes |
+| --- | --- | ---: | ---: | --- |
+| Classical baseline | original dev (`999` rows) | `0.8869` | `0.8483` | TF-IDF + Logistic Regression |
+| Gemini Flash-Lite zero-shot | original dev (`999` rows) | `0.8679` | `0.8330` | prompt-only |
+| Gemini Flash-Lite few-shot | original dev (`999` rows) | `0.8749` | `0.8414` | best prompt-only LLM run |
+| Claude Sonnet zero-shot | original dev (`999` rows) | `0.8268` | `0.7908` | prompt-only |
+| Claude Sonnet few-shot | original dev (`999` rows) | `0.8408` | `0.8042` | prompt-only |
+| MARBERT seed `42` | cleaned benchmark-safe dev (`998` rows) | `0.9669` | `0.9595` | encoder reference result |
+| MARBERT mean +/- std (`42/123/7`) | cleaned benchmark-safe dev (`998` rows) | `0.9679 +/- 0.0036` | `0.9613 +/- 0.0063` | acceptable stability |
 
-## Documentation
-- `PROJECT_SCOPE.md`: task definition, label policy, and Saudi-vs-Gulf rationale
-- `DATASET_CARD.md`: local source inventory for the benchmark-relevant corpora
-- `ANNOTATION_GUIDELINES.md`: keep/drop rules and v1 label mapping
-- `LICENSE_NOTES.md`: observed local license constraints and repo handling rules
-- `DATA_MANIFEST.csv`: full inventory of every file currently present under `data/raw/`
-- `MODEL_CARD.md`: planned model-comparison card with no results yet
+Comparison note:
 
-## Planned Implementation Sequence
-1. Validation utilities
-2. Preprocessing pipeline
-3. TF-IDF baseline
-4. One LLM baseline
-5. One fine-tuned Arabic encoder
+- Classical, Gemini, and Sonnet were run on the original `999`-row `dev_core` view.
+- MARBERT and the robustness pass use the cleaned benchmark-safe `998`-row processed dev view.
+- Treat the split distinction as part of the result, not as an omitted footnote.
 
-## Not Yet Implemented
-- no model code
-- no baseline code
-- no benchmark results
-- no experiment tracking outputs
+## OOD and Robustness Summary
 
-Current deliverables include the documentation pack, validation reports, leakage-aware interim curation outputs, and processed CSVs.
+### OOD Leakage Pre-check
+
+| Split | In-scope Rows | Exact Overlap vs train/dev | Near-Duplicate Risk vs train_core | Status |
+| --- | ---: | ---: | ---: | --- |
+| NADI 2020 dev | `3267` | `0` | `0` | acceptable as OOD evaluation source |
+| NADI 2021 DA dev | `3328` | `0` | `0` | acceptable as OOD evaluation source |
+
+### OOD Evaluation
+
+| Dataset | Model | Accuracy | Macro F1 | Delta Accuracy vs In-Domain | Delta Macro F1 vs In-Domain |
+| --- | --- | ---: | ---: | ---: | ---: |
+| NADI 2020 dev | Classical | `0.4763` | `0.4467` | `-0.4106` | `-0.4016` |
+| NADI 2020 dev | MARBERT | `0.6122` | `0.5938` | `-0.3548` | `-0.3657` |
+| NADI 2021 DA dev | Classical | `0.5153` | `0.4937` | `-0.3716` | `-0.3547` |
+| NADI 2021 DA dev | MARBERT | `0.6656` | `0.6443` | `-0.3014` | `-0.3153` |
+
+### Robustness on the Cleaned `998`-Row Dev Split
+
+| Perturbation Family | Classical Macro F1 Drop | MARBERT Macro F1 Drop | More Robust Under This Test |
+| --- | ---: | ---: | --- |
+| `typo_noise` | `0.0502` | `0.0760` | Classical |
+| `elongation` | `0.0004` | `0.0082` | Classical |
+| `placeholder_noise` | `-0.0016` | `0.0092` | Classical |
+| `punctuation_spacing` | `0.0201` | `0.0321` | Classical |
+
+MARBERT is the strongest overall model on clean in-domain and OOD metrics, but the classical baseline is more robust across all four deterministic perturbation families tested in Phase 9 Part 3.
+
+## What This Project Shows
+
+- Benchmark-safe reporting changes interpretation: the encoder result is tied to the cleaned `998`-row dev split, not the original `999`-row view.
+- A strong lexical baseline remains competitive: the classical baseline outperformed both prompt-only LLM baselines on the original full-dev comparison.
+- MARBERT is the strongest overall model in the repository on clean in-domain and current OOD evaluations.
+- Robustness and clean accuracy are different properties: MARBERT wins on clean metrics, while the classical baseline is less sensitive to the tested deterministic perturbations.
+
+## Repository Layout
+
+- [src](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/src): data, baseline, encoder, and audit code
+- [tests](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/tests): unit tests for the core pipeline
+- [configs](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/configs): YAML configs for classical, LLM, and MARBERT runs
+- [artifacts/reports](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports): aggregate metrics, summaries, audits, and comparison reports
+
+## Practical Setup and Reproducibility
+
+Environment:
+
+- Python `3.12`
+- No locked environment file is currently checked in
+- Core Python packages used by the codebase: `pyyaml`, `scikit-learn`, `numpy`, `torch`, `transformers`, `pytest`
+
+Suggested setup:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install pyyaml scikit-learn numpy torch transformers pytest
+```
+
+Local data requirement:
+
+- Keep the NADI source packages local under `data/raw/`
+- The repo does not download datasets automatically
+
+Core pipeline commands currently exposed in the repo:
+
+```bash
+python3 src/validate_data.py
+python3 src/generate_interim_data.py
+python3 src/preprocess_interim_data.py
+python3 src/run_classical_baseline.py --config configs/baseline.yaml
+python3 src/run_llm_baseline.py --config configs/llm_gemini_flash_lite.yaml
+python3 src/run_llm_baseline.py --config configs/llm_sonnet_full_dev.yaml
+python3 src/run_encoder_baseline.py --config configs/marbert_seed_42.yaml
+python3 src/run_encoder_baseline.py --config configs/marbert_seed_123.yaml
+python3 src/run_encoder_baseline.py --config configs/marbert_seed_7.yaml
+python3 src/run_marbert_stability_summary.py --seeds 42 123 7
+python3 src/run_marbert_leakage_audit.py
+python3 src/run_ood_leakage_precheck.py
+pytest -q
+```
+
+API-backed runs:
+
+- Gemini baseline requires `GEMINI_API_KEY`
+- Sonnet baseline requires `ANTHROPIC_API_KEY`
+
+Report note:
+
+- The repository includes checked-in aggregate reports for OOD evaluation and robustness.
+- Not every post-hoc analysis phase is currently exposed through a dedicated standalone runner script in `src/`.
+
+## Packaging Boundary
+
+Safe aggregate artifacts to package in Git:
+
+- code, configs, tests, and top-level docs
+- aggregate reports under `artifacts/reports/` that do not expose raw tweet text
+- leakage audits, OOD leakage pre-checks, metrics JSON files, confusion matrices, and summary markdown files
+
+Local-only artifacts that should not be framed as public packaging targets:
+
+- `data/raw/`
+- `data/interim/`
+- `data/processed/`
+- prediction CSVs that contain `original_text` or `processed_text`
+- checkpoints, HF cache directories, and temporary run logs
+
+This boundary follows the repository's own licensing notes: raw tweet text and redistributed transformed tweet-text artifacts should remain local-only unless a separate license review says otherwise.
+
+## Key Documents
+
+- [PROJECT_SCOPE.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/PROJECT_SCOPE.md)
+- [DATASET_CARD.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/DATASET_CARD.md)
+- [MODEL_CARD.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/MODEL_CARD.md)
+- [ERROR_ANALYSIS.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/ERROR_ANALYSIS.md)
+- [artifacts/reports/final_model_comparison.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/final_model_comparison.md)
+- [artifacts/reports/ood_evaluation_summary.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/ood_evaluation_summary.md)
+- [artifacts/reports/robustness_summary.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/robustness_summary.md)
+- [artifacts/reports/final_packaging_audit.md](/Users/rahebalmutairi/projects/saudi-centric-dialect-classifier/artifacts/reports/final_packaging_audit.md)
