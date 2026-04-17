@@ -1,0 +1,229 @@
+{
+  "candidate_split": "NADI 2021 DA dev",
+  "candidate_path": "data/raw/nadi2021/NADI2021_DEV.1.0/Subtask_1.2+2.2_DA/DA_dev_labeled.tsv",
+  "row_counts": {
+    "before_filtering": 5000,
+    "after_dropping_out_of_scope": 3328,
+    "dropped_out_of_scope": 1672
+  },
+  "raw_label_values": {
+    "Algeria": 430,
+    "Bahrain": 52,
+    "Djibouti": 27,
+    "Egypt": 1041,
+    "Iraq": 664,
+    "Jordan": 104,
+    "Kuwait": 105,
+    "Lebanon": 157,
+    "Libya": 314,
+    "Mauritania": 53,
+    "Morocco": 207,
+    "Oman": 355,
+    "Palestine": 104,
+    "Qatar": 52,
+    "Saudi_Arabia": 520,
+    "Somalia": 49,
+    "Sudan": 53,
+    "Syria": 278,
+    "Tunisia": 173,
+    "United_Arab_Emirates": 157,
+    "Yemen": 105
+  },
+  "mapped_raw_label_values": [
+    "Algeria",
+    "Egypt",
+    "Jordan",
+    "Lebanon",
+    "Libya",
+    "Morocco",
+    "Palestine",
+    "Saudi_Arabia",
+    "Syria",
+    "Tunisia"
+  ],
+  "dropped_raw_label_values": [
+    "Bahrain",
+    "Djibouti",
+    "Iraq",
+    "Kuwait",
+    "Mauritania",
+    "Oman",
+    "Qatar",
+    "Somalia",
+    "Sudan",
+    "United_Arab_Emirates",
+    "Yemen"
+  ],
+  "levantine_mapping_confirmation": {
+    "present_raw_labels": [
+      "Jordan",
+      "Lebanon",
+      "Palestine",
+      "Syria"
+    ],
+    "counts": {
+      "Jordan": 104,
+      "Lebanon": 157,
+      "Palestine": 104,
+      "Syria": 278
+    },
+    "all_present_mapped_to_levantine": true
+  },
+  "mapped_label_distribution": {
+    "Saudi": {
+      "count": 520,
+      "percentage": 15.62
+    },
+    "Egyptian": {
+      "count": 1041,
+      "percentage": 31.28
+    },
+    "Levantine": {
+      "count": 643,
+      "percentage": 19.32
+    },
+    "Maghrebi": {
+      "count": 1124,
+      "percentage": 33.77
+    }
+  },
+  "dev_core_distribution_reference": {
+    "source_path": "data/interim/dev_core.csv",
+    "rows": 999,
+    "distribution": {
+      "Saudi": {
+        "count": 100,
+        "percentage": 10.01
+      },
+      "Egyptian": {
+        "count": 100,
+        "percentage": 10.01
+      },
+      "Levantine": {
+        "count": 399,
+        "percentage": 39.94
+      },
+      "Maghrebi": {
+        "count": 400,
+        "percentage": 40.04
+      }
+    },
+    "candidate_minus_dev_core": {
+      "Saudi": {
+        "candidate_count": 520,
+        "candidate_percentage": 15.62,
+        "benchmark_count": 100,
+        "benchmark_percentage": 10.01,
+        "count_delta": 420,
+        "percentage_point_delta": 5.61
+      },
+      "Egyptian": {
+        "candidate_count": 1041,
+        "candidate_percentage": 31.28,
+        "benchmark_count": 100,
+        "benchmark_percentage": 10.01,
+        "count_delta": 941,
+        "percentage_point_delta": 21.27
+      },
+      "Levantine": {
+        "candidate_count": 643,
+        "candidate_percentage": 19.32,
+        "benchmark_count": 399,
+        "benchmark_percentage": 39.94,
+        "count_delta": 244,
+        "percentage_point_delta": -20.62
+      },
+      "Maghrebi": {
+        "candidate_count": 1124,
+        "candidate_percentage": 33.77,
+        "benchmark_count": 400,
+        "benchmark_percentage": 40.04,
+        "count_delta": 724,
+        "percentage_point_delta": -6.27
+      }
+    }
+  },
+  "benchmark_reference_note": {
+    "train_core": {
+      "interim_path": "data/interim/train_core.csv",
+      "interim_rows": 10000,
+      "processed_path": "data/processed/train_core.csv",
+      "processed_rows": 10000,
+      "source_id_reference_size": 10000,
+      "original_text_reference_size": 9985,
+      "processed_text_reference_size": 9983,
+      "missing_processed_source_ids": []
+    },
+    "dev_core": {
+      "interim_path": "data/interim/dev_core.csv",
+      "interim_rows": 999,
+      "processed_path": "data/processed/dev_core.csv",
+      "processed_rows": 998,
+      "source_id_reference_size": 999,
+      "original_text_reference_size": 999,
+      "processed_text_reference_size": 998,
+      "missing_processed_source_ids": [
+        "subtask1_dev_1521"
+      ]
+    }
+  },
+  "exact_overlap_checks": {
+    "train_core_source_id": {
+      "count": 0,
+      "percentage": 0.0,
+      "representative_pairs": []
+    },
+    "train_core_original_text": {
+      "count": 0,
+      "percentage": 0.0,
+      "representative_pairs": []
+    },
+    "train_core_processed_text": {
+      "count": 0,
+      "percentage": 0.0,
+      "representative_pairs": []
+    },
+    "dev_core_source_id": {
+      "count": 0,
+      "percentage": 0.0,
+      "representative_pairs": []
+    },
+    "dev_core_original_text": {
+      "count": 0,
+      "percentage": 0.0,
+      "representative_pairs": []
+    },
+    "dev_core_processed_text": {
+      "count": 0,
+      "percentage": 0.0,
+      "representative_pairs": []
+    }
+  },
+  "combined_exact_overlap": {
+    "count": 0,
+    "percentage": 0.0
+  },
+  "duplicate_processed_text_within_candidate": {
+    "count": 2,
+    "additional_rows": 2,
+    "representative_groups": [
+      [
+        "DEV_1949",
+        "DEV_3807"
+      ],
+      [
+        "DEV_25",
+        "DEV_4179"
+      ]
+    ]
+  },
+  "near_duplicate_vs_train_core": {
+    "count": 0,
+    "percentage": 0.0,
+    "threshold": 0.9,
+    "representative_pairs": []
+  },
+  "classification": "acceptable as OOD evaluation source",
+  "requires_prominent_caveat": false,
+  "decision_rationale": "No candidate rows hit any exact overlap check against the current benchmark-safe train_core/dev_core references."
+}

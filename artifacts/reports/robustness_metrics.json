@@ -1,0 +1,436 @@
+{
+  "task_mode": "inference_only_for_marbert",
+  "checkpoint_used": "artifacts/checkpoints/marbert_seed_42",
+  "base_split_rows": 998,
+  "families": {
+    "typo_noise": {
+      "classical": {
+        "clean_accuracy": 0.8867735470941884,
+        "perturbed_accuracy": 0.844689378757515,
+        "accuracy_drop": 0.04208416833667339,
+        "relative_accuracy_drop_pct": 4.745762711864411,
+        "clean_macro_f1": 0.8476041092943942,
+        "perturbed_macro_f1": 0.7974533499814203,
+        "macro_f1_drop": 0.05015075931297397,
+        "relative_macro_f1_drop_pct": 5.916766891883408
+      },
+      "marbert": {
+        "clean_accuracy": 0.966933867735471,
+        "perturbed_accuracy": 0.9028056112224448,
+        "accuracy_drop": 0.06412825651302612,
+        "relative_accuracy_drop_pct": 6.632124352331613,
+        "clean_macro_f1": 0.959520211095972,
+        "perturbed_macro_f1": 0.8835565544824232,
+        "macro_f1_drop": 0.07596365661354876,
+        "relative_macro_f1_drop_pct": 7.916837575185877
+      },
+      "comparison": {
+        "family": "typo_noise",
+        "larger_absolute_drop_model": "MARBERT",
+        "larger_relative_drop_model": "MARBERT",
+        "marbert_advantage_trend": "shrinks"
+      },
+      "excluded_over_aggressive": false
+    },
+    "elongation": {
+      "classical": {
+        "clean_accuracy": 0.8867735470941884,
+        "perturbed_accuracy": 0.8847695390781564,
+        "accuracy_drop": 0.002004008016032066,
+        "relative_accuracy_drop_pct": 0.22598870056497197,
+        "clean_macro_f1": 0.8476041092943942,
+        "perturbed_macro_f1": 0.8472039483456588,
+        "macro_f1_drop": 0.0004001609487354063,
+        "relative_macro_f1_drop_pct": 0.04721083160728523
+      },
+      "marbert": {
+        "clean_accuracy": 0.966933867735471,
+        "perturbed_accuracy": 0.9599198396793587,
+        "accuracy_drop": 0.007014028056112287,
+        "relative_accuracy_drop_pct": 0.7253886010362759,
+        "clean_macro_f1": 0.959520211095972,
+        "perturbed_macro_f1": 0.9513014537055822,
+        "macro_f1_drop": 0.008218757390389797,
+        "relative_macro_f1_drop_pct": 0.85654864747479
+      },
+      "comparison": {
+        "family": "elongation",
+        "larger_absolute_drop_model": "MARBERT",
+        "larger_relative_drop_model": "MARBERT",
+        "marbert_advantage_trend": "shrinks"
+      },
+      "excluded_over_aggressive": false
+    },
+    "placeholder_noise": {
+      "classical": {
+        "clean_accuracy": 0.8867735470941884,
+        "perturbed_accuracy": 0.8887775551102205,
+        "accuracy_drop": -0.002004008016032066,
+        "relative_accuracy_drop_pct": -0.22598870056497197,
+        "clean_macro_f1": 0.8476041092943942,
+        "perturbed_macro_f1": 0.8492453848434386,
+        "macro_f1_drop": -0.0016412755490443631,
+        "relative_macro_f1_drop_pct": -0.1936370448239895
+      },
+      "marbert": {
+        "clean_accuracy": 0.966933867735471,
+        "perturbed_accuracy": 0.9589178356713427,
+        "accuracy_drop": 0.008016032064128265,
+        "relative_accuracy_drop_pct": 0.8290155440414516,
+        "clean_macro_f1": 0.959520211095972,
+        "perturbed_macro_f1": 0.9503567240395852,
+        "macro_f1_drop": 0.00916348705638681,
+        "relative_macro_f1_drop_pct": 0.9550071953065167
+      },
+      "comparison": {
+        "family": "placeholder_noise",
+        "larger_absolute_drop_model": "MARBERT",
+        "larger_relative_drop_model": "MARBERT",
+        "marbert_advantage_trend": "shrinks"
+      },
+      "excluded_over_aggressive": false
+    },
+    "punctuation_spacing": {
+      "classical": {
+        "clean_accuracy": 0.8867735470941884,
+        "perturbed_accuracy": 0.872745490981964,
+        "accuracy_drop": 0.014028056112224463,
+        "relative_accuracy_drop_pct": 1.5819209039548037,
+        "clean_macro_f1": 0.8476041092943942,
+        "perturbed_macro_f1": 0.8274634906351834,
+        "macro_f1_drop": 0.020140618659210796,
+        "relative_macro_f1_drop_pct": 2.376182281133261
+      },
+      "marbert": {
+        "clean_accuracy": 0.966933867735471,
+        "perturbed_accuracy": 0.9378757515030061,
+        "accuracy_drop": 0.029058116232464903,
+        "relative_accuracy_drop_pct": 3.0051813471502564,
+        "clean_macro_f1": 0.959520211095972,
+        "perturbed_macro_f1": 0.9274131671442183,
+        "macro_f1_drop": 0.03210704395175368,
+        "relative_macro_f1_drop_pct": 3.346156087226213
+      },
+      "comparison": {
+        "family": "punctuation_spacing",
+        "larger_absolute_drop_model": "MARBERT",
+        "larger_relative_drop_model": "MARBERT",
+        "marbert_advantage_trend": "shrinks"
+      },
+      "excluded_over_aggressive": false
+    }
+  },
+  "sanity_checks": {
+    "typo_noise": [
+      {
+        "source_id": "subtask1_dev_2",
+        "perturbation_family": "typo_noise",
+        "perturbation_metadata": {
+          "target_edit_count": 3,
+          "applied_edit_count": 3,
+          "substitutions": 0,
+          "deletions": 3
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_3",
+        "perturbation_family": "typo_noise",
+        "perturbation_metadata": {
+          "target_edit_count": 3,
+          "applied_edit_count": 3,
+          "substitutions": 0,
+          "deletions": 3
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_6",
+        "perturbation_family": "typo_noise",
+        "perturbation_metadata": {
+          "target_edit_count": 3,
+          "applied_edit_count": 3,
+          "substitutions": 1,
+          "deletions": 2
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_7",
+        "perturbation_family": "typo_noise",
+        "perturbation_metadata": {
+          "target_edit_count": 3,
+          "applied_edit_count": 3,
+          "substitutions": 0,
+          "deletions": 3
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_9",
+        "perturbation_family": "typo_noise",
+        "perturbation_metadata": {
+          "target_edit_count": 3,
+          "applied_edit_count": 3,
+          "substitutions": 0,
+          "deletions": 3
+        },
+        "sanity_verdict": "pass"
+      }
+    ],
+    "elongation": [
+      {
+        "source_id": "subtask1_dev_2",
+        "perturbation_family": "elongation",
+        "perturbation_metadata": {
+          "applied": false,
+          "vowel": null,
+          "repeat_count": 0
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_3",
+        "perturbation_family": "elongation",
+        "perturbation_metadata": {
+          "applied": true,
+          "vowel": "و",
+          "repeat_count": 2
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_6",
+        "perturbation_family": "elongation",
+        "perturbation_metadata": {
+          "applied": true,
+          "vowel": "ا",
+          "repeat_count": 4
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_7",
+        "perturbation_family": "elongation",
+        "perturbation_metadata": {
+          "applied": true,
+          "vowel": "و",
+          "repeat_count": 2
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_9",
+        "perturbation_family": "elongation",
+        "perturbation_metadata": {
+          "applied": true,
+          "vowel": "ا",
+          "repeat_count": 4
+        },
+        "sanity_verdict": "pass"
+      }
+    ],
+    "placeholder_noise": [
+      {
+        "source_id": "subtask1_dev_2",
+        "perturbation_family": "placeholder_noise",
+        "perturbation_metadata": {
+          "prepend_user": false,
+          "append_url": true
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_3",
+        "perturbation_family": "placeholder_noise",
+        "perturbation_metadata": {
+          "prepend_user": true,
+          "append_url": true
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_6",
+        "perturbation_family": "placeholder_noise",
+        "perturbation_metadata": {
+          "prepend_user": false,
+          "append_url": false
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_7",
+        "perturbation_family": "placeholder_noise",
+        "perturbation_metadata": {
+          "prepend_user": false,
+          "append_url": true
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_9",
+        "perturbation_family": "placeholder_noise",
+        "perturbation_metadata": {
+          "prepend_user": false,
+          "append_url": true
+        },
+        "sanity_verdict": "pass"
+      }
+    ],
+    "punctuation_spacing": [
+      {
+        "source_id": "subtask1_dev_2",
+        "perturbation_family": "punctuation_spacing",
+        "perturbation_metadata": {
+          "extra_spaces": 3,
+          "punctuation_suffix": "!!"
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_3",
+        "perturbation_family": "punctuation_spacing",
+        "perturbation_metadata": {
+          "extra_spaces": 3,
+          "punctuation_suffix": null
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_6",
+        "perturbation_family": "punctuation_spacing",
+        "perturbation_metadata": {
+          "extra_spaces": 1,
+          "punctuation_suffix": "!!"
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_7",
+        "perturbation_family": "punctuation_spacing",
+        "perturbation_metadata": {
+          "extra_spaces": 3,
+          "punctuation_suffix": "..."
+        },
+        "sanity_verdict": "pass"
+      },
+      {
+        "source_id": "subtask1_dev_9",
+        "perturbation_family": "punctuation_spacing",
+        "perturbation_metadata": {
+          "extra_spaces": 1,
+          "punctuation_suffix": null
+        },
+        "sanity_verdict": "pass"
+      }
+    ]
+  },
+  "aggregate": {
+    "marbert_more_robust_families": 0,
+    "classical_more_robust_families": 4,
+    "included_family_count": 4
+  },
+  "references": {
+    "marbert_seed_42": {
+      "model_name_or_path": "UBC-NLP/MARBERT",
+      "train_rows": 10000,
+      "dev_rows": 998,
+      "seed": 42,
+      "device": "cuda",
+      "parameter_dtype": "torch.float32",
+      "best_epoch": 5,
+      "best_eval_macro_f1": 0.959520211095972,
+      "checkpoint_dir": "artifacts/checkpoints/marbert_seed_42",
+      "class_weights": "balanced",
+      "eval_loss": 0.2202035237648683,
+      "accuracy": 0.966933867735471,
+      "macro_f1": 0.959520211095972,
+      "per_class_metrics": {
+        "Saudi": {
+          "precision": 0.9509803921568627,
+          "recall": 0.97,
+          "f1": 0.9603960396039604,
+          "support": 100
+        },
+        "Egyptian": {
+          "precision": 0.9387755102040817,
+          "recall": 0.9292929292929293,
+          "f1": 0.934010152284264,
+          "support": 99
+        },
+        "Levantine": {
+          "precision": 0.9821428571428571,
+          "recall": 0.9649122807017544,
+          "f1": 0.9734513274336283,
+          "support": 399
+        },
+        "Maghrebi": {
+          "precision": 0.9630541871921182,
+          "recall": 0.9775,
+          "f1": 0.9702233250620348,
+          "support": 400
+        }
+      },
+      "tracked_confusion_counts": {
+        "Saudi->Levantine": 1,
+        "Saudi->Maghrebi": 2,
+        "Egyptian->Maghrebi": 4,
+        "Egyptian->Levantine": 2
+      },
+      "config_deviations": {},
+      "training_history": [
+        {
+          "epoch": 1,
+          "train_loss": 0.4721024153828621,
+          "eval_loss": 0.27939475382974965,
+          "eval_accuracy": 0.9488977955911824,
+          "eval_macro_f1": 0.9317508856675956
+        },
+        {
+          "epoch": 2,
+          "train_loss": 0.13650507756322622,
+          "eval_loss": 0.36845341402447535,
+          "eval_accuracy": 0.9458917835671342,
+          "eval_macro_f1": 0.9347465644352713
+        },
+        {
+          "epoch": 3,
+          "train_loss": 0.05716434730105102,
+          "eval_loss": 0.34494592335993396,
+          "eval_accuracy": 0.9569138276553106,
+          "eval_macro_f1": 0.9463350531287598
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.02091873033894226,
+          "eval_loss": 0.1827245009745768,
+          "eval_accuracy": 0.9639278557114228,
+          "eval_macro_f1": 0.9547581884010975
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.005674267910979689,
+          "eval_loss": 0.2202036960091524,
+          "eval_accuracy": 0.966933867735471,
+          "eval_macro_f1": 0.959520211095972
+        }
+      ]
+    },
+    "classical_baseline_reported": {
+      "train_rows": 10000,
+      "dev_rows": 999,
+      "accuracy": 0.8868868868868869,
+      "macro_f1": 0.8483223035488402,
+      "labels": [
+        "Saudi",
+        "Egyptian",
+        "Levantine",
+        "Maghrebi"
+      ]
+    },
+    "classical_clean_998": {
+      "accuracy": 0.8867735470941884,
+      "macro_f1": 0.8476041092943942
+    }
+  }
+}

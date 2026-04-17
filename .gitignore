@@ -22,3 +22,5 @@ artifacts/checkpoints/
 artifacts/hf_cache/
 
 artifacts/reports/*_train.log
+
+artifacts/reports/*_train.log
