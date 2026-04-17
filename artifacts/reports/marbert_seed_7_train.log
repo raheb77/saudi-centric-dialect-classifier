@@ -1,5 +1,0 @@
-Run not started.
-Date: 2026-04-17
-Reason: `marbert_leakage_audit.md` found 1 exact `processed_text` overlap between `data/processed/train_core.csv` and `data/processed/dev_core.csv`.
-Policy: stop before multi-seed if exact overlap is found in `source_id`, `original_text`, or `processed_text`.
-Prepared config: `configs/marbert_seed_7.yaml`
