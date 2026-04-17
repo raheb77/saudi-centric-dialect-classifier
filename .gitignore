@@ -16,3 +16,7 @@ artifacts/reports/llm_*_dev_predictions.csv
 artifacts/reports/llm_sonnet_full_dev_predictions.csv
 
 artifacts/reports/llm_sonnet_*_predictions.csv
+
+# Model checkpoints (too large for git)
+artifacts/checkpoints/
+artifacts/hf_cache/
