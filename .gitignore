@@ -20,3 +20,5 @@ artifacts/reports/llm_sonnet_*_predictions.csv
 # Model checkpoints (too large for git)
 artifacts/checkpoints/
 artifacts/hf_cache/
+
+artifacts/reports/*_train.log
