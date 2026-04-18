@@ -71,6 +71,8 @@ Both standalone OOD sources passed the repository's leakage pre-check with `0` e
 | NADI 2021 DA dev | Classical | `0.5153` | `0.4937` |
 | NADI 2021 DA dev | MARBERT | `0.6656` | `0.6443` |
 
+The checked-in evidence supports distribution shift more strongly than leakage: the OOD splits passed the exact-overlap audit, but their mapped label mix differs noticeably from the cleaned dev view. Topic/domain mismatch and weaker locality cues are plausible contributors, but the current repo evidence does not justify a single-factor causal claim.
+
 ### Robustness Summary
 
 - MARBERT is the strongest model on clean in-domain and current OOD metrics.
