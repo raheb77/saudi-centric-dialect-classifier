@@ -1,0 +1,2 @@
+# Intentionally minimal.
+# The Hugging Face Space uses the platform-provided Gradio runtime.
