@@ -66,6 +66,8 @@ Comparison note:
 | NADI 2021 DA dev | Classical | `0.5153` | `0.4937` | `-0.3714` | `-0.3539` |
 | NADI 2021 DA dev | MARBERT | `0.6656` | `0.6443` | `-0.3014` | `-0.3153` |
 
+Evidence in this repository supports an audited distribution-shift explanation more strongly than a leakage explanation: both OOD sources passed the exact-overlap pre-check, the same four-label mapping produces a much more Saudi/Egyptian-heavy and less Levantine-heavy label mix than the cleaned `dev_core`, and Levantine is the weakest MARBERT OOD class in both checked-in OOD summaries. Read together with the in-domain error analysis, topic/domain mismatch and weak-locality text are the most plausible interpretations, while orthographic or noise differences remain a secondary possibility rather than a proven primary cause. The current evidence therefore supports a careful claim of materially weaker domain transfer, not a stronger claim that one isolated factor fully explains the drop.
+
 ### Robustness on the Cleaned `998`-Row Dev Split
 
 | Perturbation Family | Classical Macro F1 Drop | MARBERT Macro F1 Drop | More Robust Under This Test |

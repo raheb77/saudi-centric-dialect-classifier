@@ -20,6 +20,8 @@ Phase 9 Part 2 evaluates the existing v1 classical baseline rerun and MARBERT en
 
 Classical OOD deltas now reference the corrected cleaned `998`-row in-domain split. MARBERT OOD deltas continue to reference the cleaned `998`-row seed `42` in-domain result.
 
+Evidence in this repository supports an audited distribution-shift explanation more strongly than a leakage explanation: both OOD sources passed the exact-overlap pre-check, the same four-label mapping produces a much more Saudi/Egyptian-heavy and less Levantine-heavy label mix than the cleaned `dev_core`, and Levantine is the weakest MARBERT OOD class in both checked-in OOD summaries. Read together with the in-domain error analysis, topic/domain mismatch and weak-locality text are the most plausible interpretations, while orthographic or noise differences remain a secondary possibility rather than a proven primary cause. The current evidence therefore supports a careful claim of materially weaker domain transfer, not a stronger claim that one isolated factor fully explains the drop.
+
 ## Recommendation
 
 Proceed to robustness next, but treat OOD weakness as a priority risk: the encoder shows a material macro-F1 drop out of domain and robustness should quantify whether that degradation is systematic or source-specific.

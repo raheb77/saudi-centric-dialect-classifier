@@ -67,6 +67,8 @@ Takeaways:
 - Classical OOD deltas now reference the corrected cleaned `998`-row in-domain result.
 - OOD degradation is still material for both model families, so the current v1 story should not be framed as solved domain transfer.
 
+Evidence in this repository supports an audited distribution-shift explanation more strongly than a leakage explanation: both OOD sources passed the exact-overlap pre-check, the same four-label mapping produces a much more Saudi/Egyptian-heavy and less Levantine-heavy label mix than the cleaned `dev_core`, and Levantine is the weakest MARBERT OOD class in both checked-in OOD summaries. Read together with the in-domain error analysis, topic/domain mismatch and weak-locality text are the most plausible interpretations, while orthographic or noise differences remain a secondary possibility rather than a proven primary cause. The current evidence therefore supports a careful claim of materially weaker domain transfer, not a stronger claim that one isolated factor fully explains the drop.
+
 ## Robustness Evaluation on the Cleaned `998`-Row Dev View
 
 | Perturbation Family | Classical Macro F1 Drop | MARBERT Macro F1 Drop | More Robust Under This Test |
