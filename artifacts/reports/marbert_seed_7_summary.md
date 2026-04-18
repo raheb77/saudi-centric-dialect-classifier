@@ -56,11 +56,11 @@ This run fine-tunes `UBC-NLP/MARBERT` on `train_core` and evaluates on `dev_core
 
 | Baseline | Accuracy | Macro F1 |
 | --- | --- | --- |
-| Classical | 0.8869 | 0.8483 |
+| Classical | 0.8868 | 0.8476 |
 | Gemini Zero-Shot | 0.8679 | 0.8330 |
 | Gemini Few-Shot | 0.8749 | 0.8414 |
 | Sonnet Zero-Shot | 0.8268 | 0.7908 |
 | Sonnet Few-Shot | 0.8408 | 0.8042 |
 | MARBERT | 0.9649 | 0.9561 |
 
-- Use this table as a benchmark-safe comparison against the current classical, Gemini full-dev, and Sonnet full-dev runs already present in the repository.
+- Use this table as a benchmark-safe comparison against the current classical baseline and as task-context reference against the current Gemini full-dev and Sonnet full-dev historical runs already present in the repository.

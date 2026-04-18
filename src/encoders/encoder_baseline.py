@@ -735,7 +735,7 @@ def write_summary_markdown(
                 "",
                 *_markdown_table(["Baseline", "Accuracy", "Macro F1"], comparison_rows + [["MARBERT", f"{results['eval']['accuracy']:.4f}", f"{results['eval']['macro_f1']:.4f}"]]),
                 "",
-                "- Use this table as a benchmark-safe comparison against the current classical, Gemini full-dev, and Sonnet full-dev runs already present in the repository.",
+                "- Use this table as a benchmark-safe comparison against the current classical baseline and as task-context reference against the current Gemini full-dev and Sonnet full-dev runs already present in the repository.",
                 "",
             ]
         )

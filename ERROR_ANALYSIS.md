@@ -1,14 +1,14 @@
 # Error Analysis
 
-This document records the completed-project error picture while keeping the classical TF-IDF + Logistic Regression baseline as the main qualitative reference. The classical baseline was evaluated on the original `999`-row `dev_core` view and remains the clearest view into the task's lexical failure modes.
+This document records the completed-project error picture while keeping the classical TF-IDF + Logistic Regression baseline as the main qualitative reference. The corrected classical baseline was rerun on the cleaned benchmark-safe `998`-row `dev_core` view and remains the clearest view into the task's lexical failure modes.
 
 Later baselines are now complete. MARBERT on the cleaned `998`-row benchmark-safe dev split materially reduced the tracked Saudi/Egyptian confusion directions, but the analysis below remains useful because it explains why those directions were hard in the first place.
 
 ## Classical Reference Result
 
-- Split: original `dev_core` (`999` rows)
-- Accuracy: `0.8869`
-- Macro F1: `0.8483`
+- Split: cleaned benchmark-safe `dev_core` (`998` rows)
+- Accuracy: `0.8868`
+- Macro F1: `0.8476`
 
 ## Confusion Summary
 
@@ -119,7 +119,7 @@ The classical reference remains useful because it exposes the main task difficul
 
 On the tracked Saudi/Egyptian confusion directions, MARBERT on the cleaned `998`-row dev split reduced the counts to:
 
-| True Label | Predicted Label | Classical (`999` rows) | MARBERT (`998` rows) |
+| True Label | Predicted Label | Classical (`998` rows) | MARBERT (`998` rows) |
 | --- | --- | ---: | ---: |
 | `Saudi` | `Levantine` | 15 | 1 |
 | `Saudi` | `Maghrebi` | 11 | 2 |
@@ -129,7 +129,7 @@ On the tracked Saudi/Egyptian confusion directions, MARBERT on the cleaned `998`
 Interpretation:
 
 - The contraction in these counts is large enough to support the claim that the encoder materially reduced the tracked failure modes.
-- Because the classical and MARBERT counts come from different dev views (`999` vs `998`), treat this as direction-of-change evidence rather than a perfectly like-for-like confusion table.
+- The classical and MARBERT counts now come from the same cleaned `998`-row dev view, so these tracked confusion counts are directly comparable.
 - The classical analysis still explains the linguistic pressure points that later models had to overcome.
 
 ## Implications for the Final Comparison

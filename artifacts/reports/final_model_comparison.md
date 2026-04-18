@@ -1,26 +1,39 @@
 # Final Model Comparison
 
-This file is the authoritative repository-level comparison summary. It separates the original `999`-row full-dev reports from the cleaned `998`-row benchmark-safe encoder reports, then summarizes OOD and robustness findings.
+This file is the authoritative repository-level comparison summary. It separates the historical `999`-row prompt-only full-dev reports from the cleaned `998`-row benchmark-safe comparison reports, then summarizes OOD and robustness findings.
 
 It does not reproduce raw tweet text and should be read together with the model card, dataset card, OOD summaries, and robustness summary.
 
 ## Evaluation Framing
 
-- Original full-dev view: `999` rows
-  - used by the classical baseline, Gemini Flash-Lite, and Claude Sonnet full-dev runs
-- Cleaned benchmark-safe encoder view: `998` rows
-  - used by MARBERT, MARBERT stability, and robustness evaluation
+- Historical prompt-only full-dev view: `999` rows
+  - used by the Gemini Flash-Lite and Claude Sonnet full-dev runs
+- Cleaned benchmark-safe comparison view: `998` rows
+  - used by the corrected classical baseline rerun, MARBERT, MARBERT stability, and robustness evaluation
 - OOD sources:
   - standalone NADI 2020 dev and NADI 2021 DA dev
   - both passed the exact-overlap OOD leakage pre-check before evaluation
 
-The split distinction is part of the experimental record. The repository does not collapse the `999`-row and `998`-row results into a single unlabeled in-domain score table.
+The split distinction remains part of the experimental record. The repository keeps the corrected classical-vs-MARBERT comparison explicit and treats Gemini/Sonnet as historical task-context runs rather than collapsing everything into one unlabeled score table.
 
-## In-Domain Results on the Original `999`-Row Dev View
+## In-Domain Results on the Cleaned `998`-Row Benchmark-Safe View
 
 | Model | Setting | Accuracy | Macro F1 | Notes |
 | --- | --- | ---: | ---: | --- |
-| Classical baseline | TF-IDF + Logistic Regression | `0.8869` | `0.8483` | strongest non-neural baseline |
+| Classical baseline | TF-IDF + Logistic Regression | `0.8868` | `0.8476` | cleaned benchmark-safe rerun |
+| MARBERT | seed `42` | `0.9669` | `0.9595` | cleaned benchmark-safe reference result |
+| MARBERT | mean +/- std over seeds `42/123/7` | `0.9679 +/- 0.0036` | `0.9613 +/- 0.0063` | acceptable stability |
+
+Takeaways:
+
+- Classical and MARBERT are now compared on the same cleaned benchmark-safe split.
+- MARBERT remains the strongest overall model in the repository on clean in-domain metrics.
+- The multi-seed pass supports the encoder result as stable enough for the v1 comparison story.
+
+## Historical Prompt-Only Context on the Original `999`-Row Full-Dev View
+
+| Model | Setting | Accuracy | Macro F1 | Notes |
+| --- | --- | ---: | ---: | --- |
 | Gemini Flash-Lite | zero-shot | `0.8679` | `0.8330` | prompt-only |
 | Gemini Flash-Lite | few-shot | `0.8749` | `0.8414` | best prompt-only LLM run |
 | Claude Sonnet | zero-shot | `0.8268` | `0.7908` | prompt-only |
@@ -28,19 +41,7 @@ The split distinction is part of the experimental record. The repository does no
 
 Takeaway:
 
-- The classical baseline outperformed both prompt-only LLM baselines on the original full-dev comparison.
-
-## Cleaned Benchmark-Safe Encoder Result on the `998`-Row Dev View
-
-| Model | Setting | Accuracy | Macro F1 | Notes |
-| --- | --- | ---: | ---: | --- |
-| MARBERT | seed `42` | `0.9669` | `0.9595` | cleaned benchmark-safe reference result |
-| MARBERT | mean +/- std over seeds `42/123/7` | `0.9679 +/- 0.0036` | `0.9613 +/- 0.0063` | acceptable stability |
-
-Takeaways:
-
-- MARBERT is the strongest overall model in the repository on clean in-domain metrics.
-- The multi-seed pass supports the encoder result as stable enough for the v1 comparison story.
+- Gemini few-shot remains the strongest prompt-only run, but these LLM scores are still historical `999`-row full-dev references rather than apples-to-apples comparisons against the cleaned classical/MARBERT view.
 
 ## OOD Leakage Pre-check
 
@@ -55,14 +56,15 @@ The OOD evaluation below is therefore grounded in audited sources rather than as
 
 | Dataset | Model | Accuracy | Macro F1 | In-Domain Reference Accuracy | In-Domain Reference Macro F1 | Delta Accuracy | Delta Macro F1 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| NADI 2020 dev | Classical | `0.4763` | `0.4467` | `0.8869` | `0.8483` | `-0.4106` | `-0.4016` |
+| NADI 2020 dev | Classical | `0.4763` | `0.4467` | `0.8868` | `0.8476` | `-0.4105` | `-0.4009` |
 | NADI 2020 dev | MARBERT | `0.6122` | `0.5938` | `0.9669` | `0.9595` | `-0.3548` | `-0.3657` |
-| NADI 2021 DA dev | Classical | `0.5153` | `0.4937` | `0.8869` | `0.8483` | `-0.3716` | `-0.3547` |
+| NADI 2021 DA dev | Classical | `0.5153` | `0.4937` | `0.8868` | `0.8476` | `-0.3714` | `-0.3539` |
 | NADI 2021 DA dev | MARBERT | `0.6656` | `0.6443` | `0.9669` | `0.9595` | `-0.3014` | `-0.3153` |
 
 Takeaways:
 
 - MARBERT remains stronger than the classical baseline on both audited OOD splits.
+- Classical OOD deltas now reference the corrected cleaned `998`-row in-domain result.
 - OOD degradation is still material for both model families, so the current v1 story should not be framed as solved domain transfer.
 
 ## Robustness Evaluation on the Cleaned `998`-Row Dev View

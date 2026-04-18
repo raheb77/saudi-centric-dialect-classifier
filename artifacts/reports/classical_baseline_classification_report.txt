@@ -1,10 +1,10 @@
               precision    recall  f1-score   support
 
        Saudi       0.93      0.74      0.82       100
-    Egyptian       0.90      0.65      0.76       100
+    Egyptian       0.90      0.65      0.75        99
    Levantine       0.89      0.92      0.91       399
     Maghrebi       0.88      0.95      0.91       400
 
-    accuracy                           0.89       999
-   macro avg       0.90      0.81      0.85       999
-weighted avg       0.89      0.89      0.88       999
+    accuracy                           0.89       998
+   macro avg       0.90      0.81      0.85       998
+weighted avg       0.89      0.89      0.88       998

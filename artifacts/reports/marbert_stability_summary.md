@@ -31,11 +31,13 @@ This summary aggregates the cleaned post-dedup MARBERT runs on the 998-row `dev_
 
 | Model | Setting | Accuracy | Macro F1 | Run Type |
 | --- | --- | --- | --- | --- |
-| Classical baseline | TF-IDF + Logistic Regression | `0.8869` | `0.8483` | single run |
+| Classical baseline | TF-IDF + Logistic Regression | `0.8868` | `0.8476` | single run |
 | Gemini Flash-Lite | zero-shot | `0.8679` | `0.8330` | single run |
 | Gemini Flash-Lite | few-shot | `0.8749` | `0.8414` | single run |
 | Claude Sonnet | zero-shot | `0.8268` | `0.7908` | single run |
 | Claude Sonnet | few-shot | `0.8408` | `0.8042` | single run |
 | MARBERT | mean +/- std (n=3 seeds) | `0.9679 +/- 0.0036` | `0.9613 +/- 0.0063` | multi-seed |
 
+- Classical now uses the same `cleaned benchmark-safe dev (998 rows)` as MARBERT, so that comparison is apples-to-apples.
+- Gemini and Sonnet remain historical single-run prompt-only values from the original `999`-row full-dev view.
 - Classical, Gemini, and Sonnet were not multi-seed rerun here. Their single-run values are shown for task context, not as a claim of LLM instability.

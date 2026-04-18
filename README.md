@@ -20,9 +20,9 @@ The project now includes benchmark-aware data validation, leakage-aware curation
 3. Preprocessing:
    URLs, mentions, diacritics, Alef variants, tatweel, and elongation were normalized into parallel processed CSVs.
 4. Classical baseline:
-   TF-IDF + Logistic Regression established the lexical baseline on the original `dev_core` view.
+   TF-IDF + Logistic Regression established the lexical baseline, then was rerun on the cleaned benchmark-safe `998`-row `dev_core` view used by the final classical-vs-MARBERT comparison.
 5. LLM baselines:
-   Gemini Flash-Lite and Claude Sonnet were evaluated in zero-shot and few-shot settings on the same original `dev_core` view.
+   Gemini Flash-Lite and Claude Sonnet were evaluated in zero-shot and few-shot settings on the original `999`-row `dev_core` view and are retained as historical prompt-only references.
 6. Encoder baseline:
    `UBC-NLP/MARBERT` was fine-tuned and reported on the cleaned 998-row benchmark-safe dev split, then checked across three seeds.
 7. OOD checks and OOD evaluation:
@@ -34,7 +34,7 @@ The project now includes benchmark-aware data validation, leakage-aware curation
 
 | Model / Setting | Evaluation Split | Accuracy | Macro F1 | Notes |
 | --- | --- | ---: | ---: | --- |
-| Classical baseline | original dev (`999` rows) | `0.8869` | `0.8483` | TF-IDF + Logistic Regression |
+| Classical baseline | cleaned benchmark-safe dev (`998` rows) | `0.8868` | `0.8476` | TF-IDF + Logistic Regression |
 | Gemini Flash-Lite zero-shot | original dev (`999` rows) | `0.8679` | `0.8330` | prompt-only |
 | Gemini Flash-Lite few-shot | original dev (`999` rows) | `0.8749` | `0.8414` | best prompt-only LLM run |
 | Claude Sonnet zero-shot | original dev (`999` rows) | `0.8268` | `0.7908` | prompt-only |
@@ -44,8 +44,8 @@ The project now includes benchmark-aware data validation, leakage-aware curation
 
 Comparison note:
 
-- Classical, Gemini, and Sonnet were run on the original `999`-row `dev_core` view.
-- MARBERT and the robustness pass use the cleaned benchmark-safe `998`-row processed dev view.
+- The corrected classical baseline rerun and MARBERT use the cleaned benchmark-safe `998`-row processed dev view.
+- Gemini and Sonnet remain historical prompt-only runs on the original `999`-row `dev_core` view.
 - Treat the split distinction as part of the result, not as an omitted footnote.
 
 ## OOD and Robustness Summary
@@ -61,9 +61,9 @@ Comparison note:
 
 | Dataset | Model | Accuracy | Macro F1 | Delta Accuracy vs In-Domain | Delta Macro F1 vs In-Domain |
 | --- | --- | ---: | ---: | ---: | ---: |
-| NADI 2020 dev | Classical | `0.4763` | `0.4467` | `-0.4106` | `-0.4016` |
+| NADI 2020 dev | Classical | `0.4763` | `0.4467` | `-0.4105` | `-0.4009` |
 | NADI 2020 dev | MARBERT | `0.6122` | `0.5938` | `-0.3548` | `-0.3657` |
-| NADI 2021 DA dev | Classical | `0.5153` | `0.4937` | `-0.3716` | `-0.3547` |
+| NADI 2021 DA dev | Classical | `0.5153` | `0.4937` | `-0.3714` | `-0.3539` |
 | NADI 2021 DA dev | MARBERT | `0.6656` | `0.6443` | `-0.3014` | `-0.3153` |
 
 ### Robustness on the Cleaned `998`-Row Dev Split
@@ -79,8 +79,8 @@ MARBERT is the strongest overall model on clean in-domain and OOD metrics, but t
 
 ## What This Project Shows
 
-- Benchmark-safe reporting changes interpretation: the encoder result is tied to the cleaned `998`-row dev split, not the original `999`-row view.
-- A strong lexical baseline remains competitive: the classical baseline outperformed both prompt-only LLM baselines on the original full-dev comparison.
+- Benchmark-safe reporting changes interpretation: the corrected classical baseline and encoder results are tied to the cleaned `998`-row dev split, while Gemini/Sonnet remain historical `999`-row prompt-only references.
+- A strong lexical baseline remains competitive: the corrected classical rerun still provides a credible non-neural benchmark next to MARBERT.
 - MARBERT is the strongest overall model in the repository on clean in-domain and current OOD evaluations.
 - Robustness and clean accuracy are different properties: MARBERT wins on clean metrics, while the classical baseline is less sensitive to the tested deterministic perturbations.
 

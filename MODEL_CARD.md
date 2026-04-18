@@ -27,8 +27,8 @@ This file describes the final encoder result used in the repository's comparison
 Important benchmark note:
 
 - The repository contains two relevant dev views in its current reports.
-- Classical, Gemini, and Sonnet full-dev comparisons were run on the original `999`-row `dev_core` view.
-- MARBERT, the MARBERT stability pass, and the robustness evaluation use the cleaned benchmark-safe `998`-row processed dev view.
+- The corrected classical baseline rerun, MARBERT, the MARBERT stability pass, and the robustness evaluation use the cleaned benchmark-safe `998`-row processed dev view.
+- Gemini and Sonnet full-dev comparisons remain historical prompt-only runs on the original `999`-row `dev_core` view.
 - Repository-level comparison documents keep this split distinction explicit and do not treat it as hidden bookkeeping.
 
 Supporting-source note:
@@ -137,7 +137,7 @@ Project-level robustness interpretation:
 
 - The label space is asymmetric: `Saudi` and `Egyptian` are single-country labels, while `Levantine` and `Maghrebi` are grouped regional labels.
 - The project operates on short text only, so some items remain weak-signal or genuinely ambiguous even for stronger models.
-- Reported repository comparisons span two dev views: original `999`-row full-dev reports and cleaned `998`-row encoder-safe reports.
+- Reported repository comparisons span two dev views: historical `999`-row prompt-only full-dev reports and cleaned `998`-row benchmark-safe classical/encoder reports.
 - OOD degradation is substantial despite MARBERT's strong in-domain result.
 - Robustness under deterministic perturbation is weaker than the classical baseline on the tested families.
 - The source material is tweet-domain text, so domain transfer beyond this setting should not be assumed.

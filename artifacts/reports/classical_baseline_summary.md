@@ -13,19 +13,19 @@ This baseline trains a Logistic Regression classifier on combined word and char 
 - Char analyzer: `char_wb`
 - Char n-grams: `(3, 5)`
 - Train rows: `10000`
-- Dev rows: `999`
+- Dev rows: `998`
 
 ## Overall Metrics
 
-- Accuracy: `0.8869`
-- Macro F1: `0.8483`
+- Accuracy: `0.8868`
+- Macro F1: `0.8476`
 
 ## Per-Class Metrics
 
 | Label | Precision | Recall | F1 | Support |
 | --- | --- | --- | --- | --- |
 | Saudi | 0.9250 | 0.7400 | 0.8222 | 100 |
-| Egyptian | 0.9028 | 0.6500 | 0.7558 | 100 |
+| Egyptian | 0.9014 | 0.6465 | 0.7529 | 99 |
 | Levantine | 0.8889 | 0.9223 | 0.9053 | 399 |
 | Maghrebi | 0.8753 | 0.9475 | 0.9100 | 400 |
 
@@ -34,6 +34,6 @@ This baseline trains a Logistic Regression classifier on combined word and char 
 | True \ Pred | Saudi | Egyptian | Levantine | Maghrebi |
 | --- | --- | --- | --- | --- |
 | Saudi | 74 | 0 | 15 | 11 |
-| Egyptian | 0 | 65 | 13 | 22 |
+| Egyptian | 0 | 64 | 13 | 22 |
 | Levantine | 5 | 5 | 368 | 21 |
 | Maghrebi | 1 | 2 | 18 | 379 |

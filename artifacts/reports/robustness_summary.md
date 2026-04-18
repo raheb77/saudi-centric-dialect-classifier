@@ -38,5 +38,5 @@ Phase 9 Part 3 evaluates deterministic perturbation sensitivity on the cleaned 9
 ## Reference Comparison
 
 - Current cleaned MARBERT seed 42 reference: accuracy `0.9669`, macro F1 `0.9595`.
-- Current classical baseline reference report: accuracy `0.8869`, macro F1 `0.8483` on the original 999-row dev split.
-- Robustness clean classical result on the cleaned 998-row split: accuracy `0.8868`, macro F1 `0.8476`.
+- Current classical baseline reference report: accuracy `0.8868`, macro F1 `0.8476` on the cleaned `998`-row dev split.
+- Robustness clean classical result matches that same cleaned `998`-row reference: accuracy `0.8868`, macro F1 `0.8476`.

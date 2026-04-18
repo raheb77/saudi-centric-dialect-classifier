@@ -1,8 +1,8 @@
 {
   "train_rows": 10000,
-  "dev_rows": 999,
-  "accuracy": 0.8868868868868869,
-  "macro_f1": 0.8483223035488402,
+  "dev_rows": 998,
+  "accuracy": 0.8867735470941884,
+  "macro_f1": 0.8476041092943942,
   "labels": [
     "Saudi",
     "Egyptian",

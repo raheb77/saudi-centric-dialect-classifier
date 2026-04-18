@@ -59,8 +59,8 @@ The current repository state covers the full data pipeline needed for the checke
 
 Current reporting split note:
 
-- Classical, Gemini, and Sonnet full-dev reports use the original `999`-row `dev_core` view.
-- MARBERT, the MARBERT stability summary, and robustness evaluation use the cleaned benchmark-safe `998`-row processed dev view.
+- The corrected classical baseline rerun, MARBERT, the MARBERT stability summary, and robustness evaluation use the cleaned benchmark-safe `998`-row processed dev view.
+- Gemini and Sonnet full-dev reports remain historical prompt-only runs on the original `999`-row `dev_core` view.
 - The final comparison documents keep this distinction explicit instead of collapsing the two views into one unlabeled number.
 
 ## OOD Sources Used

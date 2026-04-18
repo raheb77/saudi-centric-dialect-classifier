@@ -1,6 +1,6 @@
 # OOD Evaluation Summary
 
-Phase 9 Part 2 evaluates the existing v1 classical baseline and MARBERT encoder on standalone NADI 2020 and NADI 2021 dev files only. The same four-label mapping and preprocessing policy used in-domain are applied, and out-of-scope countries are dropped.
+Phase 9 Part 2 evaluates the existing v1 classical baseline rerun and MARBERT encoder on standalone NADI 2020 and NADI 2021 dev files only. The same four-label mapping and preprocessing policy used in-domain are applied, and out-of-scope countries are dropped.
 
 ## Row Counts After Mapping and Filtering
 
@@ -13,10 +13,12 @@ Phase 9 Part 2 evaluates the existing v1 classical baseline and MARBERT encoder 
 
 | Dataset | Model | Accuracy | Macro F1 | In-Domain Accuracy | In-Domain Macro F1 | Delta Accuracy | Delta Macro F1 |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| nadi2020 | Classical | 0.4763 | 0.4467 | 0.8869 | 0.8483 | -0.4106 | -0.4016 |
+| nadi2020 | Classical | 0.4763 | 0.4467 | 0.8868 | 0.8476 | -0.4105 | -0.4009 |
 | nadi2020 | MARBERT | 0.6122 | 0.5938 | 0.9669 | 0.9595 | -0.3548 | -0.3657 |
-| nadi2021 | Classical | 0.5153 | 0.4937 | 0.8869 | 0.8483 | -0.3716 | -0.3547 |
+| nadi2021 | Classical | 0.5153 | 0.4937 | 0.8868 | 0.8476 | -0.3714 | -0.3539 |
 | nadi2021 | MARBERT | 0.6656 | 0.6443 | 0.9669 | 0.9595 | -0.3014 | -0.3153 |
+
+Classical OOD deltas now reference the corrected cleaned `998`-row in-domain split. MARBERT OOD deltas continue to reference the cleaned `998`-row seed `42` in-domain result.
 
 ## Recommendation
 
